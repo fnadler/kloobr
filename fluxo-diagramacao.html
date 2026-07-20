@@ -104,6 +104,24 @@
         </div>
         <div class="upload-card__track"><span class="upload-card__fill" data-up-fill></span></div>
       </div>
+
+      <!-- Formato final do livro impresso -->
+      <div class="flow-field">
+        <label class="flow-field__label" for="dgm-formato">Formato do livro impresso</label>
+        <div class="ds-select">
+          <select class="ds-input" id="dgm-formato" name="formato">
+            <option value="a5" selected>A5 · 14,8 × 21 cm (mais usado)</option>
+            <option value="14x21">14 × 21 cm</option>
+            <option value="155x225">15,5 × 22,5 cm</option>
+            <option value="16x23">16 × 23 cm</option>
+            <option value="6x9">6 × 9 pol · 15,2 × 22,9 cm</option>
+            <option value="a4">A4 · 21 × 29,7 cm</option>
+            <option value="bolso">Bolso · 10,5 × 14,8 cm</option>
+          </select>
+          <svg class="ds-select__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <p class="flow-field__hint">A amostra grátis é sempre em A5. O formato escolhido aqui vale para o seu livro completo, que você recebe ao contratar.</p>
+      </div>
     </div>
   </section>
 
@@ -166,14 +184,14 @@
             <span class="field__label">Senha</span>
             <input class="ds-input" type="password" name="senha" autocomplete="current-password" required placeholder="Sua senha">
           </label>
-          <button class="auth__link" type="button" data-forgot-open>Esqueci minha senha</button>
           <button class="btn btn-primary auth__submit" type="submit">Entrar</button>
+          <button class="auth__link auth__link--under" type="button" data-forgot-open>Esqueci minha senha</button>
         </form>
 
         <!-- Criar conta -->
         <form class="auth__pane" id="pane-signup" role="tabpanel" aria-labelledby="tab-signup" data-auth-form novalidate hidden>
           <label class="field">
-            <span class="field__label">Nome completo</span>
+            <span class="field__label">Nome</span>
             <input class="ds-input" type="text" name="nome" autocomplete="name" required placeholder="Como você assina seus livros">
           </label>
           <label class="field">

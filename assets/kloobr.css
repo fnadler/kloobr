@@ -577,6 +577,154 @@ main {
 .nav-locale__chevron { transition: transform .2s ease; }
 .nav-locale[aria-expanded="true"] .nav-locale__chevron { transform: rotate(180deg); }
 
+/* ---- Controle de localização (país): botão do nav + modal de busca ------ */
+.nav-country {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .45rem .6rem;
+  border-radius: 999px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .16);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: border-color .2s ease, background .2s ease;
+}
+.nav-country:hover {
+  border-color: rgba(255, 255, 255, .32);
+  background: rgba(255, 255, 255, .1);
+}
+.nav-country:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: 2px;
+}
+.nav-country__flag {
+  font-size: 18px;
+  line-height: 1;
+}
+.nav-country__name { display: none; }
+.nav-country .nav-locale__chevron { display: none; }
+@media (min-width: 900px) {
+  .nav-country { padding: .5rem .75rem; }
+  .nav-country__name { display: inline; }
+  .nav-country .nav-locale__chevron { display: inline; }
+}
+
+/* Modal de país */
+.ctry__inner {
+  display: flex;
+  flex-direction: column;
+  max-height: min(80vh, 620px);
+  padding: 1.5rem 1.5rem 1rem;
+}
+.ctry__lead {
+  margin: -.5rem 0 1rem;
+  color: var(--text-soft);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+.ctry__detect {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  width: 100%;
+  padding: .7rem 1rem;
+  margin-bottom: .75rem;
+  border-radius: 12px;
+  cursor: pointer;
+  background: rgba(255, 0, 191, .12);
+  border: 1px solid rgba(255, 0, 191, .4);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  transition: border-color .2s ease, background .2s ease;
+}
+.ctry__detect:hover { background: rgba(255, 0, 191, .2); }
+.ctry__detect:disabled { opacity: .6; cursor: default; }
+.ctry__detect .ctry__detect-ico { flex: 0 0 auto; }
+.ctry__detect.is-loading .ctry__detect-ico { animation: spin .9s linear infinite; }
+
+.ctry__msg {
+  margin: 0 0 .75rem;
+  padding: .6rem .8rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .14);
+  color: var(--text-soft);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.ctry__msg--info {
+  background: rgba(90, 130, 255, .12);
+  border-color: rgba(120, 150, 255, .4);
+  color: #fff;
+}
+.ctry__msg[hidden] { display: none; }
+
+.ctry__search {
+  position: relative;
+  margin-bottom: .75rem;
+}
+.ctry__search-ico {
+  position: absolute;
+  left: .85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-mut);
+  pointer-events: none;
+}
+.ctry__search .ds-input {
+  padding-left: 2.6rem;
+}
+.ctry__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  -webkit-overflow-scrolling: touch;
+}
+.ctry__list li[hidden] { display: none; }
+.ctry-item {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  width: 100%;
+  padding: .6rem .7rem;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  cursor: pointer;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  text-align: left;
+  transition: background .15s ease;
+}
+.ctry-item:hover { background: rgba(255, 255, 255, .06); }
+.ctry-item:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: -2px;
+}
+.ctry-item__flag { font-size: 20px; line-height: 1; flex: 0 0 auto; }
+.ctry-item__name { flex: 1 1 auto; min-width: 0; }
+.ctry-item__check { flex: 0 0 auto; color: var(--hl-pink); opacity: 0; }
+.ctry-item[aria-selected="true"] { background: rgba(255, 255, 255, .05); }
+.ctry-item[aria-selected="true"] .ctry-item__check { opacity: 1; }
+.ctry__empty {
+  padding: 1rem .7rem;
+  color: var(--text-mut);
+  font-size: 14px;
+}
+.ctry__empty[hidden] { display: none; }
+
 /* Conta: login/cadastro (deslogado) ou usuário (logado) */
 .nav-account {
   position: relative;
@@ -770,7 +918,8 @@ main {
 
 /* Painel de preferências + diálogo de conta (modais, servem desktop e mobile) */
 .prefs,
-.authd {
+.authd,
+.ctry {
   width: min(440px, calc(100% - 2rem));
   padding: 0;
   margin: auto;
@@ -782,13 +931,15 @@ main {
 }
 
 .prefs::backdrop,
-.authd::backdrop {
+.authd::backdrop,
+.ctry::backdrop {
   background: rgba(10, 8, 20, .7);
   backdrop-filter: blur(3px);
 }
 
 .prefs[open],
-.authd[open] {
+.authd[open],
+.ctry[open] {
   animation: tipIn .2s ease-out;
 }
 
@@ -5246,6 +5397,40 @@ img.img-placeholder--tech {
   animation: tipIn .3s ease-out;
 }
 
+/* Mobile: o processamento vira um banner compacto (ícone + status em linha,
+   sem a lista de etapas) para o formulário de login subir e o botão "Entrar"
+   ficar visível sem rolar. */
+@media (max-width: 859px) {
+  .processing {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: .9rem;
+    padding: .85rem 1rem;
+  }
+  .processing__spin,
+  .processing__done-ico {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    margin-bottom: 0;
+  }
+  .processing__title {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end;
+    font-size: 1rem;
+  }
+  .processing__text {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: start;
+    margin: .1rem 0 0;
+  }
+  .processing__list {
+    display: none;
+  }
+}
+
 /* Card de conta identificada */
 .account {
   position: relative;
@@ -5328,7 +5513,7 @@ img.img-placeholder--tech {
 }
 
 .auth {
-  padding: 1.5rem;
+  padding: 1.25rem;
   border-radius: 18px;
   background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
   border: 1px solid rgba(255, 255, 255, .12);
@@ -5338,11 +5523,10 @@ img.img-placeholder--tech {
   flex-direction: column;
 }
 
-/* A nota sobre contas de outros canais vai para o FIM do bloco (abaixo do
-   formulário), para o botão de login não ficar fora da área visível. */
+/* A nota sobre contas de outros canais fica ACIMA do formulário (posição no
+   DOM). O form foi compactado para o botão de login não sair da área visível. */
 .auth .auth-note {
-  order: 1;
-  margin: 1.5rem 0 0;
+  margin: 0 0 1.1rem;
 }
 
 .auth__tabs {
@@ -5350,7 +5534,7 @@ img.img-placeholder--tech {
   grid-template-columns: 1fr 1fr;
   gap: 4px;
   padding: 4px;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   background: rgba(255, 255, 255, .04);
   border: 1px solid rgba(255, 255, 255, .1);
   border-radius: 999px;
@@ -5386,11 +5570,34 @@ img.img-placeholder--tech {
 .auth__pane {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: .75rem;
 }
 
 .auth__pane[hidden] {
   display: none;
+}
+
+/* Labels ao lado do campo: reduz a altura do form e mantém o botão visível. */
+.auth__pane .field {
+  flex-direction: row;
+  align-items: center;
+  gap: .75rem;
+}
+
+.auth__pane .field__label {
+  flex: 0 0 auto;
+  width: 74px;
+}
+
+.auth__pane .field .ds-input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Link "Esqueci minha senha": logo abaixo do botão Entrar, centralizado. */
+.auth__link--under {
+  align-self: center;
+  margin-top: .15rem;
 }
 
 .auth__forgot-title {
@@ -5466,6 +5673,39 @@ img.img-placeholder--tech {
 select.ds-input {
   appearance: none;
   cursor: pointer;
+}
+
+/* Campo de formulário do fluxo (ex.: formato do livro na Diagramação) */
+.flow-field {
+  margin-top: 1.25rem;
+}
+.flow-field__label {
+  display: block;
+  margin-bottom: .5rem;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-soft);
+}
+.flow-field__hint {
+  margin: .5rem 0 0;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.45;
+  color: var(--text-mut);
+}
+.ds-select {
+  position: relative;
+}
+.ds-select select.ds-input {
+  padding-right: 2.6rem;
+}
+.ds-select__chev {
+  position: absolute;
+  right: .9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-mut);
+  pointer-events: none;
 }
 
 select.ds-input option {

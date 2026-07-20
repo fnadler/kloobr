@@ -577,13 +577,17 @@ main {
 .nav-locale__chevron { transition: transform .2s ease; }
 .nav-locale[aria-expanded="true"] .nav-locale__chevron { transform: rotate(180deg); }
 
-/* ---- Controle de localização (país): botão do nav + modal de busca ------ */
+/* ---- Controle de localização (país): botão do nav + modal ---------------- */
+/* Mobile: mesmo formato do botão de idioma (quadrado arredondado, só bandeira). */
 .nav-country {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: .4rem;
-  padding: .45rem .6rem;
-  border-radius: 999px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px;
+  border-radius: 10px;
   cursor: pointer;
   background: rgba(255, 255, 255, .06);
   border: 1px solid rgba(255, 255, 255, .16);
@@ -606,21 +610,80 @@ main {
   font-size: 18px;
   line-height: 1;
 }
-.nav-country__name { display: none; }
+.nav-country__pin { flex: 0 0 auto; color: var(--hl-pink); }
+.nav-country__pin,
+.nav-country__name,
 .nav-country .nav-locale__chevron { display: none; }
-@media (min-width: 900px) {
-  .nav-country { padding: .5rem .75rem; }
-  .nav-country__name { display: inline; }
-  .nav-country .nav-locale__chevron { display: inline; }
+
+/* Telas mobile muito estreitas: o botão de localização some para a nav caber;
+   o idioma (globo) abre o mesmo modal, onde o toggle dá acesso à localização. */
+@media (max-width: 380px) {
+  .nav-country { display: none; }
 }
 
-/* Modal de país */
+/* Desktop: vira pill com ícone de localização + bandeira + nome. */
+@media (min-width: 900px) {
+  .nav-country {
+    min-width: 0;
+    min-height: 0;
+    padding: .5rem .75rem;
+    border-radius: 999px;
+  }
+  .nav-country__pin,
+  .nav-country__name,
+  .nav-country .nav-locale__chevron { display: inline; }
+  .nav-country__pin { display: inline-flex; }
+}
+
+/* Modal de idioma + localização */
 .ctry__inner {
   display: flex;
   flex-direction: column;
   max-height: min(80vh, 620px);
   padding: 1.5rem 1.5rem 1rem;
 }
+
+/* Toggle Idioma / Localização */
+.locale-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 1.1rem;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 999px;
+}
+.locale-tab {
+  padding: .55rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  cursor: pointer;
+  color: var(--text-mut);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  transition: color .2s ease, background .2s ease;
+}
+.locale-tab:hover { color: #fff; }
+.locale-tab[aria-selected="true"] {
+  color: #fff;
+  background: rgba(255, 0, 191, .22);
+}
+.locale-tab:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: -2px;
+}
+.locale-pane { min-height: 0; }
+.locale-pane[hidden] { display: none; }
+.locale-pane--local {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.locale-pane--local[hidden] { display: none; }
 .ctry__lead {
   margin: -.5rem 0 1rem;
   color: var(--text-soft);
@@ -5675,9 +5738,10 @@ select.ds-input {
   cursor: pointer;
 }
 
-/* Campo de formulário do fluxo (ex.: formato do livro na Diagramação) */
+/* Campo de formulário do fluxo (ex.: formato do livro na Diagramação).
+   Vem antes do upload, como os campos complementares dos outros fluxos. */
 .flow-field {
-  margin-top: 1.25rem;
+  margin: 0 0 1.25rem;
 }
 .flow-field__label {
   display: block;

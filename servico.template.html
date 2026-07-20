@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO por serviço (gerado pelo build a partir de data/servicos.json) -->
+<title>{{TITLE}}</title>
+<meta name="description" content="{{META_DESC}}">
+<meta name="theme-color" content="#19162d">
+<link rel="canonical" href="{{CANONICAL}}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{META_DESC}}">
+<meta property="og:image" content="{{OG_IMAGE}}">
+
+<!--
+  ============================================================================
+  PÁGINA DE SERVIÇO — GERADA AUTOMATICAMENTE. NÃO EDITE À MÃO.
+  Fonte: servico.template.html + data/servicos.json → build.py
+  Para mudar textos: edite data/servicos.json. Para mudar layout/blocos
+  compartilhados (nav, rodapé, scripts): edite servico.template.html.
+  Depois rode:  python3 build.py
+  ============================================================================
+-->
+
+<!-- Tipografia do Design System: Exo -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/kloobr.css">
+
+<!-- Gate de animações: só ativa reveal on load/scroll se houver IntersectionObserver
+     e o usuário não pedir movimento reduzido. Roda antes da pintura (sem flash). -->
+<script>
+  (function () {
+    try {
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!('IntersectionObserver' in window)) return;
+      document.documentElement.classList.add('has-anim');
+    } catch (e) {}
+  })();
+</script>
+<script defer src="assets/kloobr-anim.js"></script>
+</head>
+<body>
+
+<a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
+
+<!-- ===== NAV-BAR PRÓPRIA KLOOBR (FIXO, idêntico ao da home) ===== -->
+<header class="site-nav" data-site-nav>
+  <nav class="container site-nav__inner" aria-label="Navegação principal">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-drawer">
+      <span class="nav-toggle__bars" aria-hidden="true"><span></span></span>
+      <span class="nav-toggle__label">Serviços</span>
+    </button>
+
+    <a class="site-nav__logo" href="home.html" aria-label="Página inicial da KlooBR">
+      <img class="site-nav__logo-img" src="assets/logo-kloobr-white.svg" alt="" aria-hidden="true">
+    </a>
+
+    <div class="site-nav__service">
+      <span class="site-nav__service-eyebrow">{{NAV_PHASE}}</span>
+      <span class="site-nav__service-name">{{NAV_NAME}}</span>
+    </div>
+
+    <!-- Controles globais: idioma + moeda + conta -->
+    <div class="nav-prefs" data-nav-prefs>
+      <!-- Idioma, desktop: dropdown abaixo do botão -->
+      <div class="nav-ctrl" data-ctrl>
+        <button class="nav-locale" type="button" data-dd-toggle aria-haspopup="menu" aria-expanded="false" aria-controls="dd-lang" aria-label="Idioma">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.8 2.6 15.2 0 18M12 3c-2.6 2.8-2.6 15.2 0 18"/></svg>
+          <span class="nav-locale__text" data-lang-label>PT-BR</span>
+          <svg class="nav-locale__chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="nav-dd" id="dd-lang" data-dd role="menu" aria-label="Idioma" hidden>
+          <ul class="prefs__langs">
+          <li><button class="lang" type="button" data-lang="pt-BR" aria-pressed="true"><span class="lang__flag" aria-hidden="true">🇧🇷</span><span class="lang__name">Português (Brasil)</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          <li><button class="lang" type="button" data-lang="pt-PT" aria-pressed="false"><span class="lang__flag" aria-hidden="true">🇵🇹</span><span class="lang__name">Português (Portugal)</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          <li><button class="lang" type="button" data-lang="es" aria-pressed="false"><span class="lang__flag" aria-hidden="true">🇪🇸</span><span class="lang__name">Español</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          <li><button class="lang" type="button" data-lang="en" aria-pressed="false"><span class="lang__flag" aria-hidden="true">🇺🇸</span><span class="lang__name">English</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          <li><button class="lang" type="button" data-lang="de" aria-pressed="false"><span class="lang__flag" aria-hidden="true">🇩🇪</span><span class="lang__name">Deutsch</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          </ul>
+        </div>
+      </div>
+      <!-- Moeda, desktop: dropdown abaixo do botão -->
+      <div class="nav-ctrl" data-ctrl>
+        <button class="nav-locale" type="button" data-dd-toggle aria-haspopup="menu" aria-expanded="false" aria-controls="dd-cur" aria-label="Moeda">
+          <span class="nav-cur__sym" data-cur-sym>R$</span>
+          <span class="nav-locale__text" data-cur-label>BRL</span>
+          <svg class="nav-locale__chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="nav-dd" id="dd-cur" data-dd role="menu" aria-label="Moeda" hidden>
+          <ul class="prefs__langs">
+          <li><button class="lang" type="button" data-cur="BRL" aria-pressed="true"><span class="lang__flag" aria-hidden="true">R$</span><span class="lang__name">Real brasileiro</span><span class="lang__cur">BRL</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          <li><button class="lang" type="button" data-cur="EUR" aria-pressed="false"><span class="lang__flag" aria-hidden="true">€</span><span class="lang__name">Euro</span><span class="lang__cur">EUR</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          <li><button class="lang" type="button" data-cur="USD" aria-pressed="false"><span class="lang__flag" aria-hidden="true">US$</span><span class="lang__name">Dólar americano</span><span class="lang__cur">USD</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          <li><button class="lang" type="button" data-cur="GBP" aria-pressed="false"><span class="lang__flag" aria-hidden="true">£</span><span class="lang__name">Libra esterlina</span><span class="lang__cur">GBP</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          </ul>
+        </div>
+      </div>
+      <button class="nav-prefs-toggle" type="button" data-prefs-open aria-haspopup="dialog" aria-label="Idioma e moeda">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.8 2.6 15.2 0 18M12 3c-2.6 2.8-2.6 15.2 0 18"/></svg>
+      </button>
+
+      <!-- Conta: login/cadastro (deslogado) · usuário + menu (logado) -->
+      <div class="nav-account" data-account data-logged="false">
+        <button class="nav-login" type="button" data-auth-open aria-label="Entrar ou criar conta">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/></svg>
+          <span class="nav-login__txt">Entrar</span>
+        </button>
+        <button class="nav-user" type="button" data-account-toggle aria-expanded="false" aria-haspopup="menu" aria-label="Sua conta">
+          <span class="nav-user__avatar js-ini" aria-hidden="true">·</span>
+          <span class="nav-user__name js-name"></span>
+          <svg class="nav-user__chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="account-menu" data-account-menu data-open="false" role="menu" aria-label="Menu da conta">
+          <div class="account-menu__head">
+            <span class="nav-user__avatar js-ini" aria-hidden="true">·</span>
+            <span class="account-menu__id">
+              <span class="account-menu__name js-name"></span>
+              <span class="account-menu__mail" data-user-mail></span>
+            </span>
+          </div>
+          <a class="account-menu__item" href="#" role="menuitem">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.5l8-4 8 4v9l-8 4-8-4z"/><path d="M4 7.5l8 4 8-4"/><path d="M12 11.5v9"/></svg>
+            Meus pedidos
+          </a>
+          <button class="account-menu__item" type="button" data-logout role="menuitem">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3"/><path d="M10 12h9"/><path d="M16 9l3 3-3 3"/></svg>
+            Sair
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="nav-drawer" id="nav-drawer" data-open="false">
+    <div class="container nav-drawer__inner">
+      <div class="nav-drawer__group">
+        <a class="nav-drawer__phase" href="home.html#fase-escreve" data-nav-go>
+          <span class="nav-drawer__phase-ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+          <span>Enquanto você escreve</span>
+        </a>
+        <ul class="nav-drawer__list">
+          <li><a href="servico-analise-livro.html" data-nav-go data-svc="analise-livro"><span class="nav-drawer__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span><span class="nav-drawer__name">Análise de Livro</span></a></li>
+          <li><a href="servico-raiox-emocional.html" data-nav-go data-svc="raiox-emocional"><span class="nav-drawer__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 5.6a5.4 5.4 0 0 0-7.7 0l-1.1 1.1-1.1-1.1a5.4 5.4 0 1 0-7.7 7.7l1.1 1.1L12 21l7.7-6.6 1.1-1.1a5.4 5.4 0 0 0 0-7.7z"/></svg></span><span class="nav-drawer__name">Raio-X Emocional</span></a></li>
+        </ul>
+      </div>
+      <div class="nav-drawer__group">
+        <a class="nav-drawer__phase" href="home.html#fase-pronto" data-nav-go>
+          <span class="nav-drawer__phase-ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7.5l1.6 1.6L14 5.8"/></svg></span>
+          <span>Com o livro pronto</span>
+        </a>
+        <ul class="nav-drawer__list">
+          <li><a href="servico-edicao-revisao.html" data-nav-go data-svc="edicao-revisao"><span class="nav-drawer__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3.5v4.5h4.5"/><path d="M15 3.5H6.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M8.5 13.5h7M8.5 17h4"/></svg></span><span class="nav-drawer__name">Edição &amp; Revisão</span></a></li>
+          <li><a href="servico-traducao.html" data-nav-go data-svc="traducao"><span class="nav-drawer__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.5 2.3 3.9 5.4 3.9 8.5s-1.4 6.2-3.9 8.5c-2.5-2.3-3.9-5.4-3.9-8.5S9.5 5.8 12 3.5z"/></svg></span><span class="nav-drawer__name">Tradução</span></a></li>
+        </ul>
+      </div>
+      <div class="nav-drawer__group">
+        <a class="nav-drawer__phase" href="home.html#fase-publicar" data-nav-go>
+          <span class="nav-drawer__phase-ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13.2c2.7-.6 5.4-.3 7.4 1 .4.2.8.2 1.2 0 2-1.3 4.7-1.6 7.4-1v6.8c-2.7-.6-5.4-.3-7.4 1a1.1 1.1 0 0 1-1.2 0c-2-1.3-4.7-1.6-7.4-1z"/><path d="M12 14.2v6.8"/><path d="M12 11V3.5"/><path d="M8.8 6.7 12 3.5l3.2 3.2"/></svg></span>
+          <span>Para publicar</span>
+        </a>
+        <ul class="nav-drawer__list">
+          <li><a href="servico-conversao-ebook.html" data-nav-go data-svc="conversao-ebook"><span class="nav-drawer__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="2.5" width="13" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></span><span class="nav-drawer__name">Conversão para E-book</span></a></li>
+          <li><a href="servico-diagramacao.html" data-nav-go data-svc="diagramacao"><span class="nav-drawer__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M12 4v16"/><path d="M6 8h3M6 12h3M15 8h3M15 12h3"/></svg></span><span class="nav-drawer__name">Diagramação</span></a></li>
+        </ul>
+      </div>
+      <div class="nav-drawer__group">
+        <a class="nav-drawer__phase" href="home.html#fase-divulgar" data-nav-go>
+          <span class="nav-drawer__phase-ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
+          <span>Para divulgar</span>
+        </a>
+        <ul class="nav-drawer__list">
+          <li><a href="servico-textos-marketing.html" data-nav-go data-svc="textos-marketing"><span class="nav-drawer__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5v3a1 1 0 0 0 1 1h2l5 3.5v-15L7 10.5H5a1 1 0 0 0-1 1z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></span><span class="nav-drawer__name">Textos de marketing &amp; sinopse</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="page page--flush" id="conteudo">
+
+  <!-- ================ 1 · HERO DO SERVIÇO ================ -->
+  <section class="hero-section hero-section--image hero-section--servico" id="hero" aria-labelledby="hero-h" style="--hero-img:url('img/{{HERO_IMG}}')">
+    <div class="hero-ellipse hero-ellipse--top-right" aria-hidden="true"></div>
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="hero-subtitle">
+            <span class="hero-subtitle__line" aria-hidden="true"></span>
+            <span class="hero-subtitle__text">{{HERO_PHASE}}</span>
+          </p>
+          <h1 class="hero-title" id="hero-h">{{HERO_NAME}} <span class="title-pink title-ia">com IA</span></h1>
+          <p class="hero-description">{{PROMISE}}</p>
+
+          <div class="hero-price">
+            <div class="hero-price__value"><span class="hero-price__cur">R$</span>{{PRICE}}</div>
+            <div class="hero-price__savings">
+              <span class="hero-price__save">Economize ~{{SAVE_PCT}}%</span>
+              <span class="hero-price__market">no mercado você paga {{MARKET_TEXT}}</span>
+            </div>
+          </div>
+
+          <div class="hero-actions mt-2">
+            <a class="btn btn-primary" href="{{FLOW_URL}}" aria-label="{{ARIA_TESTAR}}">{{CTA_LABEL}}</a>
+            <a class="btn btn-outline" href="#como-funciona">Como funciona</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================ 2 · COMO FUNCIONA (4 ETAPAS) ================ -->
+  <section class="section section--dark" id="como-funciona" aria-labelledby="cf-h">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__eyebrow">Self-service</p>
+        <h2 class="h2" id="cf-h"><strong>Como funciona</strong> em 4 etapas.</h2>
+      </div>
+      <ol class="steps-grid steps-grid--4">
+{{STEPS}}
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================ 3 · COMO A IA APRIMORA O SEU TEXTO ================ -->
+  <section class="section section--radial section--centered" id="como-ia-faz" aria-labelledby="cia-h">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__eyebrow">{{HOWAI_EYEBROW}}</p>
+        <h2 class="h2" id="cia-h">{{HOWAI_TITLE}}</h2>
+        <p class="section__lead">{{HOWAI_LEAD}}</p>
+      </div>
+
+      <ol class="howai">
+{{HOWAI_CARDS}}
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================ 4 · O QUE VOCÊ RECEBE ================ -->
+  <section class="section section--dark section--centered" id="entregaveis" aria-labelledby="ent-h">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__eyebrow">Entregáveis</p>
+        <h2 class="h2" id="ent-h"><strong>O que você recebe.</strong></h2>
+      </div>
+      <div class="delivery-grid">
+{{DELIVERABLES}}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================ 5 · ECONOMIA + TEMPO ================ -->
+  <section class="section section--table" id="comparativo" aria-labelledby="comp-h">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__eyebrow">Economia + Tempo</p>
+        <h2 class="h2" id="comp-h"><strong>Quanto você economiza</strong> em dinheiro e em tempo.</h2>
+      </div>
+
+      <div class="comparison-cards">
+        <div class="comparison-card aila-card"><div class="card-header"><h3>KlooBR <small>inteligência artificial</small></h3></div></div>
+        <div class="comparison-card market-card"><div class="card-header"><h3>Mercado <small>tradicional</small></h3></div></div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="pricing-table pricing-table--service" aria-label="Comparativo de {{SERVICE_NAME}}: KlooBR versus mercado tradicional">
+          <thead>
+            <tr>
+              <th scope="col" class="service-name">Critério</th>
+              <th scope="col" class="col-kloobr">KlooBR</th>
+              <th scope="col">Mercado tradicional</th>
+            </tr>
+          </thead>
+          <tbody>
+{{COMPARE_ROWS}}
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">*Valores de mercado são médias de referência para um livro de cerca de 200 páginas. O preço e o prazo da KlooBR não variam conforme as características do seu livro.</p>
+    </div>
+  </section>
+
+  <!-- ================ 6 · DEPOIMENTOS (mesmo estilo da home) ================ -->
+  <section class="section section--dark" id="prova-social" aria-labelledby="ps-h">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__eyebrow">Prova social</p>
+        <h2 class="h2" id="ps-h"><strong>{{PROOF_TITLE}}</strong></h2>
+      </div>
+
+      <!-- Depoimentos do serviço (placeholder, substituir por reais e autorizados) -->
+      <div class="testimonial-carousel" data-carousel aria-roledescription="carrossel" aria-label="Depoimentos de autores">
+        <div class="testimonial-carousel__viewport">
+          <ul class="testimonial-carousel__track" data-track>
+{{TESTIMONIALS}}
+          </ul>
+        </div>
+
+        <div class="testimonial-carousel__controls">
+          <button class="testimonial-carousel__btn" type="button" data-prev aria-label="Depoimento anterior">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <div class="testimonial-carousel__dots" data-dots role="tablist" aria-label="Selecionar depoimento"></div>
+          <button class="testimonial-carousel__btn" type="button" data-next aria-label="Próximo depoimento">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================ 7 · FAQ DO SERVIÇO ================ -->
+  <section class="section section--radial" id="faq" aria-labelledby="faq-h">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__eyebrow">Dúvidas frequentes</p>
+        <h2 class="h2" id="faq-h"><strong>Perguntas frequentes</strong></h2>
+      </div>
+      <div class="faq">
+{{FAQ}}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================ 7.5 · COMBINA COM ESTE SERVIÇO (cross-sell) ================ -->
+  <section class="section section--dark" id="combina" aria-labelledby="xs-h">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__eyebrow">{{XS_EYEBROW}}</p>
+        <h2 class="h2" id="xs-h">{{XS_TITLE}}</h2>
+        <p class="section__lead">{{XS_LEAD}}</p>
+      </div>
+
+      <div class="cross-sell">
+{{XS_CARDS}}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================ 8 · CTA FINAL ================ -->
+  <section class="hero-section" id="cta-final" aria-labelledby="cta-h">
+    <div class="hero-ellipse hero-ellipse--bottom-left" aria-hidden="true"></div>
+    <div class="container">
+      <div class="cta-final">
+        <h2 class="h2" id="cta-h"><strong>{{CTA_TITLE}}</strong></h2>
+        <p>{{CTA_TEXT}}</p>
+        <div class="hero-price cta-final__price">
+          <div class="hero-price__value"><span class="hero-price__cur">R$</span>{{PRICE}}</div>
+          <div class="hero-price__savings">
+            <span class="hero-price__save">Economize ~{{SAVE_PCT}}%</span>
+            <span class="hero-price__market">no mercado você paga {{MARKET_TEXT}}</span>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="{{FLOW_URL}}" aria-label="{{ARIA_TESTAR}}">{{CTA_LABEL}}</a>
+          <a class="btn btn-outline" href="home.html#servicos">Ver outros serviços</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===== CTA FIXO NO RODAPÉ DA JANELA (só no mobile) ===== -->
+<div class="cta-dock" data-cta-dock>
+  <div class="cta-dock__info">
+    <span class="cta-dock__price">R$ {{PRICE}}</span>
+    <span class="cta-dock__note">{{DOCK_NOTE}}</span>
+  </div>
+  <a class="btn btn-primary cta-dock__btn" href="{{FLOW_URL}}" aria-label="{{ARIA_TESTAR}}">{{CTA_LABEL}}</a>
+</div>
+
+<!-- ===== RODAPÉ PRÓPRIO KLOOBR (FIXO, idêntico ao da home) ===== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="site-nav__logo footer-brand__logo" href="home.html" aria-label="Página inicial da KlooBR">
+          <img class="site-nav__logo-img" src="assets/logo-kloobr-white.svg" alt="" aria-hidden="true">
+        </a>
+        <p>Uma empresa do Clube de Autores.</p>
+      </div>
+
+      <nav class="footer-services" aria-label="Serviços por fase (rodapé)">
+        <h3>Serviços</h3>
+        <div class="footer-services__phases">
+          <details class="footer-phase" open>
+            <summary class="footer-phase__name">Enquanto você escreve
+              <svg class="footer-phase__chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <ul>
+              <li><a href="servico-analise-livro.html" data-svc="analise-livro">Análise de Livro</a></li>
+              <li><a href="servico-raiox-emocional.html" data-svc="raiox-emocional">Raio-X Emocional</a></li>
+            </ul>
+          </details>
+          <details class="footer-phase" open>
+            <summary class="footer-phase__name">Com o livro pronto
+              <svg class="footer-phase__chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <ul>
+              <li><a href="servico-edicao-revisao.html" data-svc="edicao-revisao">Edição &amp; Revisão</a></li>
+              <li><a href="servico-traducao.html" data-svc="traducao">Tradução</a></li>
+            </ul>
+          </details>
+          <details class="footer-phase" open>
+            <summary class="footer-phase__name">Para publicar
+              <svg class="footer-phase__chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <ul>
+              <li><a href="servico-conversao-ebook.html" data-svc="conversao-ebook">Conversão para E-book</a></li>
+              <li><a href="servico-diagramacao.html" data-svc="diagramacao">Diagramação</a></li>
+            </ul>
+          </details>
+          <details class="footer-phase" open>
+            <summary class="footer-phase__name">Para divulgar
+              <svg class="footer-phase__chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <ul>
+              <li><a href="servico-textos-marketing.html" data-svc="textos-marketing">Textos de marketing &amp; sinopse</a></li>
+            </ul>
+          </details>
+        </div>
+      </nav>
+
+      <nav aria-label="Institucional (rodapé)">
+        <h3>Institucional</h3>
+        <ul>
+          <li><a href="https://clubedeautores.com.br/" target="_blank" rel="noopener">Sobre o Clube de Autores</a></li>
+          <li><a href="https://clubedeautores.com.br/termos-de-uso" target="_blank" rel="noopener">Termos de uso</a></li>
+          <li><a href="https://clubedeautores.com.br/politica-de-privacidade" target="_blank" rel="noopener">Política de privacidade</a></li>
+          <li><a href="https://clubedeautores.com.br/atendimento" target="_blank" rel="noopener">Fale conosco</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="footer-copy">© 2026 KlooBR · Publishing, re-engineered. · Uma empresa do Clube de Autores. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var toggle = document.querySelector('.nav-toggle');
+    var drawer = document.getElementById('nav-drawer');
+    if (!toggle || !drawer) return;
+
+    function setOpen(open) {
+      toggle.setAttribute('aria-expanded', String(open));
+      drawer.setAttribute('data-open', String(open));
+      document.body.classList.toggle('has-drawer-open', open);
+    }
+    toggle.addEventListener('click', function () {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+    drawer.querySelectorAll('[data-nav-go]').forEach(function (a) {
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false); toggle.focus();
+      }
+    });
+    document.addEventListener('click', function (e) {
+      if (toggle.getAttribute('aria-expanded') !== 'true') return;
+      if (!drawer.contains(e.target) && !toggle.contains(e.target)) setOpen(false);
+    });
+  })();
+
+  // Carrossel de depoimentos, responsivo: 1 por página no mobile, 3 no desktop.
+  // Os controles (setas + dots) só aparecem quando há mais páginas que uma
+  // (ex.: mais de 3 depoimentos no desktop). Arrastar, teclado e autoplay.
+  (function () {
+    var root = document.querySelector('[data-carousel]');
+    if (!root) return;
+    var track = root.querySelector('[data-track]');
+    var slides = Array.prototype.slice.call(root.querySelectorAll('.testimonial-carousel__slide'));
+    var dotsWrap = root.querySelector('[data-dots]');
+    var controls = root.querySelector('.testimonial-carousel__controls');
+    var prev = root.querySelector('[data-prev]');
+    var next = root.querySelector('[data-next]');
+    if (!track || slides.length === 0) return;
+
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var mqDesk = window.matchMedia('(min-width: 900px)');
+
+    var page = 0, perView = 1, pages = 1, dots = [];
+
+    function buildDots() {
+      dotsWrap.innerHTML = '';
+      dots = [];
+      for (var i = 0; i < pages; i++) {
+        (function (i) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'testimonial-carousel__dot';
+          b.setAttribute('role', 'tab');
+          b.setAttribute('aria-label', 'Ir para a página ' + (i + 1));
+          b.addEventListener('click', function () { go(i, true); });
+          dotsWrap.appendChild(b);
+          dots.push(b);
+        })(i);
+      }
+    }
+
+    function render() {
+      track.style.transform = 'translateX(' + (-page * 100) + '%)';
+      slides.forEach(function (s, i) { s.setAttribute('aria-hidden', String(Math.floor(i / perView) !== page)); });
+      dots.forEach(function (d, i) { d.setAttribute('aria-selected', String(i === page)); });
+    }
+
+    function layout() {
+      perView = mqDesk.matches ? 3 : 1;
+      pages = Math.ceil(slides.length / perView);
+      if (page > pages - 1) page = pages - 1;
+      buildDots();
+      if (controls) controls.style.display = pages > 1 ? '' : 'none';  // nada a navegar → some
+      render();
+    }
+
+    function go(i, user) {
+      page = (i + pages) % pages;
+      render();
+      if (user) restart();
+    }
+
+    prev && prev.addEventListener('click', function () { go(page - 1, true); });
+    next && next.addEventListener('click', function () { go(page + 1, true); });
+
+    root.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { go(page - 1, true); }
+      else if (e.key === 'ArrowRight') { go(page + 1, true); }
+    });
+
+    var startX = null;
+    root.addEventListener('pointerdown', function (e) { startX = e.clientX; });
+    root.addEventListener('pointerup', function (e) {
+      if (startX === null) return;
+      var dx = e.clientX - startX;
+      if (Math.abs(dx) > 40) { go(page + (dx < 0 ? 1 : -1), true); }
+      startX = null;
+    });
+
+    var timer = null;
+    function start() { if (!reduce && pages > 1) timer = setInterval(function () { go(page + 1); }, 6000); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function restart() { stop(); start(); }
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', start);
+
+    function relayout() { stop(); layout(); start(); }
+    if (mqDesk.addEventListener) mqDesk.addEventListener('change', relayout);
+    else if (mqDesk.addListener) mqDesk.addListener(relayout);
+    window.addEventListener('resize', function () { clearTimeout(root._tr); root._tr = setTimeout(relayout, 150); });
+
+    layout();
+    start();
+  })();
+
+  // Nav-bar condensa ao rolar
+  (function () {
+    var nav = document.querySelector('[data-site-nav]');
+    if (!nav) return;
+    var ticking = false;
+    function update() { nav.setAttribute('data-scrolled', String(window.scrollY > 24)); ticking = false; }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    update();
+  })();
+</script>
+
+
+<!-- ===== PAINEL DE PREFERÊNCIAS: idioma + moeda ===== -->
+<dialog class="prefs" data-prefs-dialog aria-labelledby="prefs-h">
+  <div class="prefs__inner">
+    <div class="prefs__head">
+      <h2 class="prefs__title" id="prefs-h">Idioma e moeda</h2>
+      <button class="flow-icon flow-icon--sm" type="button" data-prefs-close aria-label="Fechar">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <section class="prefs__sec">
+      <h3 class="prefs__label">Idioma</h3>
+      <ul class="prefs__langs" data-lang-list>
+        <li><button class="lang" type="button" data-lang="pt-BR" aria-pressed="true"><span class="lang__flag" aria-hidden="true">🇧🇷</span><span class="lang__name">Português (Brasil)</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+        <li><button class="lang" type="button" data-lang="pt-PT" aria-pressed="false"><span class="lang__flag" aria-hidden="true">🇵🇹</span><span class="lang__name">Português (Portugal)</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+        <li><button class="lang" type="button" data-lang="es" aria-pressed="false"><span class="lang__flag" aria-hidden="true">🇪🇸</span><span class="lang__name">Español</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+        <li><button class="lang" type="button" data-lang="en" aria-pressed="false"><span class="lang__flag" aria-hidden="true">🇺🇸</span><span class="lang__name">English</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+        <li><button class="lang" type="button" data-lang="de" aria-pressed="false"><span class="lang__flag" aria-hidden="true">🇩🇪</span><span class="lang__name">Deutsch</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+      </ul>
+    </section>
+
+    <section class="prefs__sec">
+      <h3 class="prefs__label">Moeda</h3>
+      <ul class="prefs__langs" data-cur-list>
+        <li><button class="lang" type="button" data-cur="BRL" aria-pressed="true"><span class="lang__flag" aria-hidden="true">R$</span><span class="lang__name">Real brasileiro</span><span class="lang__cur">BRL</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+        <li><button class="lang" type="button" data-cur="EUR" aria-pressed="false"><span class="lang__flag" aria-hidden="true">€</span><span class="lang__name">Euro</span><span class="lang__cur">EUR</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+        <li><button class="lang" type="button" data-cur="USD" aria-pressed="false"><span class="lang__flag" aria-hidden="true">US$</span><span class="lang__name">Dólar americano</span><span class="lang__cur">USD</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+        <li><button class="lang" type="button" data-cur="GBP" aria-pressed="false"><span class="lang__flag" aria-hidden="true">£</span><span class="lang__name">Libra esterlina</span><span class="lang__cur">GBP</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+      </ul>
+    </section>
+  </div>
+</dialog>
+
+<!-- ===== DIÁLOGO DE LOGIN / CADASTRO ===== -->
+<dialog class="authd" data-auth-dialog aria-labelledby="auth-h">
+  <div class="prefs__inner">
+    <div class="prefs__head">
+      <h2 class="prefs__title" id="auth-h" data-auth-title>Entrar na KlooBR</h2>
+      <button class="flow-icon flow-icon--sm" type="button" data-auth-close aria-label="Fechar">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="authd__tabs" role="tablist" aria-label="Entrar ou criar conta">
+      <button class="authd__tab" type="button" role="tab" data-authtab="login" aria-selected="true">Entrar</button>
+      <button class="authd__tab" type="button" role="tab" data-authtab="signup" aria-selected="false">Criar conta</button>
+    </div>
+
+    <p class="auth-note">
+      <svg class="auth-note__ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.5h.01"/></svg>
+      <span>Já tem conta no <strong>Clube de Autores</strong>, na <strong>Literary Highways</strong> ou no <strong>Club de Autores</strong>? Use o mesmo e-mail e senha para entrar. Não precisa criar uma conta nova.</span>
+    </p>
+
+    <form class="authd__form" data-authform="login" novalidate>
+      <label class="field"><span class="field__label">E-mail</span><input class="ds-input" type="email" name="email" required autocomplete="email" placeholder="voce@email.com"></label>
+      <label class="field"><span class="field__label">Senha</span><input class="ds-input" type="password" name="senha" required autocomplete="current-password" placeholder="Sua senha"></label>
+      <p class="authd__msg" data-auth-msg hidden role="status"></p>
+      <button class="btn btn-primary authd__submit" type="submit">Entrar</button>
+      <p class="authd__alt">Esqueceu a senha? <button type="button" class="linkish" data-forgot>Recuperar acesso</button></p>
+    </form>
+
+    <form class="authd__form" data-authform="signup" hidden novalidate>
+      <label class="field"><span class="field__label">Nome</span><input class="ds-input" type="text" name="nome" required autocomplete="name" placeholder="Como você assina seus livros"></label>
+      <label class="field"><span class="field__label">E-mail</span><input class="ds-input" type="email" name="email" required autocomplete="email" placeholder="voce@email.com"></label>
+      <label class="field"><span class="field__label">Senha</span><input class="ds-input" type="password" name="senha" required minlength="8" autocomplete="new-password" placeholder="Mínimo de 8 caracteres"></label>
+      <button class="btn btn-primary authd__submit" type="submit">Criar conta</button>
+    </form>
+  </div>
+</dialog>
+
+<script>
+  /* Preferências (idioma + moeda) e conta (login/cadastro).
+     Protótipo: seleções e sessão são simuladas no cliente e lembradas em localStorage. */
+  (function () {
+    var LANGS = {
+      'pt-BR': { short: 'PT-BR' }, 'pt-PT': { short: 'PT-PT' },
+      'es': { short: 'ES' }, 'en': { short: 'EN' }, 'de': { short: 'DE' }
+    };
+    var CURS = {
+      'BRL': { sym: 'R$' }, 'EUR': { sym: '€' }, 'USD': { sym: 'US$' }, 'GBP': { sym: '£' }
+    };
+    function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+    function read(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+
+    /* ---------- idioma + moeda ---------- */
+    var prefsDlg = document.querySelector('[data-prefs-dialog]');
+    var langLabel = document.querySelector('[data-lang-label]');
+    var curLabel = document.querySelector('[data-cur-label]');
+    var curSym = document.querySelector('[data-cur-sym]');
+    var langBtns = Array.prototype.slice.call(document.querySelectorAll('[data-lang]'));
+    var curBtns = Array.prototype.slice.call(document.querySelectorAll('[data-cur]'));
+
+    function setLang(code) {
+      var L = LANGS[code]; if (!L) return;
+      document.documentElement.lang = code;
+      if (langLabel) langLabel.textContent = L.short;
+      langBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.lang === code)); });
+      store('kloobr-lang', code);
+    }
+    function setCur(code) {
+      var C = CURS[code]; if (!C) return;
+      if (curLabel) curLabel.textContent = code;
+      if (curSym) curSym.textContent = C.sym;
+      curBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.cur === code)); });
+      store('kloobr-cur', code);
+    }
+    langBtns.forEach(function (b) { b.addEventListener('click', function () { setLang(b.dataset.lang); }); });
+    curBtns.forEach(function (b) { b.addEventListener('click', function () { setCur(b.dataset.cur); }); });
+
+    /* dropdowns de idioma/moeda (desktop): abrem abaixo do próprio botão */
+    var ddToggles = Array.prototype.slice.call(document.querySelectorAll('[data-dd-toggle]'));
+    function panelOf(t) { return document.getElementById(t.getAttribute('aria-controls')); }
+    function closeDD(keep) {
+      ddToggles.forEach(function (t) {
+        var p = panelOf(t);
+        if (p && p !== keep) { p.hidden = true; t.setAttribute('aria-expanded', 'false'); }
+      });
+    }
+    ddToggles.forEach(function (t) {
+      t.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var p = panelOf(t); if (!p) return;
+        var abrir = p.hidden;
+        closeDD();
+        if (abrir) { p.hidden = false; t.setAttribute('aria-expanded', 'true'); }
+      });
+    });
+    // escolher um item fecha o dropdown
+    document.querySelectorAll('[data-dd] [data-lang], [data-dd] [data-cur]').forEach(function (b) {
+      b.addEventListener('click', function () { closeDD(); });
+    });
+    document.addEventListener('click', function (e) { if (!e.target.closest('[data-ctrl]')) closeDD(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeDD(); });
+
+    function openPrefs() { if (prefsDlg.showModal) prefsDlg.showModal(); else prefsDlg.setAttribute('open', ''); }
+    function closePrefs() { if (prefsDlg.close) prefsDlg.close(); else prefsDlg.removeAttribute('open'); }
+    document.querySelectorAll('[data-prefs-open]').forEach(function (b) { b.addEventListener('click', openPrefs); });
+    var pc = document.querySelector('[data-prefs-close]'); if (pc) pc.addEventListener('click', closePrefs);
+    prefsDlg.addEventListener('click', function (e) { if (e.target === prefsDlg) closePrefs(); });
+
+    setLang(read('kloobr-lang') || 'pt-BR');
+    setCur(read('kloobr-cur') || 'BRL');
+
+    /* ---------- conta: login / cadastro ---------- */
+    var acc = document.querySelector('[data-account]');
+    var authDlg = document.querySelector('[data-auth-dialog]');
+    if (!acc || !authDlg) return;
+    var iniEls = Array.prototype.slice.call(document.querySelectorAll('.js-ini'));
+    var nameEls = Array.prototype.slice.call(document.querySelectorAll('.js-name'));
+    var mailEl = document.querySelector('[data-user-mail]');
+    var accToggle = document.querySelector('[data-account-toggle]');
+    var accMenu = document.querySelector('[data-account-menu]');
+
+    function iniciais(nome) {
+      var p = String(nome).trim().split(/\s+/);
+      return (((p[0] || '')[0] || '') + (p.length > 1 ? (p[p.length - 1][0] || '') : '')).toUpperCase() || '·';
+    }
+    function login(nome, email) {
+      iniEls.forEach(function (e) { e.textContent = iniciais(nome); });
+      nameEls.forEach(function (e) { e.textContent = nome; });
+      if (mailEl) mailEl.textContent = email;
+      acc.dataset.logged = 'true';
+      store('kloobr-user', JSON.stringify({ nome: nome, email: email }));
+    }
+    function logout() {
+      acc.dataset.logged = 'false';
+      if (accMenu) accMenu.dataset.open = 'false';
+      if (accToggle) accToggle.setAttribute('aria-expanded', 'false');
+      try { localStorage.removeItem('kloobr-user'); } catch (e) {}
+    }
+
+    function openAuth() { if (authDlg.showModal) authDlg.showModal(); else authDlg.setAttribute('open', ''); }
+    function closeAuth() { if (authDlg.close) authDlg.close(); else authDlg.removeAttribute('open'); }
+    document.querySelectorAll('[data-auth-open]').forEach(function (b) { b.addEventListener('click', openAuth); });
+    var ac = document.querySelector('[data-auth-close]'); if (ac) ac.addEventListener('click', closeAuth);
+    authDlg.addEventListener('click', function (e) { if (e.target === authDlg) closeAuth(); });
+
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-authtab]'));
+    var formLogin = document.querySelector('[data-authform="login"]');
+    var formSignup = document.querySelector('[data-authform="signup"]');
+    var authTitle = document.querySelector('[data-auth-title]');
+    var authMsg = document.querySelector('[data-auth-msg]');
+    function showTab(which) {
+      tabs.forEach(function (t) { t.setAttribute('aria-selected', String(t.dataset.authtab === which)); });
+      formLogin.hidden = which !== 'login';
+      formSignup.hidden = which !== 'signup';
+      if (authTitle) authTitle.textContent = which === 'login' ? 'Entrar na KlooBR' : 'Criar a sua conta';
+      if (authMsg) authMsg.hidden = true;
+    }
+    tabs.forEach(function (t) { t.addEventListener('click', function () { showTab(t.dataset.authtab); }); });
+
+    formLogin.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!formLogin.checkValidity()) { formLogin.reportValidity(); return; }
+      var email = formLogin.querySelector('[name="email"]').value;
+      login(email.split('@')[0].replace(/[._-]+/g, ' '), email);   // sem nome no login: deriva do e-mail
+      closeAuth();
+    });
+    formSignup.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!formSignup.checkValidity()) { formSignup.reportValidity(); return; }
+      login(formSignup.querySelector('[name="nome"]').value, formSignup.querySelector('[name="email"]').value);
+      closeAuth();
+    });
+
+    var forgot = document.querySelector('[data-forgot]');
+    if (forgot) forgot.addEventListener('click', function () {
+      var email = formLogin.querySelector('[name="email"]');
+      if (!email.value) { email.focus(); return; }
+      if (authMsg) { authMsg.textContent = 'Enviamos um link de recuperação para ' + email.value + '.'; authMsg.hidden = false; }
+    });
+
+    if (accToggle) accToggle.addEventListener('click', function () {
+      var open = accMenu.dataset.open === 'true';
+      accMenu.dataset.open = String(!open);
+      accToggle.setAttribute('aria-expanded', String(!open));
+    });
+    var logoutBtn = document.querySelector('[data-logout]');
+    if (logoutBtn) logoutBtn.addEventListener('click', logout);
+    document.addEventListener('click', function (e) {
+      if (accMenu && accMenu.dataset.open === 'true' && !acc.contains(e.target)) {
+        accMenu.dataset.open = 'false';
+        if (accToggle) accToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && accMenu && accMenu.dataset.open === 'true') {
+        accMenu.dataset.open = 'false';
+        if (accToggle) accToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    var saved = read('kloobr-user');
+    if (saved) { try { var u = JSON.parse(saved); if (u && u.email) login(u.nome, u.email); } catch (e) {} }
+    showTab('login');
+  })();
+
+  // Rodapé: fases viram accordion no mobile (fechadas) e ficam abertas no desktop.
+  (function () {
+    var phases = document.querySelectorAll(".footer-phase");
+    if (!phases.length) return;
+    var mq = window.matchMedia("(min-width: 640px)");
+    function sync() { phases.forEach(function (d) { d.open = mq.matches; }); }
+    sync();
+    if (mq.addEventListener) mq.addEventListener("change", sync);
+    else if (mq.addListener) mq.addListener(sync);
+  })();
+</script>
+
+</body>
+</html>

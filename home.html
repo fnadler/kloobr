@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO (copy final, Tarefa 3) -->
+<title>KlooBR: Serviços de IA para autores | Publishing, re-engineered.</title>
+<meta name="description" content="Edite, revise, traduza e publique seu livro com inteligência artificial. Entrega em até 24h por uma fração do preço do mercado. Teste grátis, sem compromisso. KlooBR, uma empresa do Clube de Autores.">
+<meta name="theme-color" content="#19162d">
+
+<!-- Tipografia do Design System: Exo -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/kloobr.css">
+
+<!-- Gate de animações: só ativa reveal on load/scroll se houver IntersectionObserver
+     e o usuário não pedir movimento reduzido. Roda antes da pintura (sem flash). -->
+<script>
+  (function () {
+    try {
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!('IntersectionObserver' in window)) return;
+      document.documentElement.classList.add('has-anim');
+    } catch (e) {}
+  })();
+</script>
+<script defer src="assets/kloobr-anim.js"></script>
+</head>
+<body>
+
+<!-- ====================== SKIP LINK (A11y) ====================== -->
+<a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
+
+<!-- ============================================================================
+     NAV-BAR PRÓPRIA KLOOBR (fixa, translúcida + blur, padrão .ds-nav do DS).
+     Navegação por FASE de produção. CTA persistente. Sem e-commerce de livros.
+     ============================================================================ -->
+<header class="site-nav" data-site-nav>
+  <nav class="container site-nav__inner" aria-label="Navegação principal">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-drawer">
+      <span class="nav-toggle__bars" aria-hidden="true"><span></span></span>
+      <span class="nav-toggle__label">Serviços</span>
+    </button>
+
+    <a class="site-nav__logo" href="home.html" aria-label="Página inicial da KlooBR">
+      <img class="site-nav__logo-img" src="assets/logo-kloobr-white.svg" alt="" aria-hidden="true">
+    </a>
+
+    <!-- Controles globais: idioma + moeda + conta -->
+    <div class="nav-prefs" data-nav-prefs>
+      <!-- Idioma, desktop: dropdown abaixo do botão -->
+      <div class="nav-ctrl" data-ctrl>
+        <button class="nav-locale" type="button" data-dd-toggle aria-haspopup="menu" aria-expanded="false" aria-controls="dd-lang" aria-label="Idioma">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.8 2.6 15.2 0 18M12 3c-2.6 2.8-2.6 15.2 0 18"/></svg>
+          <span class="nav-locale__text" data-lang-label>PT-BR</span>
+          <svg class="nav-locale__chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="nav-dd" id="dd-lang" data-dd role="menu" aria-label="Idioma" hidden>
+          <ul class="prefs__langs">
+          <li><button class="lang" type="button" data-lang="pt-BR" aria-pressed="true"><span class="lang__flag" aria-hidden="true">🇧🇷</span><span class="lang__name">Português (Brasil)</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          <li><button class="lang" type="button" data-lang="pt-PT" aria-pressed="false"><span class="lang__flag" aria-hidden="true">🇵🇹</span><span class="lang__name">Português (Portugal)</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          <li><button class="lang" type="button" data-lang="es" aria-pressed="false"><span class="lang__flag" aria-hidden="true">🇪🇸</span><span class="lang__name">Español</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          <li><button class="lang" type="button" data-lang="en" aria-pressed="false"><span class="lang__flag" aria-hidden="true">🇺🇸</span><span class="lang__name">English</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          <li><button class="lang" type="button" data-lang="de" aria-pressed="false"><span class="lang__flag" aria-hidden="true">🇩🇪</span><span class="lang__name">Deutsch</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          </ul>
+        </div>
+      </div>
+      <!-- Moeda, desktop: dropdown abaixo do botão -->
+      <div class="nav-ctrl" data-ctrl>
+        <button class="nav-locale" type="button" data-dd-toggle aria-haspopup="menu" aria-expanded="false" aria-controls="dd-cur" aria-label="Moeda">
+          <span class="nav-cur__sym" data-cur-sym>R$</span>
+          <span class="nav-locale__text" data-cur-label>BRL</span>
+          <svg class="nav-locale__chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="nav-dd" id="dd-cur" data-dd role="menu" aria-label="Moeda" hidden>
+          <ul class="prefs__langs">
+          <li><button class="lang" type="button" data-cur="BRL" aria-pressed="true"><span class="lang__flag" aria-hidden="true">R$</span><span class="lang__name">Real brasileiro</span><span class="lang__cur">BRL</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          <li><button class="lang" type="button" data-cur="EUR" aria-pressed="false"><span class="lang__flag" aria-hidden="true">€</span><span class="lang__name">Euro</span><span class="lang__cur">EUR</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          <li><button class="lang" type="button" data-cur="USD" aria-pressed="false"><span class="lang__flag" aria-hidden="true">US$</span><span class="lang__name">Dólar americano</span><span class="lang__cur">USD</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          <li><button class="lang" type="button" data-cur="GBP" aria-pressed="false"><span class="lang__flag" aria-hidden="true">£</span><span class="lang__name">Libra esterlina</span><span class="lang__cur">GBP</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+          </ul>
+        </div>
+      </div>
+      <button class="nav-prefs-toggle" type="button" data-prefs-open aria-haspopup="dialog" aria-label="Idioma e moeda">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.8 2.6 15.2 0 18M12 3c-2.6 2.8-2.6 15.2 0 18"/></svg>
+      </button>
+
+      <!-- Conta: login/cadastro (deslogado) · usuário + menu (logado) -->
+      <div class="nav-account" data-account data-logged="false">
+        <button class="nav-login" type="button" data-auth-open aria-label="Entrar ou criar conta">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/></svg>
+          <span class="nav-login__txt">Entrar</span>
+        </button>
+        <button class="nav-user" type="button" data-account-toggle aria-expanded="false" aria-haspopup="menu" aria-label="Sua conta">
+          <span class="nav-user__avatar js-ini" aria-hidden="true">·</span>
+          <span class="nav-user__name js-name"></span>
+          <svg class="nav-user__chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="account-menu" data-account-menu data-open="false" role="menu" aria-label="Menu da conta">
+          <div class="account-menu__head">
+            <span class="nav-user__avatar js-ini" aria-hidden="true">·</span>
+            <span class="account-menu__id">
+              <span class="account-menu__name js-name"></span>
+              <span class="account-menu__mail" data-user-mail></span>
+            </span>
+          </div>
+          <a class="account-menu__item" href="#" role="menuitem">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.5l8-4 8 4v9l-8 4-8-4z"/><path d="M4 7.5l8 4 8-4"/><path d="M12 11.5v9"/></svg>
+            Meus pedidos
+          </a>
+          <button class="account-menu__item" type="button" data-logout role="menuitem">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3"/><path d="M10 12h9"/><path d="M16 9l3 3-3 3"/></svg>
+            Sair
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="nav-drawer" id="nav-drawer" data-open="false">
+    <div class="container nav-drawer__inner">
+      <div class="nav-drawer__group">
+        <a class="nav-drawer__phase" href="#fase-escreve" data-nav-go>
+          <span class="nav-drawer__phase-ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+          <span>Enquanto você escreve</span>
+        </a>
+        <ul class="nav-drawer__list">
+          <li><a href="servico-analise-livro.html" data-nav-go data-svc="analise-livro"><span class="nav-drawer__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span><span class="nav-drawer__name">Análise de Livro</span></a></li>
+          <li><a href="servico-raiox-emocional.html" data-nav-go data-svc="raiox-emocional"><span class="nav-drawer__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 5.6a5.4 5.4 0 0 0-7.7 0l-1.1 1.1-1.1-1.1a5.4 5.4 0 1 0-7.7 7.7l1.1 1.1L12 21l7.7-6.6 1.1-1.1a5.4 5.4 0 0 0 0-7.7z"/></svg></span><span class="nav-drawer__name">Raio-X Emocional</span></a></li>
+        </ul>
+      </div>
+      <div class="nav-drawer__group">
+        <a class="nav-drawer__phase" href="#fase-pronto" data-nav-go>
+          <span class="nav-drawer__phase-ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7.5l1.6 1.6L14 5.8"/></svg></span>
+          <span>Com o livro pronto</span>
+        </a>
+        <ul class="nav-drawer__list">
+          <li><a href="servico-edicao-revisao.html" data-nav-go data-svc="edicao-revisao"><span class="nav-drawer__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3.5v4.5h4.5"/><path d="M15 3.5H6.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M8.5 13.5h7M8.5 17h4"/></svg></span><span class="nav-drawer__name">Edição &amp; Revisão</span></a></li>
+          <li><a href="servico-traducao.html" data-nav-go data-svc="traducao"><span class="nav-drawer__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.5 2.3 3.9 5.4 3.9 8.5s-1.4 6.2-3.9 8.5c-2.5-2.3-3.9-5.4-3.9-8.5S9.5 5.8 12 3.5z"/></svg></span><span class="nav-drawer__name">Tradução</span></a></li>
+        </ul>
+      </div>
+      <div class="nav-drawer__group">
+        <a class="nav-drawer__phase" href="#fase-publicar" data-nav-go>
+          <span class="nav-drawer__phase-ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13.2c2.7-.6 5.4-.3 7.4 1 .4.2.8.2 1.2 0 2-1.3 4.7-1.6 7.4-1v6.8c-2.7-.6-5.4-.3-7.4 1a1.1 1.1 0 0 1-1.2 0c-2-1.3-4.7-1.6-7.4-1z"/><path d="M12 14.2v6.8"/><path d="M12 11V3.5"/><path d="M8.8 6.7 12 3.5l3.2 3.2"/></svg></span>
+          <span>Para publicar</span>
+        </a>
+        <ul class="nav-drawer__list">
+          <li><a href="servico-conversao-ebook.html" data-nav-go data-svc="conversao-ebook"><span class="nav-drawer__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="2.5" width="13" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></span><span class="nav-drawer__name">Conversão para E-book</span></a></li>
+          <li><a href="servico-diagramacao.html" data-nav-go data-svc="diagramacao"><span class="nav-drawer__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M12 4v16"/><path d="M6 8h3M6 12h3M15 8h3M15 12h3"/></svg></span><span class="nav-drawer__name">Diagramação</span></a></li>
+        </ul>
+      </div>
+      <div class="nav-drawer__group">
+        <a class="nav-drawer__phase" href="#fase-divulgar" data-nav-go>
+          <span class="nav-drawer__phase-ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
+          <span>Para divulgar</span>
+        </a>
+        <ul class="nav-drawer__list">
+          <li><a href="servico-textos-marketing.html" data-nav-go data-svc="textos-marketing"><span class="nav-drawer__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5v3a1 1 0 0 0 1 1h2l5 3.5v-15L7 10.5H5a1 1 0 0 0-1 1z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></span><span class="nav-drawer__name">Textos de marketing &amp; sinopse</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="page page--flush" id="conteudo">
+
+  <!-- ======================= SEÇÃO 1 · HERO ======================= -->
+  <section class="hero-section hero-section--home" aria-labelledby="hero-h">
+    <div class="hero-ellipse hero-ellipse--top-right" aria-hidden="true"></div>
+    <div class="hero-ellipse hero-ellipse--bottom-left" aria-hidden="true"></div>
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="hero-subtitle">
+            <span class="hero-subtitle__line" aria-hidden="true"></span>
+            <span class="hero-subtitle__text">Publishing, re-engineered.</span>
+          </p>
+          <h1 class="hero-title" id="hero-h">A plataforma de IA líder do <span class="title-pink">mercado editorial</span>.</h1>
+          <p class="hero-description">Serviços de IA que garantem a qualidade da sua obra e agilizam cada etapa da publicação, com entrega em horas e economia de milhares de reais.</p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#servicos" aria-label="Conheça os serviços da KlooBR">Conheça os serviços</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ BARRA DE GARANTIAS (flutua sobre o hero, glassmorfismo) ============ -->
+    <aside class="trust-bar" aria-label="Nossas garantias">
+      <div class="container">
+        <ul class="trust-bar__list">
+          <li class="trust-bar__item">
+            <span class="seal-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.3 12.4l2.5 2.5 4.9-5.4"/></svg></span>
+            <span class="seal-text">Teste grátis antes de pagar</span>
+          </li>
+          <li class="trust-bar__item">
+            <span class="seal-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="9.5" rx="2.2"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/></svg></span>
+            <span class="seal-text">Privacidade garantida · LGPD</span>
+          </li>
+          <li class="trust-bar__item">
+            <span class="seal-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7.5 3v5.2c0 4.7-3.2 7.9-7.5 9.3-4.3-1.4-7.5-4.6-7.5-9.3V6z"/><path d="M9 12l2 2 4-4.2"/></svg></span>
+            <span class="seal-text">Pagamento 100% seguro</span>
+          </li>
+          <li class="trust-bar__item">
+            <span class="seal-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5.5"/><path d="M8.6 13.4L7 21l5-2.6L17 21l-1.6-7.6"/></svg></span>
+            <span class="seal-text">Você é o dono da sua obra</span>
+          </li>
+        </ul>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ================ SEÇÃO 2 · PROVA / TRAÇÃO ================ -->
+  <section class="section section--dark" aria-labelledby="prova-h">
+    <div class="container">
+      <div class="section__head section__head--stats">
+        <p class="section__eyebrow">Reconhecimento global</p>
+        <h2 class="h2" id="prova-h"><strong>Autores do mundo todo</strong> já publicam com a KlooBR.</h2>
+        <p class="section__lead">De estreantes a escritores best-seller, milhares de pessoas confiam nossa tecnologia às suas obras, e os números provam por quê.</p>
+      </div>
+      <ul class="stats-grid">
+        <li><span class="stat-num">+12 mil</span><span class="stat-label">autores já atendidos</span></li>
+        <li><span class="stat-num">+40 mil</span><span class="stat-label">livros processados por IA</span></li>
+        <li><span class="stat-num">4,8/5</span><span class="stat-label">satisfação dos autores</span></li>
+        <li><span class="stat-num">24h</span><span class="stat-label">prazo médio de entrega</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================ SEÇÃO 3 · COMO FUNCIONA (3 PASSOS) ================ -->
+  <section class="section section--radial" aria-labelledby="cf-h">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__eyebrow">Self-service</p>
+        <h2 class="h2" id="cf-h"><strong>Simples assim:</strong> você envia, a IA trabalha, você recebe.</h2>
+      </div>
+      <ol class="steps-grid">
+        <li class="step-card">
+          <div class="step-number">01</div>
+          <h3>Envie seu arquivo</h3>
+          <p>Suba seu livro em Word (.docx). Leva menos de um minuto e não exige nenhum conhecimento técnico.</p>
+        </li>
+        <li class="step-card">
+          <div class="step-number">02</div>
+          <h3>Veja uma amostra grátis</h3>
+          <p>A IA processa seu texto e mostra uma prévia real do resultado. Você avalia antes de decidir, sem pagar nada.</p>
+        </li>
+        <li class="step-card">
+          <div class="step-number">03</div>
+          <h3>Pague e receba em horas</h3>
+          <p>Gostou? Conclua o pagamento online e receba o arquivo final com o relatório de tudo o que foi feito, em até 24h.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================ SEÇÃO 4 · SERVIÇOS POR FASE ================ -->
+  <!-- Cabeçalho + categorias numa só seção (integradas) -->
+  <section class="section section--dark" id="servicos" aria-labelledby="serv-h">
+    <div class="container">
+      <div class="section__head services-intro__head">
+        <p class="section__eyebrow">Catálogo por fase do livro</p>
+        <h2 class="h2 services-intro__title" id="serv-h"><strong>Serviços para cada fase do seu livro.</strong></h2>
+        <p class="services-intro__lead">Do primeiro rascunho ao lançamento, a KlooBR acompanha cada etapa da sua jornada. Escolha a fase em que você está e navegue pelos serviços disponíveis. Cada um tem preço fixo, prazo de até 24h e teste grátis antes de pagar.</p>
+      </div>
+    </div>
+
+    <nav class="svc-bar" aria-label="Fases do livro" data-svc-bar>
+      <div class="container">
+
+        <!-- Mobile: gatilho no estilo select (rótulo completo, nunca cortado) -->
+        <button class="svc-select" type="button" aria-expanded="false" aria-controls="svc-fases" data-svc-select>
+          <span class="svc-select__ico" data-svc-select-ico aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+          <span class="svc-select__text">
+            <span class="svc-select__eyebrow">Fase do livro</span>
+            <span class="svc-select__label" data-svc-select-label>Enquanto você escreve</span>
+          </span>
+          <svg class="svc-select__chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+
+        <ul class="svc-bar__list" id="svc-fases" data-svc-list>
+          <li class="svc-bar__item">
+            <a class="svc-bar__link" href="#fase-escreve" data-svc-link data-svc-phase="fase-escreve">
+              <span class="svc-bar__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+              <span class="svc-bar__text">Enquanto você escreve</span>
+            </a>
+          </li>
+          <li class="svc-bar__item">
+            <a class="svc-bar__link" href="#fase-pronto" data-svc-link data-svc-phase="fase-pronto">
+              <span class="svc-bar__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7.5l1.6 1.6L14 5.8"/></svg></span>
+              <span class="svc-bar__text">Com o livro pronto</span>
+            </a>
+          </li>
+          <li class="svc-bar__item">
+            <a class="svc-bar__link" href="#fase-publicar" data-svc-link data-svc-phase="fase-publicar">
+              <span class="svc-bar__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13.2c2.7-.6 5.4-.3 7.4 1 .4.2.8.2 1.2 0 2-1.3 4.7-1.6 7.4-1v6.8c-2.7-.6-5.4-.3-7.4 1a1.1 1.1 0 0 1-1.2 0c-2-1.3-4.7-1.6-7.4-1z"/><path d="M12 14.2v6.8"/><path d="M12 11V3.5"/><path d="M8.8 6.7 12 3.5l3.2 3.2"/></svg></span>
+              <span class="svc-bar__text">Para publicar</span>
+            </a>
+          </li>
+          <li class="svc-bar__item">
+            <a class="svc-bar__link" href="#fase-divulgar" data-svc-link data-svc-phase="fase-divulgar">
+              <span class="svc-bar__ico" aria-hidden="true"><svg class="svc-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
+              <span class="svc-bar__text">Para divulgar</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <!-- ---------- Enquanto você escreve ---------- -->
+      <div class="phase phase--carousel" id="fase-escreve" data-phase-section style="--n: 3">
+        <div class="phase__pin" data-phase-pin>
+          <div class="phase__head">
+            <h3 class="phase__title">Enquanto você escreve</h3>
+            <p class="phase__desc">Ainda construindo sua história? Ganhe um olhar profissional sobre o texto e descubra como ele soa para quem lê.</p>
+          </div>
+
+          <div class="phase-nav" role="tablist" aria-label="Serviços da fase Enquanto você escreve">
+            <button class="phase-card" type="button" role="tab" id="tab-analise" aria-controls="svc-analise" aria-selected="true" tabindex="0">
+              <span class="phase-card__icon" aria-hidden="true"><svg class="phase-card__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span>
+              <span class="phase-card__text">
+                <span class="phase-card__name">Análise de Livro</span>
+                <span class="phase-card__support">Parecer editorial completo do seu manuscrito.</span>
+              </span>
+              <svg class="phase-card__chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+            <button class="phase-card" type="button" role="tab" id="tab-raiox" aria-controls="svc-raiox" aria-selected="false" tabindex="-1">
+              <span class="phase-card__icon" aria-hidden="true"><svg class="phase-card__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 5.6a5.4 5.4 0 0 0-7.7 0l-1.1 1.1-1.1-1.1a5.4 5.4 0 1 0-7.7 7.7l1.1 1.1L12 21l7.7-6.6 1.1-1.1a5.4 5.4 0 0 0 0-7.7z"/></svg></span>
+              <span class="phase-card__text">
+                <span class="phase-card__name">Raio-X Emocional</span>
+                <span class="phase-card__support">O impacto emocional, capítulo a capítulo.</span>
+              </span>
+              <svg class="phase-card__chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+            <button class="phase-card" type="button" role="tab" id="tab-assistente" aria-controls="svc-assistente" aria-selected="false" tabindex="-1">
+              <span class="phase-card__icon" aria-hidden="true"><svg class="phase-card__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+              <span class="phase-card__text">
+                <span class="phase-card__name">Assistente de escrita <span class="badge-soon">Em breve</span></span>
+                <span class="phase-card__support">Escreva capítulo a capítulo com a IA.</span>
+              </span>
+              <svg class="phase-card__chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+
+          <div class="svc-carousel" data-svc-carousel>
+            <ul class="svc-track" data-svc-track>
+              <li class="svc-slide" id="svc-analise" data-svc-slide aria-label="Análise de Livro">
+                <article class="svc-card">
+                  <div class="sd__media">
+                    <img class="sd__bg" src="assets/img/card-analise-livro.webp" alt="" aria-hidden="true" loading="lazy">
+                    <h4 class="sd__name">Análise de Livro</h4>
+                  </div>
+                  <div class="sd__body">
+                    <div class="sd__pricing">
+                      <div class="sd__price"><span class="sd__cur">R$</span>69</div>
+                      <div class="sd__savings">
+                        <span class="sd__save">Economize ~92%</span>
+                        <span class="sd__market">no mercado você paga até R$ 900</span>
+                      </div>
+                    </div>
+                    <p class="sd__tagline">Um parecer editorial completo do seu manuscrito: pontos fortes, fragilidades e o que melhorar antes de seguir em frente.</p>
+                    <ul class="sd__features">
+                      <li>Pontos fortes e fragilidades do texto</li>
+                      <li>Sugestões práticas de melhoria</li>
+                      <li>Relatório completo em até 24h</li>
+                    </ul>
+                    <div class="sd__foot">
+                      <p class="sd__note">Teste grátis antes de pagar, sem cartão.</p>
+                      <a class="btn btn-primary sd__cta" href="servico-analise-livro.html" aria-label="Ver o serviço de Análise de Livro">Ver serviço</a>
+                    </div>
+                  </div>
+                </article>
+              </li>
+              <li class="svc-slide" id="svc-raiox" data-svc-slide aria-label="Raio-X Emocional">
+                <article class="svc-card">
+                  <div class="sd__media">
+                    <img class="sd__bg" src="assets/img/card-raiox-emocional.webp" alt="" aria-hidden="true" loading="lazy">
+                    <h4 class="sd__name">Raio-X Emocional</h4>
+                  </div>
+                  <div class="sd__body">
+                    <div class="sd__pricing">
+                      <div class="sd__price"><span class="sd__cur">R$</span>99</div>
+                      <div class="sd__savings">
+                        <span class="sd__save">Economize ~86%</span>
+                        <span class="sd__market">no mercado você paga até R$ 700</span>
+                      </div>
+                    </div>
+                    <p class="sd__tagline">Descubra o impacto emocional que cada capítulo provoca no leitor, e onde a sua história prende ou perde a atenção.</p>
+                    <ul class="sd__features">
+                      <li>Curva emocional capítulo a capítulo</li>
+                      <li>Onde a história prende ou perde o leitor</li>
+                      <li>Pontos de tensão e de queda de ritmo</li>
+                    </ul>
+                    <div class="sd__foot">
+                      <p class="sd__note">Teste grátis antes de pagar, sem cartão.</p>
+                      <a class="btn btn-primary sd__cta" href="servico-raiox-emocional.html" aria-label="Ver o serviço de Raio-X Emocional">Ver serviço</a>
+                    </div>
+                  </div>
+                </article>
+              </li>
+              <li class="svc-slide" id="svc-assistente" data-svc-slide aria-label="Assistente de escrita">
+                <article class="svc-card svc-card--future">
+                  <div class="sd__media sd__media--future" aria-hidden="true"></div>
+                  <div class="sd__body">
+                    <span class="badge-soon">Em breve</span>
+                    <h4 class="sd__name">Assistente de escrita</h4>
+                    <p class="sd__tagline">Uma IA que ajuda você a escrever, capítulo a capítulo, sugerindo continuidade, tom e ritmo enquanto a sua história ganha forma.</p>
+                    <p class="sd__note">Novos serviços entram nesta fase sem mudar o layout. Quer ser avisado no lançamento?</p>
+                    <button type="button" class="btn btn-outline sd__cta" data-notify-open data-notify-svc="Assistente de escrita" aria-label="Quero ser avisado sobre Assistente de escrita">Avise-me</button>
+                  </div>
+                </article>
+              </li>
+            </ul>
+
+            <div class="svc-carousel__nav" data-svc-nav hidden>
+              <button class="svc-arrow" type="button" data-svc-prev aria-label="Serviço anterior">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <div class="svc-dots" data-svc-dots></div>
+              <button class="svc-arrow" type="button" data-svc-next aria-label="Próximo serviço">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- espaço de rolagem do pin (precisa estar no content box) -->
+        <div class="phase__spacer" aria-hidden="true"></div>
+      </div>
+
+      <!-- ---------- Com o livro pronto ---------- -->
+      <div class="phase phase--carousel" id="fase-pronto" data-phase-section style="--n: 3">
+        <div class="phase__pin" data-phase-pin>
+          <div class="phase__head">
+            <h3 class="phase__title">Com o livro pronto</h3>
+            <p class="phase__desc">Manuscrito finalizado? Deixe seu texto impecável e pronto para qualquer leitor e qualquer idioma.</p>
+          </div>
+
+          <div class="phase-nav" role="tablist" aria-label="Serviços da fase Com o livro pronto">
+            <button class="phase-card" type="button" role="tab" id="tab-edicao" aria-controls="svc-edicao" aria-selected="true" tabindex="0">
+              <span class="phase-card__icon" aria-hidden="true"><svg class="phase-card__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3.5v4.5h4.5"/><path d="M15 3.5H6.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M8.5 13.5h7M8.5 17h4"/></svg></span>
+              <span class="phase-card__text">
+                <span class="phase-card__name">Edição &amp; Revisão</span>
+                <span class="phase-card__support">Ortografia, gramática e fluidez impecáveis.</span>
+              </span>
+              <svg class="phase-card__chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+            <button class="phase-card" type="button" role="tab" id="tab-traducao" aria-controls="svc-traducao" aria-selected="false" tabindex="-1">
+              <span class="phase-card__icon" aria-hidden="true"><svg class="phase-card__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.5 2.3 3.9 5.4 3.9 8.5s-1.4 6.2-3.9 8.5c-2.5-2.3-3.9-5.4-3.9-8.5S9.5 5.8 12 3.5z"/></svg></span>
+              <span class="phase-card__text">
+                <span class="phase-card__name">Tradução</span>
+                <span class="phase-card__support">Seu livro em outros idiomas, com o mesmo tom.</span>
+              </span>
+              <svg class="phase-card__chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+            <button class="phase-card" type="button" role="tab" id="tab-padronizacao" aria-controls="svc-padronizacao" aria-selected="false" tabindex="-1">
+              <span class="phase-card__icon" aria-hidden="true"><svg class="phase-card__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M3.5 9h17M9 20.5V9"/></svg></span>
+              <span class="phase-card__text">
+                <span class="phase-card__name">Padronização editorial <span class="badge-soon">Em breve</span></span>
+                <span class="phase-card__support">Normas ABNT e formatação acadêmica.</span>
+              </span>
+              <svg class="phase-card__chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+
+          <div class="svc-carousel" data-svc-carousel>
+            <ul class="svc-track" data-svc-track>
+              <li class="svc-slide" id="svc-edicao" data-svc-slide aria-label="Edição &amp; Revisão">
+                <article class="svc-card">
+                  <div class="sd__media">
+                    <img class="sd__bg" src="assets/img/card-edicao-revisao.webp" alt="" aria-hidden="true" loading="lazy">
+                    <h4 class="sd__name">Edição &amp; Revisão</h4>
+                  </div>
+                  <div class="sd__body">
+                    <div class="sd__pricing">
+                      <div class="sd__price"><span class="sd__cur">R$</span>299</div>
+                      <div class="sd__savings">
+                        <span class="sd__save">Economize ~94%</span>
+                        <span class="sd__market">no mercado você paga até R$ 5.000</span>
+                      </div>
+                    </div>
+                    <p class="sd__tagline">Edição profissional completa: ortografia, gramática, fluidez e padronização. Seu texto fica pronto para publicar.</p>
+                    <ul class="sd__features">
+                      <li>Ortografia, gramática e pontuação</li>
+                      <li>Fluidez e padronização do texto</li>
+                      <li>Relatório de todos os ajustes</li>
+                    </ul>
+                    <div class="sd__foot">
+                      <p class="sd__note">Teste grátis antes de pagar, sem cartão.</p>
+                      <a class="btn btn-primary sd__cta" href="servico-edicao-revisao.html" aria-label="Ver o serviço de Edição e Revisão">Ver serviço</a>
+                    </div>
+                  </div>
+                </article>
+              </li>
+              <li class="svc-slide" id="svc-traducao" data-svc-slide aria-label="Tradução">
+                <article class="svc-card">
+                  <div class="sd__media">
+                    <img class="sd__bg" src="assets/img/card-traducao.webp" alt="" aria-hidden="true" loading="lazy">
+                    <h4 class="sd__name">Tradução</h4>
+                  </div>
+                  <div class="sd__body">
+                    <div class="sd__pricing">
+                      <div class="sd__price"><span class="sd__cur">R$</span>399</div>
+                      <div class="sd__savings">
+                        <span class="sd__save">Economize ~93%</span>
+                        <span class="sd__market">no mercado você paga até R$ 6.000</span>
+                      </div>
+                    </div>
+                    <p class="sd__tagline">Seu livro em outro idioma para alcançar leitores no mundo todo, mantendo o sentido e o tom da sua obra.</p>
+                    <ul class="sd__features">
+                      <li>Mantém o sentido e o tom da obra</li>
+                      <li>Diversos idiomas disponíveis</li>
+                      <li>Pronto para publicar no exterior</li>
+                    </ul>
+                    <div class="sd__foot">
+                      <p class="sd__note">Teste grátis antes de pagar, sem cartão.</p>
+                      <a class="btn btn-primary sd__cta" href="servico-traducao.html" aria-label="Ver o serviço de Tradução">Ver serviço</a>
+                    </div>
+                  </div>
+                </article>
+              </li>
+              <li class="svc-slide" id="svc-padronizacao" data-svc-slide aria-label="Padronização editorial">
+                <article class="svc-card svc-card--future">
+                  <div class="sd__media sd__media--future" aria-hidden="true"></div>
+                  <div class="sd__body">
+                    <span class="badge-soon">Em breve</span>
+                    <h4 class="sd__name">Padronização editorial</h4>
+                    <p class="sd__tagline">Normas ABNT, citações e formatação acadêmica automatizadas, com o rigor editorial que trabalhos técnicos e acadêmicos exigem.</p>
+                    <p class="sd__note">Novos serviços entram nesta fase sem mudar o layout. Quer ser avisado no lançamento?</p>
+                    <button type="button" class="btn btn-outline sd__cta" data-notify-open data-notify-svc="Padronização editorial" aria-label="Quero ser avisado sobre Padronização editorial">Avise-me</button>
+                  </div>
+                </article>
+              </li>
+            </ul>
+
+            <div class="svc-carousel__nav" data-svc-nav hidden>
+              <button class="svc-arrow" type="button" data-svc-prev aria-label="Serviço anterior">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <div class="svc-dots" data-svc-dots></div>
+              <button class="svc-arrow" type="button" data-svc-next aria-label="Próximo serviço">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- espaço de rolagem do pin (precisa estar no content box) -->
+        <div class="phase__spacer" aria-hidden="true"></div>
+      </div>
+
+      <!-- ---------- Para publicar ---------- -->
+      <div class="phase phase--carousel" id="fase-publicar" data-phase-section style="--n: 3">
+        <div class="phase__pin" data-phase-pin>
+          <div class="phase__head">
+            <h3 class="phase__title">Para publicar</h3>
+            <p class="phase__desc">Hora de preparar seu livro para as lojas. Deixe os detalhes técnicos com a IA e foque no lançamento.</p>
+          </div>
+
+          <div class="phase-nav" role="tablist" aria-label="Serviços da fase Para publicar">
+            <button class="phase-card" type="button" role="tab" id="tab-epub" aria-controls="svc-epub" aria-selected="true" tabindex="0">
+              <span class="phase-card__icon" aria-hidden="true"><svg class="phase-card__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="2.5" width="13" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></span>
+              <span class="phase-card__text">
+                <span class="phase-card__name">Conversão para E-book</span>
+                <span class="phase-card__support">Seu PDF em EPUB pronto para as lojas.</span>
+              </span>
+              <svg class="phase-card__chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+            <button class="phase-card" type="button" role="tab" id="tab-diagramacao" aria-controls="svc-diagramacao" aria-selected="false" tabindex="-1">
+              <span class="phase-card__icon" aria-hidden="true"><svg class="phase-card__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M12 3.5v17"/><path d="M6.4 8h2.4M6.4 11h2.4M15.2 8h2.4M15.2 11h2.4"/></svg></span>
+              <span class="phase-card__text">
+                <span class="phase-card__name">Diagramação</span>
+                <span class="phase-card__support">Seu miolo pronto para impressão.</span>
+              </span>
+              <svg class="phase-card__chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+            <button class="phase-card" type="button" role="tab" id="tab-capa" aria-controls="svc-capa" aria-selected="false" tabindex="-1">
+              <span class="phase-card__icon" aria-hidden="true"><svg class="phase-card__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><circle cx="8.7" cy="9" r="1.6"/><path d="M20 15l-4.5-4.5L5 21"/></svg></span>
+              <span class="phase-card__text">
+                <span class="phase-card__name">Capa <span class="title-ia">com IA</span> <span class="badge-soon">Em breve</span></span>
+                <span class="phase-card__support">Capas profissionais geradas por IA.</span>
+              </span>
+              <svg class="phase-card__chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+
+          <div class="svc-carousel" data-svc-carousel>
+            <ul class="svc-track" data-svc-track>
+              <li class="svc-slide" id="svc-epub" data-svc-slide aria-label="Conversão para E-book">
+                <article class="svc-card">
+                  <div class="sd__media">
+                    <img class="sd__bg" src="assets/img/card-conversao-epub.webp" alt="" aria-hidden="true" loading="lazy">
+                    <h4 class="sd__name">Conversão para E-book</h4>
+                  </div>
+                  <div class="sd__body">
+                    <div class="sd__pricing">
+                      <div class="sd__price"><span class="sd__cur">R$</span>109</div>
+                      <div class="sd__savings">
+                        <span class="sd__save">Economize ~78%</span>
+                        <span class="sd__market">no mercado você paga até R$ 500</span>
+                      </div>
+                    </div>
+                    <p class="sd__tagline">Transforme seu PDF em um e-book (EPUB) pronto para as principais lojas, com leitura perfeita em qualquer dispositivo.</p>
+                    <ul class="sd__features">
+                      <li>EPUB para as principais lojas</li>
+                      <li>Leitura perfeita em qualquer tela</li>
+                      <li>Arquivo final em até 24h</li>
+                    </ul>
+                    <div class="sd__foot">
+                      <p class="sd__note">Teste grátis antes de pagar, sem cartão.</p>
+                      <a class="btn btn-primary sd__cta" href="servico-conversao-ebook.html" aria-label="Ver o serviço de Conversão para E-book">Ver serviço</a>
+                    </div>
+                  </div>
+                </article>
+              </li>
+              <li class="svc-slide" id="svc-diagramacao" data-svc-slide aria-label="Diagramação">
+                <article class="svc-card">
+                  <div class="sd__media">
+                    <img class="sd__bg" src="assets/img/card-diagramacao.webp" alt="" aria-hidden="true" loading="lazy">
+                    <h4 class="sd__name">Diagramação</h4>
+                  </div>
+                  <div class="sd__body">
+                    <div class="sd__pricing">
+                      <div class="sd__price"><span class="sd__cur">R$</span>149</div>
+                      <div class="sd__savings">
+                        <span class="sd__save">Economize ~90%</span>
+                        <span class="sd__market">no mercado você paga a partir de R$ 1.500</span>
+                      </div>
+                    </div>
+                    <p class="sd__tagline">Seu miolo diagramado e pronto para impressão, com margens, tipografia e espaçamento no padrão do mercado editorial.</p>
+                    <ul class="sd__features">
+                      <li>Formato profissional (A5, 16x23 e mais)</li>
+                      <li>Tipografia, margens e sumário automáticos</li>
+                      <li>Miolo final em até 24h</li>
+                    </ul>
+                    <div class="sd__foot">
+                      <p class="sd__note">Teste grátis antes de pagar, sem cartão.</p>
+                      <a class="btn btn-primary sd__cta" href="servico-diagramacao.html" aria-label="Ver o serviço de Diagramação">Ver serviço</a>
+                    </div>
+                  </div>
+                </article>
+              </li>
+              <li class="svc-slide" id="svc-capa" data-svc-slide aria-label="Capa com IA">
+                <article class="svc-card svc-card--future">
+                  <div class="sd__media sd__media--future" aria-hidden="true"></div>
+                  <div class="sd__body">
+                    <span class="badge-soon">Em breve</span>
+                    <h4 class="sd__name">Capa <span class="title-ia">com IA</span></h4>
+                    <p class="sd__tagline">Capas profissionais geradas por IA, com direitos comerciais totais e várias opções para você escolher a cara do seu livro.</p>
+                    <p class="sd__note">Novos serviços entram nesta fase sem mudar o layout. Quer ser avisado no lançamento?</p>
+                    <button type="button" class="btn btn-outline sd__cta" data-notify-open data-notify-svc="Capa com IA" aria-label="Quero ser avisado sobre Capa com IA">Avise-me</button>
+                  </div>
+                </article>
+              </li>
+            </ul>
+
+            <div class="svc-carousel__nav" data-svc-nav hidden>
+              <button class="svc-arrow" type="button" data-svc-prev aria-label="Serviço anterior">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <div class="svc-dots" data-svc-dots></div>
+              <button class="svc-arrow" type="button" data-svc-next aria-label="Próximo serviço">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- espaço de rolagem do pin (precisa estar no content box) -->
+        <div class="phase__spacer" aria-hidden="true"></div>
+      </div>
+
+      <!-- ---------- Para divulgar seu livro ---------- -->
+      <div class="phase phase--carousel" id="fase-divulgar" data-phase-section style="--n: 2">
+        <div class="phase__pin" data-phase-pin>
+          <div class="phase__head">
+            <h3 class="phase__title">Para divulgar seu livro</h3>
+            <p class="phase__desc">Livro publicado é só o começo. Crie os textos que vendem e conquiste novos leitores.</p>
+          </div>
+
+          <div class="phase-nav" role="tablist" aria-label="Serviços da fase Para divulgar seu livro">
+            <button class="phase-card" type="button" role="tab" id="tab-marketing" aria-controls="svc-marketing" aria-selected="true" tabindex="0">
+              <span class="phase-card__icon" aria-hidden="true"><svg class="phase-card__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5v3a1 1 0 0 0 1 1h2l5 3.5v-15L7 10.5H5a1 1 0 0 0-1 1z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></span>
+              <span class="phase-card__text">
+                <span class="phase-card__name">Textos de marketing &amp; sinopse</span>
+                <span class="phase-card__support">Sinopse e posts que despertam o desejo de ler.</span>
+              </span>
+              <svg class="phase-card__chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+            <button class="phase-card" type="button" role="tab" id="tab-materiais" aria-controls="svc-materiais" aria-selected="false" tabindex="-1">
+              <span class="phase-card__icon" aria-hidden="true"><svg class="phase-card__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="3.5" width="12.5" height="12.5" rx="2"/><path d="M4.5 8v10a2.5 2.5 0 0 0 2.5 2.5h10"/></svg></span>
+              <span class="phase-card__text">
+                <span class="phase-card__name">Materiais de divulgação <span class="badge-soon">Em breve</span></span>
+                <span class="phase-card__support">Kits de imagens e textos para as redes.</span>
+              </span>
+              <svg class="phase-card__chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+
+          <div class="svc-carousel" data-svc-carousel>
+            <ul class="svc-track" data-svc-track>
+              <li class="svc-slide" id="svc-marketing" data-svc-slide aria-label="Textos de marketing &amp; sinopse">
+                <article class="svc-card">
+                  <div class="sd__media">
+                    <img class="sd__bg" src="assets/img/card-textos-marketing.webp" alt="" aria-hidden="true" loading="lazy">
+                    <h4 class="sd__name">Textos de marketing &amp; sinopse</h4>
+                  </div>
+                  <div class="sd__body">
+                    <div class="sd__pricing">
+                      <div class="sd__price"><span class="sd__cur">R$</span>79</div>
+                      <div class="sd__savings">
+                        <span class="sd__save">Economize ~87%</span>
+                        <span class="sd__market">no mercado você paga até R$ 600</span>
+                      </div>
+                    </div>
+                    <p class="sd__tagline">Sinopse, textos de orelha e posts que despertam o desejo de ler, prontos para as lojas e as redes sociais.</p>
+                    <ul class="sd__features">
+                      <li>Sinopse e textos de orelha</li>
+                      <li>Posts para as redes sociais</li>
+                      <li>Prontos para publicar na hora</li>
+                    </ul>
+                    <div class="sd__foot">
+                      <p class="sd__note">Teste grátis antes de pagar, sem cartão.</p>
+                      <a class="btn btn-primary sd__cta" href="servico-textos-marketing.html" aria-label="Ver o serviço de Textos de marketing e sinopse">Ver serviço</a>
+                    </div>
+                  </div>
+                </article>
+              </li>
+              <li class="svc-slide" id="svc-materiais" data-svc-slide aria-label="Materiais de divulgação">
+                <article class="svc-card svc-card--future">
+                  <div class="sd__media sd__media--future" aria-hidden="true"></div>
+                  <div class="sd__body">
+                    <span class="badge-soon">Em breve</span>
+                    <h4 class="sd__name">Materiais de divulgação</h4>
+                    <p class="sd__tagline">Kits de imagens e textos prontos para as suas redes sociais, tudo pensado para dar visibilidade ao seu lançamento.</p>
+                    <p class="sd__note">Novos serviços entram nesta fase sem mudar o layout. Quer ser avisado no lançamento?</p>
+                    <button type="button" class="btn btn-outline sd__cta" data-notify-open data-notify-svc="Materiais de divulgação" aria-label="Quero ser avisado sobre Materiais de divulgação">Avise-me</button>
+                  </div>
+                </article>
+              </li>
+            </ul>
+
+            <div class="svc-carousel__nav" data-svc-nav hidden>
+              <button class="svc-arrow" type="button" data-svc-prev aria-label="Serviço anterior">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <div class="svc-dots" data-svc-dots></div>
+              <button class="svc-arrow" type="button" data-svc-next aria-label="Próximo serviço">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- espaço de rolagem do pin (precisa estar no content box) -->
+        <div class="phase__spacer" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================ SEÇÃO 5 · POR QUE IA (COMPARATIVO) ================ -->
+  <section class="section section--table" id="por-que-ia" aria-labelledby="pq-h">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__eyebrow">Economia + Tempo</p>
+        <h2 class="h2" id="pq-h"><strong>A mesma qualidade</strong>, por uma fração do <span class="accent">preço</span> e do <span class="accent">tempo</span>.</h2>
+        <p class="section__lead">Contratar um profissional para cada etapa custa milhares de reais e semanas de espera. Com a KlooBR, você tem o mesmo cuidado editorial em horas, e paga só o que faz sentido. Compare:</p>
+      </div>
+
+      <div class="comparison-cards">
+        <div class="comparison-card aila-card">
+          <div class="card-header"><h3>KlooBR <small>inteligência artificial</small></h3></div>
+        </div>
+        <div class="comparison-card market-card">
+          <div class="card-header"><h3>Mercado <small>tradicional</small></h3></div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="pricing-table" aria-label="Comparativo de preço e prazo: KlooBR versus mercado tradicional, por serviço">
+          <thead>
+            <tr>
+              <th scope="col" class="service-name">Serviço</th>
+              <th scope="col" class="col-kloobr">Preço KlooBR</th>
+              <th scope="col" class="col-kloobr">Prazo KlooBR</th>
+              <th scope="col">Preço no mercado</th>
+              <th scope="col">Prazo no mercado</th>
+              <th scope="col">Sua economia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="service-name">Edição &amp; Revisão</th>
+              <td class="col-kloobr">R$ 299</td><td class="col-kloobr">até 24h</td>
+              <td>R$ 5.000</td><td>6 a 10 semanas</td><td class="save">até –94%</td>
+            </tr>
+            <tr>
+              <th scope="row" class="service-name">Análise de Livro</th>
+              <td class="col-kloobr">R$ 69</td><td class="col-kloobr">até 24h</td>
+              <td>a partir de R$ 900</td><td>2 a 4 semanas</td><td class="save">até –92%</td>
+            </tr>
+            <tr>
+              <th scope="row" class="service-name">Raio-X Emocional</th>
+              <td class="col-kloobr">R$ 99</td><td class="col-kloobr">até 24h</td>
+              <td>a partir de R$ 700</td><td>2 a 3 semanas</td><td class="save">até –86%</td>
+            </tr>
+            <tr>
+              <th scope="row" class="service-name">Tradução</th>
+              <td class="col-kloobr">R$ 399</td><td class="col-kloobr">até 24h</td>
+              <td>a partir de R$ 6.000</td><td>6 a 12 semanas</td><td class="save">até –93%</td>
+            </tr>
+            <tr>
+              <th scope="row" class="service-name">Conversão para E-book</th>
+              <td class="col-kloobr">R$ 109</td><td class="col-kloobr">até 24h</td>
+              <td>a partir de R$ 500</td><td>1 a 2 semanas</td><td class="save">até –78%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">*Os valores de mercado são médias de referência para um livro de cerca de 200 páginas. Os preços e prazos da KlooBR não variam conforme as características do seu livro.</p>
+    </div>
+  </section>
+
+  <!-- ================ SEÇÃO 5b · POR QUE ESCOLHER ================ -->
+  <section class="section section--dark" id="por-que-escolher" aria-labelledby="pqe-h">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__eyebrow">Diferenciais</p>
+        <h2 class="h2" id="pqe-h"><strong>Por que escolher</strong> nossos serviços de IA.</h2>
+      </div>
+      <ul class="reasons-grid">
+        <li class="reason-card">
+          <span class="reason-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.1 4.6L19 8.6l-3.5 3.3.9 4.9L12 14.6 7.6 16.8l.9-4.9L5 8.6l4.9-1z"/></svg></span>
+          <h3 class="reason-card__title">Tecnologia que faz a diferença</h3>
+          <p class="reason-card__text">Utilizamos ferramentas avançadas de IA para garantir que seu livro se destaque no mercado, elevando-o a um novo patamar.</p>
+        </li>
+        <li class="reason-card">
+          <span class="reason-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 5 5.5.8-4 3.9.95 5.5L12 16.6 7.05 18.2 8 12.7l-4-3.9L9.5 8z"/><path d="M9 20.5h6"/></svg></span>
+          <h3 class="reason-card__title">Qualidade de alto padrão</h3>
+          <p class="reason-card__text">A nossa IA entende as sutilezas da linguagem e entrega resultados precisos que elevam seu texto a um padrão editorial de alta qualidade.</p>
+        </li>
+        <li class="reason-card">
+          <span class="reason-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.5 13.5H11l-1 8.5L19.5 10H13z"/></svg></span>
+          <h3 class="reason-card__title">Automação para ganhar tempo</h3>
+          <p class="reason-card__text">Nossa automação inteligente agiliza tarefas complexas, liberando você para focar no que realmente importa: criar histórias incríveis.</p>
+        </li>
+        <li class="reason-card">
+          <span class="reason-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5s1.3 1.8 3.5 1.8 3.5-1.8 3.5-1.8"/><path d="M9 9.5h.01M15 9.5h.01"/></svg></span>
+          <h3 class="reason-card__title">Facilidade e eficiência</h3>
+          <p class="reason-card__text">Criado para todos que atuam com conteúdo editorial, de autores independentes a editoras e profissionais do livro. Nossos serviços são fáceis de usar, garantindo uma experiência fluida e sem complicações.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================ SEÇÃO 6 · PROVA SOCIAL ================ -->
+  <section class="section section--dark" aria-labelledby="ps-h">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__eyebrow">Prova social</p>
+        <h2 class="h2" id="ps-h"><strong>Autores que já publicaram com a KlooBR.</strong></h2>
+      </div>
+
+      <!-- Carrossel de depoimentos (placeholder, substituir por reais e autorizados) -->
+      <div class="testimonial-carousel" data-carousel aria-roledescription="carrossel" aria-label="Depoimentos de autores">
+        <div class="testimonial-carousel__viewport">
+          <ul class="testimonial-carousel__track" data-track>
+            <li class="testimonial-carousel__slide" role="group" aria-roledescription="depoimento" aria-label="1 de 6">
+              <figure class="quote-card">
+                <span class="quote-card__mark" aria-hidden="true">”</span>
+                <div class="quote-card__stars" role="img" aria-label="Avaliação 5 de 5 estrelas">★★★★★</div>
+                <blockquote class="quote-card__text">Recebi a revisão do meu romance em um único dia. Gastei menos do que num jantar pelo que uma editora cobraria milhares.</blockquote>
+                <figcaption class="quote-card__author">
+                  <span class="quote-card__avatar" aria-hidden="true">MA</span>
+                  <span class="quote-card__meta"><cite>Marina Alves</cite><span>autora de ficção · Belo Horizonte</span></span>
+                </figcaption>
+              </figure>
+            </li>
+            <li class="testimonial-carousel__slide" role="group" aria-roledescription="depoimento" aria-label="2 de 6">
+              <figure class="quote-card">
+                <span class="quote-card__mark" aria-hidden="true">”</span>
+                <div class="quote-card__stars" role="img" aria-label="Avaliação 5 de 5 estrelas">★★★★★</div>
+                <blockquote class="quote-card__text">Tinha medo de que a IA descaracterizasse meu texto. Recebi o relatório justificando cada ajuste e vi que minha voz continuou intacta.</blockquote>
+                <figcaption class="quote-card__author">
+                  <span class="quote-card__avatar" aria-hidden="true">RT</span>
+                  <span class="quote-card__meta"><cite>Rogério Tavares</cite><span>autor de não ficção · Recife</span></span>
+                </figcaption>
+              </figure>
+            </li>
+            <li class="testimonial-carousel__slide" role="group" aria-roledescription="depoimento" aria-label="3 de 6">
+              <figure class="quote-card">
+                <span class="quote-card__mark" aria-hidden="true">”</span>
+                <div class="quote-card__stars" role="img" aria-label="Avaliação 5 de 5 estrelas">★★★★★</div>
+                <blockquote class="quote-card__text">Traduzi meu livro para o inglês num fim de semana e comecei a vender lá fora. Não teria conseguido pelo caminho tradicional.</blockquote>
+                <figcaption class="quote-card__author">
+                  <span class="quote-card__avatar" aria-hidden="true">HC</span>
+                  <span class="quote-card__meta"><cite>Helena Costa</cite><span>autora independente · Curitiba</span></span>
+                </figcaption>
+              </figure>
+            </li>
+            <li class="testimonial-carousel__slide" role="group" aria-roledescription="depoimento" aria-label="4 de 6">
+              <figure class="quote-card">
+                <span class="quote-card__mark" aria-hidden="true">”</span>
+                <div class="quote-card__stars" role="img" aria-label="Avaliação 5 de 5 estrelas">★★★★★</div>
+                <blockquote class="quote-card__text">O parecer da Análise de Livro apontou exatamente onde a minha história perdia o ritmo. Reescrevi dois capítulos e ficou muito mais forte.</blockquote>
+                <figcaption class="quote-card__author">
+                  <span class="quote-card__avatar" aria-hidden="true">FM</span>
+                  <span class="quote-card__meta"><cite>Fábio Menezes</cite><span>autor de fantasia · Porto Alegre</span></span>
+                </figcaption>
+              </figure>
+            </li>
+            <li class="testimonial-carousel__slide" role="group" aria-roledescription="depoimento" aria-label="5 de 6">
+              <figure class="quote-card">
+                <span class="quote-card__mark" aria-hidden="true">”</span>
+                <div class="quote-card__stars" role="img" aria-label="Avaliação 5 de 5 estrelas">★★★★★</div>
+                <blockquote class="quote-card__text">Converti o meu livro para e-book e publiquei na Amazon no mesmo dia. O que eu adiava havia meses saiu em algumas horas.</blockquote>
+                <figcaption class="quote-card__author">
+                  <span class="quote-card__avatar" aria-hidden="true">JP</span>
+                  <span class="quote-card__meta"><cite>Juliana Prado</cite><span>autora de autoajuda · Salvador</span></span>
+                </figcaption>
+              </figure>
+            </li>
+            <li class="testimonial-carousel__slide" role="group" aria-roledescription="depoimento" aria-label="6 de 6">
+              <figure class="quote-card">
+                <span class="quote-card__mark" aria-hidden="true">”</span>
+                <div class="quote-card__stars" role="img" aria-label="Avaliação 5 de 5 estrelas">★★★★★</div>
+                <blockquote class="quote-card__text">Uso a KlooBR em cada lançamento. A sinopse e os textos de divulgação chegam prontos e no tom certo do meu público.</blockquote>
+                <figcaption class="quote-card__author">
+                  <span class="quote-card__avatar" aria-hidden="true">CE</span>
+                  <span class="quote-card__meta"><cite>Carlos Espínola</cite><span>autor de negócios · São Paulo</span></span>
+                </figcaption>
+              </figure>
+            </li>
+          </ul>
+        </div>
+
+        <div class="testimonial-carousel__controls">
+          <button class="testimonial-carousel__btn" type="button" data-prev aria-label="Depoimento anterior">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <div class="testimonial-carousel__dots" data-dots role="tablist" aria-label="Selecionar depoimento"></div>
+          <button class="testimonial-carousel__btn" type="button" data-next aria-label="Próximo depoimento">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================ SEÇÃO 8 · FAQ ================ -->
+  <section class="section section--dark" id="faq" aria-labelledby="faq-h">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__eyebrow">Dúvidas frequentes</p>
+        <h2 class="h2" id="faq-h"><strong>Perguntas frequentes</strong></h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Quais formatos de arquivo vocês aceitam?</summary>
+          <div class="faq__answer">Para edição, revisão, tradução e análise, envie seu livro em Word (.docx). Para a conversão em e-book, aceitamos PDF. É só arrastar o arquivo, sem instalar nada.</div>
+        </details>
+        <details>
+          <summary>Em quanto tempo eu recebo meu livro?</summary>
+          <div class="faq__answer">A maioria dos serviços é entregue em até 24 horas após a confirmação do pagamento. Nada de esperar semanas por uma editora ou por um freelancer.</div>
+        </details>
+        <details>
+          <summary>Como funciona o pagamento?</summary>
+          <div class="faq__answer">É tudo online e seguro. Você aprova uma amostra grátis, escolhe a forma de pagamento e libera o arquivo final na hora. Sem cotações, sem troca de e-mails, sem espera.</div>
+        </details>
+        <details>
+          <summary>O que eu preciso ter em mãos?</summary>
+          <div class="faq__answer">Só o seu arquivo. Não é preciso conhecimento técnico nem software especial. A IA da KlooBR cuida de todo o processo para você.</div>
+        </details>
+        <details>
+          <summary>Meu texto fica realmente privado?</summary>
+          <div class="faq__answer">Sim. Seu arquivo é usado apenas para entregar o serviço contratado e nunca para treinar nossos modelos. Você é e continua sendo o único dono da obra.</div>
+        </details>
+        <details>
+          <summary>A IA substitui um editor humano?</summary>
+          <div class="faq__answer">A IA da KlooBR faz o trabalho pesado com rapidez e consistência, entregando um resultado profissional. Pense nela como uma colaboradora que acelera a sua publicação. Você continua no comando da sua obra.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================ SEÇÃO 9 · CTA FINAL ================ -->
+  <section class="hero-section" id="cta-final" aria-labelledby="cta-h">
+    <div class="hero-ellipse hero-ellipse--bottom-left" aria-hidden="true"></div>
+    <div class="container">
+      <div class="cta-final">
+        <h2 class="h2" id="cta-h"><strong>Seu próximo livro pode estar pronto ainda hoje.</strong></h2>
+        <p>Experimente a KlooBR sem pagar nada: envie seu texto, veja uma amostra grátis e descubra por que publicar nunca foi tão rápido e tão acessível.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#servicos" aria-label="Testar grátis e ver os serviços">Testar grátis</a>
+          <a class="btn btn-outline" href="#servicos">Ver serviços</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================ RODAPÉ PRÓPRIO KLOOBR ============================ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="site-nav__logo footer-brand__logo" href="home.html" aria-label="Página inicial da KlooBR">
+          <img class="site-nav__logo-img" src="assets/logo-kloobr-white.svg" alt="" aria-hidden="true">
+        </a>
+        <p>Uma empresa do Clube de Autores.</p>
+      </div>
+
+      <nav class="footer-services" aria-label="Serviços por fase (rodapé)">
+        <h3>Serviços</h3>
+        <div class="footer-services__phases">
+          <details class="footer-phase" open>
+            <summary class="footer-phase__name">Enquanto você escreve
+              <svg class="footer-phase__chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <ul>
+              <li><a href="servico-analise-livro.html" data-svc="analise-livro">Análise de Livro</a></li>
+              <li><a href="servico-raiox-emocional.html" data-svc="raiox-emocional">Raio-X Emocional</a></li>
+            </ul>
+          </details>
+          <details class="footer-phase" open>
+            <summary class="footer-phase__name">Com o livro pronto
+              <svg class="footer-phase__chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <ul>
+              <li><a href="servico-edicao-revisao.html" data-svc="edicao-revisao">Edição &amp; Revisão</a></li>
+              <li><a href="servico-traducao.html" data-svc="traducao">Tradução</a></li>
+            </ul>
+          </details>
+          <details class="footer-phase" open>
+            <summary class="footer-phase__name">Para publicar
+              <svg class="footer-phase__chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <ul>
+              <li><a href="servico-conversao-ebook.html" data-svc="conversao-ebook">Conversão para E-book</a></li>
+              <li><a href="servico-diagramacao.html" data-svc="diagramacao">Diagramação</a></li>
+            </ul>
+          </details>
+          <details class="footer-phase" open>
+            <summary class="footer-phase__name">Para divulgar
+              <svg class="footer-phase__chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <ul>
+              <li><a href="servico-textos-marketing.html" data-svc="textos-marketing">Textos de marketing &amp; sinopse</a></li>
+            </ul>
+          </details>
+        </div>
+      </nav>
+
+      <nav aria-label="Institucional (rodapé)">
+        <h3>Institucional</h3>
+        <ul>
+          <li><a href="https://clubedeautores.com.br/" target="_blank" rel="noopener">Sobre o Clube de Autores</a></li>
+          <li><a href="https://clubedeautores.com.br/termos-de-uso" target="_blank" rel="noopener">Termos de uso</a></li>
+          <li><a href="https://clubedeautores.com.br/politica-de-privacidade" target="_blank" rel="noopener">Política de privacidade</a></li>
+          <li><a href="https://clubedeautores.com.br/atendimento" target="_blank" rel="noopener">Fale conosco</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="footer-copy">© 2026 KlooBR · Publishing, re-engineered. · Uma empresa do Clube de Autores. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<!-- Menu mobile acessível (abre/fecha + Esc + foco) -->
+<script>
+  (function () {
+    var toggle = document.querySelector('.nav-toggle');
+    var drawer = document.getElementById('nav-drawer');
+    if (!toggle || !drawer) return;
+
+    function setOpen(open) {
+      toggle.setAttribute('aria-expanded', String(open));
+      drawer.setAttribute('data-open', String(open));
+      document.body.classList.toggle('has-drawer-open', open);
+    }
+    toggle.addEventListener('click', function () {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+    // Fecha ao navegar a partir do drawer
+    drawer.querySelectorAll('[data-nav-go]').forEach(function (a) {
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+    // Fecha com Esc
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false); toggle.focus();
+      }
+    });
+    // Fecha ao clicar fora
+    document.addEventListener('click', function (e) {
+      if (toggle.getAttribute('aria-expanded') !== 'true') return;
+      if (!drawer.contains(e.target) && !toggle.contains(e.target)) setOpen(false);
+    });
+  })();
+
+  // Nav-bar: leve sobre o hero, condensa ao rolar (não briga com a barra de fases)
+  (function () {
+    var nav = document.querySelector('[data-site-nav]');
+    if (!nav) return;
+    var ticking = false;
+    function update() {
+      nav.setAttribute('data-scrolled', String(window.scrollY > 24));
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    update();
+  })();
+
+  // Barra de garantias: no mobile alterna os selos sozinha (swipe continua livre)
+  (function () {
+    var list = document.querySelector('.trust-bar__list');
+    if (!list) return;
+    var items = list.children;
+    if (items.length < 2) return;
+
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var oneUp = window.matchMedia('(max-width: 859px)');
+    var index = 0, timer = null, paused = false, self = false, settle = null;
+
+    function tick() {
+      if (paused || !oneUp.matches) return;
+      index = (index + 1) % items.length;
+      self = true;
+      list.scrollTo({ left: items[index].offsetLeft, behavior: 'smooth' });
+    }
+    function start() { if (!reduce && !timer && oneUp.matches) timer = setInterval(tick, 3500); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    // Ao arrastar, sincroniza o índice e pausa antes de voltar a girar.
+    // `self` distingue o scroll do autoplay do scroll feito pela pessoa.
+    var resume = null;
+    list.addEventListener('scroll', function () {
+      clearTimeout(settle);
+      settle = setTimeout(function () { self = false; }, 150); // fim do scroll programático
+      if (self) return;
+      paused = true;
+      clearTimeout(resume);
+      resume = setTimeout(function () {
+        index = Math.round(list.scrollLeft / list.clientWidth) % items.length;
+        paused = false;
+      }, 5000);
+    }, { passive: true });
+
+    oneUp.addEventListener('change', function () { stop(); start(); });
+    start();
+  })();
+
+  // Carrossel de depoimentos, responsivo: 1 por página no mobile, 3 no desktop.
+  // Os controles (setas + dots) só aparecem quando há mais páginas que uma
+  // (ex.: mais de 3 depoimentos no desktop). Arrastar, teclado e autoplay.
+  (function () {
+    var root = document.querySelector('[data-carousel]');
+    if (!root) return;
+    var track = root.querySelector('[data-track]');
+    var slides = Array.prototype.slice.call(root.querySelectorAll('.testimonial-carousel__slide'));
+    var dotsWrap = root.querySelector('[data-dots]');
+    var controls = root.querySelector('.testimonial-carousel__controls');
+    var prev = root.querySelector('[data-prev]');
+    var next = root.querySelector('[data-next]');
+    if (!track || slides.length === 0) return;
+
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var mqDesk = window.matchMedia('(min-width: 900px)');
+
+    var page = 0, perView = 1, pages = 1, dots = [];
+
+    function buildDots() {
+      dotsWrap.innerHTML = '';
+      dots = [];
+      for (var i = 0; i < pages; i++) {
+        (function (i) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'testimonial-carousel__dot';
+          b.setAttribute('role', 'tab');
+          b.setAttribute('aria-label', 'Ir para a página ' + (i + 1));
+          b.addEventListener('click', function () { go(i, true); });
+          dotsWrap.appendChild(b);
+          dots.push(b);
+        })(i);
+      }
+    }
+
+    function render() {
+      track.style.transform = 'translateX(' + (-page * 100) + '%)';
+      slides.forEach(function (s, i) { s.setAttribute('aria-hidden', String(Math.floor(i / perView) !== page)); });
+      dots.forEach(function (d, i) { d.setAttribute('aria-selected', String(i === page)); });
+    }
+
+    function layout() {
+      perView = mqDesk.matches ? 3 : 1;
+      pages = Math.ceil(slides.length / perView);
+      if (page > pages - 1) page = pages - 1;
+      buildDots();
+      if (controls) controls.style.display = pages > 1 ? '' : 'none';  // nada a navegar → some
+      render();
+    }
+
+    function go(i, user) {
+      page = (i + pages) % pages;
+      render();
+      if (user) restart();
+    }
+
+    prev && prev.addEventListener('click', function () { go(page - 1, true); });
+    next && next.addEventListener('click', function () { go(page + 1, true); });
+
+    root.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { go(page - 1, true); }
+      else if (e.key === 'ArrowRight') { go(page + 1, true); }
+    });
+
+    var startX = null;
+    root.addEventListener('pointerdown', function (e) { startX = e.clientX; });
+    root.addEventListener('pointerup', function (e) {
+      if (startX === null) return;
+      var dx = e.clientX - startX;
+      if (Math.abs(dx) > 40) { go(page + (dx < 0 ? 1 : -1), true); }
+      startX = null;
+    });
+
+    var timer = null;
+    function start() { if (!reduce && pages > 1) timer = setInterval(function () { go(page + 1); }, 6000); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function restart() { stop(); start(); }
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', start);
+
+    function relayout() { stop(); layout(); start(); }
+    if (mqDesk.addEventListener) mqDesk.addEventListener('change', relayout);
+    else if (mqDesk.addListener) mqDesk.addListener(relayout);
+    window.addEventListener('resize', function () { clearTimeout(root._tr); root._tr = setTimeout(relayout, 150); });
+
+    layout();
+    start();
+  })();
+
+  // Carrossel de serviços de cada fase (scroll-snap + setas + dots)
+  (function () {
+    var carousels = {}; // id do slide -> função que o traz para a viewport
+
+    document.querySelectorAll('[data-svc-carousel]').forEach(function (root) {
+      var track  = root.querySelector('[data-svc-track]');
+      var slides = Array.prototype.slice.call(root.querySelectorAll('[data-svc-slide]'));
+      var nav    = root.querySelector('[data-svc-nav]');
+      var prev   = root.querySelector('[data-svc-prev]');
+      var next   = root.querySelector('[data-svc-next]');
+      var dotsEl = root.querySelector('[data-svc-dots]');
+      if (!track || !slides.length) return;
+
+      // Quantos slides cabem por vez muda com o breakpoint: derivamos da medida real
+      function perView() {
+        var w = slides[0].getBoundingClientRect().width;
+        return w ? Math.max(1, Math.round(track.clientWidth / w)) : 1;
+      }
+      function pages() { return Math.max(1, slides.length - perView() + 1); }
+      function current() {
+        var w = slides[0].getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 0);
+        return w ? Math.round(track.scrollLeft / w) : 0;
+      }
+
+      var dots = [];
+      function buildDots() {
+        dotsEl.innerHTML = ''; dots = [];
+        for (var i = 0; i < pages(); i++) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'svc-dot';
+          b.setAttribute('aria-label', 'Ir para o serviço ' + (i + 1));
+          (function (idx) { b.addEventListener('click', function () { go(idx); }); })(i);
+          dotsEl.appendChild(b); dots.push(b);
+        }
+      }
+      function go(i, instant) {
+        var max = pages() - 1;
+        var idx = Math.min(Math.max(i, 0), max);
+        track.scrollTo({
+          left: slides[idx].offsetLeft - slides[0].offsetLeft,
+          behavior: instant ? 'auto' : 'smooth'
+        });
+        // O scroll instantâneo já atualizou scrollLeft: sincroniza a lista
+        // agora, sem esperar o debounce do evento de scroll do track.
+        if (instant) sync();
+      }
+      // Lista lateral do desktop: cada botão controla um slide do mesmo track
+      var phase = root.closest('[data-phase-section]');
+      var tabs = phase ? Array.prototype.slice.call(phase.querySelectorAll('.phase-card')) : [];
+
+      function sync() {
+        // Sem overflow (ex.: 3 cards e 3 cabem na tela) a navegação some
+        var scrollable = track.scrollWidth - track.clientWidth > 4;
+        nav.hidden = !scrollable;
+        var i = scrollable ? current() : 0;
+
+        // Mantém a lista lateral espelhando o slide visível (inclusive no swipe)
+        tabs.forEach(function (t, k) {
+          var on = k === i;
+          t.setAttribute('aria-selected', String(on));
+          t.tabIndex = on ? 0 : -1;
+        });
+
+        if (!scrollable) return;
+        var max = pages() - 1;
+        prev.disabled = i <= 0;
+        next.disabled = i >= max;
+        if (dots.length !== pages()) buildDots();
+        dots.forEach(function (d, k) {
+          d.setAttribute('aria-current', k === i ? 'true' : 'false');
+        });
+      }
+
+      // Com o bloco travado, escolher um serviço tem de mover a PÁGINA para o
+      // trecho dele, senão a própria rolagem sobrescreveria a escolha.
+      if (phase) phase._go = go;
+      function pick(i, focus) {
+        if (phase && phase._pinScrollTo) phase._pinScrollTo(i); else go(i);
+        if (focus) tabs[i].focus();
+      }
+
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener('click', function () { pick(i); });
+        tab.addEventListener('keydown', function (e) {
+          var idx = null;
+          if (e.key === 'ArrowDown' || e.key === 'ArrowRight') idx = (i + 1) % tabs.length;
+          else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') idx = (i - 1 + tabs.length) % tabs.length;
+          else if (e.key === 'Home') idx = 0;
+          else if (e.key === 'End') idx = tabs.length - 1;
+          if (idx === null) return;
+          e.preventDefault(); pick(idx, true);
+        });
+      });
+
+      prev.addEventListener('click', function () { go(current() - 1); });
+      next.addEventListener('click', function () { go(current() + 1); });
+      track.addEventListener('scroll', function () {
+        clearTimeout(track._t);
+        track._t = setTimeout(sync, 90);
+      }, { passive: true });
+      window.addEventListener('resize', function () {
+        clearTimeout(root._r);
+        root._r = setTimeout(function () { buildDots(); sync(); }, 150);
+      });
+
+      slides.forEach(function (s, i) {
+        if (s.id) carousels[s.id] = function () { go(Math.min(i, pages() - 1)); };
+      });
+
+      buildDots(); sync();
+    });
+
+    // Links do drawer com data-svc-target já abrem o serviço certo dentro do carrossel
+    document.querySelectorAll('a[data-svc-target]').forEach(function (link) {
+      link.addEventListener('click', function () {
+        var f = carousels[link.getAttribute('data-svc-target')];
+        // Espera o scroll da âncora para a fase antes de mover o carrossel
+        if (f) setTimeout(f, 420);
+      });
+    });
+  })();
+
+  // Desktop: o bloco da fase trava e a rolagem passa pelos serviços dela.
+  // Ao terminar o último, o bloco destrava e o próximo trava no lugar.
+  (function () {
+    var bar = document.querySelector('.svc-bar');
+    var phases = Array.prototype.slice.call(document.querySelectorAll('[data-phase-section]'));
+    if (!bar || !phases.length) return;
+
+    var mq = window.matchMedia('(min-width: 1100px) and (min-height: 700px)');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var root = document.documentElement;
+    var pinTop = 0;
+
+    // A barra tem altura variável, medimos em vez de fixar um número mágico.
+    function measure() {
+      var navH = parseFloat(getComputedStyle(root).getPropertyValue('--nav-h-min')) || 64;
+      var barH = bar.getBoundingClientRect().height;
+      pinTop = Math.round(navH + barH + 16);
+      root.style.setProperty('--svc-bar-h', Math.round(barH) + 'px');
+      root.style.setProperty('--pin-top', pinTop + 'px');
+    }
+
+    function count(ph) { return ph.querySelectorAll('[data-svc-slide]').length; }
+    function travelOf(ph) {
+      var pin = ph.querySelector('[data-phase-pin]');
+      return ph.offsetHeight - pin.offsetHeight;   // quanto o sticky percorre travado
+    }
+
+    // Feedback visual: pinta o progresso (0..1) na borda esquerda do card ativo.
+    function setProg(ph, idx, frac) {
+      var cards = ph.querySelectorAll('.phase-card');
+      for (var k = 0; k < cards.length; k++) {
+        cards[k].style.setProperty('--svc-prog', k === idx ? frac.toFixed(4) : '0');
+      }
+    }
+
+    function update() {
+      if (!mq.matches) return;
+      phases.forEach(function (ph) {
+        var n = count(ph);
+        if (n < 2 || !ph._go) return;
+        var travel = travelOf(ph);
+        if (travel <= 0) return;
+        var passed = pinTop - ph.getBoundingClientRect().top;
+        var t = Math.min(Math.max(passed / travel, 0), 0.9999);
+        var pos = t * n;                 // posição contínua entre os serviços
+        var idx = Math.floor(pos);
+        setProg(ph, idx, pos - idx);     // barra de progresso do card ativo
+        if (ph._idx !== idx) { ph._idx = idx; ph._go(idx, true); }
+      });
+    }
+
+    phases.forEach(function (ph) {
+      ph._pinScrollTo = function (i) {
+        if (!mq.matches) { ph._go(i); return; }
+        var travel = travelOf(ph);
+        if (travel <= 0) { ph._go(i); return; }
+        // mira o meio do trecho do serviço i
+        var t = (i + 0.5) / count(ph);
+        var alvo = ph.getBoundingClientRect().top + window.scrollY - pinTop + t * travel;
+        window.scrollTo({ top: Math.round(alvo), behavior: reduce ? 'auto' : 'smooth' });
+      };
+    });
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        ticking = false;   // libera antes: um erro em update() não pode travar o loop
+        update();
+      });
+    }, { passive: true });
+    window.addEventListener('resize', function () {
+      clearTimeout(window._pinR);
+      window._pinR = setTimeout(function () { measure(); update(); }, 150);
+    });
+
+    measure(); update();
+  })();
+
+  // Barra de fases: marca a fase visível enquanto a página rola (scroll-spy)
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('[data-svc-link]'));
+    var sections = Array.prototype.slice.call(document.querySelectorAll('[data-phase-section]'));
+    if (!links.length || !sections.length || !('IntersectionObserver' in window)) return;
+
+    // O gatilho do mobile espelha a fase ativa (é o "valor" do select)
+    var selBtn   = document.querySelector('[data-svc-select]');
+    var selLabel = document.querySelector('[data-svc-select-label]');
+    var selIco   = document.querySelector('[data-svc-select-ico]');
+
+    var visible = {};
+    function mark() {
+      // A fase ativa é a visível que está mais acima na página
+      var best = null;
+      sections.forEach(function (s) {
+        if (!visible[s.id]) return;
+        if (!best || s.getBoundingClientRect().top < best.getBoundingClientRect().top) best = s;
+      });
+      if (!best) return;
+      links.forEach(function (l) {
+        var on = l.getAttribute('href') === '#' + best.id;
+        l.classList.toggle('is-active', on);
+        if (on) l.setAttribute('aria-current', 'true'); else l.removeAttribute('aria-current');
+        if (on && selLabel) {
+          selLabel.textContent = l.querySelector('.svc-bar__text').textContent;
+          selIco.innerHTML = l.querySelector('.svc-bar__ico').innerHTML;
+        }
+      });
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { visible[e.target.id] = e.isIntersecting; });
+      mark();
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+    sections.forEach(function (s) { io.observe(s); });
+
+    // Abre/fecha o painel do select (mobile)
+    var list = document.querySelector('[data-svc-list]');
+    if (!selBtn || !list) return;
+    function setOpen(open) {
+      selBtn.setAttribute('aria-expanded', String(open));
+      list.setAttribute('data-open', String(open));
+    }
+    selBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setOpen(selBtn.getAttribute('aria-expanded') !== 'true');
+    });
+    links.forEach(function (l) { l.addEventListener('click', function () { setOpen(false); }); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && selBtn.getAttribute('aria-expanded') === 'true') { setOpen(false); selBtn.focus(); }
+    });
+    document.addEventListener('click', function (e) {
+      if (selBtn.getAttribute('aria-expanded') !== 'true') return;
+      if (!list.contains(e.target)) setOpen(false);
+    });
+  })();
+</script>
+
+
+<!-- ===== PAINEL DE PREFERÊNCIAS: idioma + moeda ===== -->
+<dialog class="prefs" data-prefs-dialog aria-labelledby="prefs-h">
+  <div class="prefs__inner">
+    <div class="prefs__head">
+      <h2 class="prefs__title" id="prefs-h">Idioma e moeda</h2>
+      <button class="flow-icon flow-icon--sm" type="button" data-prefs-close aria-label="Fechar">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <section class="prefs__sec">
+      <h3 class="prefs__label">Idioma</h3>
+      <ul class="prefs__langs" data-lang-list>
+        <li><button class="lang" type="button" data-lang="pt-BR" aria-pressed="true"><span class="lang__flag" aria-hidden="true">🇧🇷</span><span class="lang__name">Português (Brasil)</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+        <li><button class="lang" type="button" data-lang="pt-PT" aria-pressed="false"><span class="lang__flag" aria-hidden="true">🇵🇹</span><span class="lang__name">Português (Portugal)</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+        <li><button class="lang" type="button" data-lang="es" aria-pressed="false"><span class="lang__flag" aria-hidden="true">🇪🇸</span><span class="lang__name">Español</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+        <li><button class="lang" type="button" data-lang="en" aria-pressed="false"><span class="lang__flag" aria-hidden="true">🇺🇸</span><span class="lang__name">English</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+        <li><button class="lang" type="button" data-lang="de" aria-pressed="false"><span class="lang__flag" aria-hidden="true">🇩🇪</span><span class="lang__name">Deutsch</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+      </ul>
+    </section>
+
+    <section class="prefs__sec">
+      <h3 class="prefs__label">Moeda</h3>
+      <ul class="prefs__langs" data-cur-list>
+        <li><button class="lang" type="button" data-cur="BRL" aria-pressed="true"><span class="lang__flag" aria-hidden="true">R$</span><span class="lang__name">Real brasileiro</span><span class="lang__cur">BRL</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+        <li><button class="lang" type="button" data-cur="EUR" aria-pressed="false"><span class="lang__flag" aria-hidden="true">€</span><span class="lang__name">Euro</span><span class="lang__cur">EUR</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+        <li><button class="lang" type="button" data-cur="USD" aria-pressed="false"><span class="lang__flag" aria-hidden="true">US$</span><span class="lang__name">Dólar americano</span><span class="lang__cur">USD</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+        <li><button class="lang" type="button" data-cur="GBP" aria-pressed="false"><span class="lang__flag" aria-hidden="true">£</span><span class="lang__name">Libra esterlina</span><span class="lang__cur">GBP</span><span class="lang__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></button></li>
+      </ul>
+    </section>
+  </div>
+</dialog>
+
+<!-- ===== DIÁLOGO DE LOGIN / CADASTRO ===== -->
+<dialog class="authd" data-auth-dialog aria-labelledby="auth-h">
+  <div class="prefs__inner">
+    <div class="prefs__head">
+      <h2 class="prefs__title" id="auth-h" data-auth-title>Entrar na KlooBR</h2>
+      <button class="flow-icon flow-icon--sm" type="button" data-auth-close aria-label="Fechar">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="authd__tabs" role="tablist" aria-label="Entrar ou criar conta">
+      <button class="authd__tab" type="button" role="tab" data-authtab="login" aria-selected="true">Entrar</button>
+      <button class="authd__tab" type="button" role="tab" data-authtab="signup" aria-selected="false">Criar conta</button>
+    </div>
+
+    <p class="auth-note">
+      <svg class="auth-note__ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.5h.01"/></svg>
+      <span>Já tem conta no <strong>Clube de Autores</strong>, na <strong>Literary Highways</strong> ou no <strong>Club de Autores</strong>? Use o mesmo e-mail e senha para entrar. Não precisa criar uma conta nova.</span>
+    </p>
+
+    <form class="authd__form" data-authform="login" novalidate>
+      <label class="field"><span class="field__label">E-mail</span><input class="ds-input" type="email" name="email" required autocomplete="email" placeholder="voce@email.com"></label>
+      <label class="field"><span class="field__label">Senha</span><input class="ds-input" type="password" name="senha" required autocomplete="current-password" placeholder="Sua senha"></label>
+      <p class="authd__msg" data-auth-msg hidden role="status"></p>
+      <button class="btn btn-primary authd__submit" type="submit">Entrar</button>
+      <p class="authd__alt">Esqueceu a senha? <button type="button" class="linkish" data-forgot>Recuperar acesso</button></p>
+    </form>
+
+    <form class="authd__form" data-authform="signup" hidden novalidate>
+      <label class="field"><span class="field__label">Nome</span><input class="ds-input" type="text" name="nome" required autocomplete="name" placeholder="Como você assina seus livros"></label>
+      <label class="field"><span class="field__label">E-mail</span><input class="ds-input" type="email" name="email" required autocomplete="email" placeholder="voce@email.com"></label>
+      <label class="field"><span class="field__label">Senha</span><input class="ds-input" type="password" name="senha" required minlength="8" autocomplete="new-password" placeholder="Mínimo de 8 caracteres"></label>
+      <button class="btn btn-primary authd__submit" type="submit">Criar conta</button>
+    </form>
+  </div>
+</dialog>
+
+<!-- ===== DIÁLOGO "AVISE-ME" (serviços em breve) ===== -->
+<dialog class="authd notifyd" data-notify-dialog aria-labelledby="notify-h">
+  <div class="prefs__inner">
+    <div class="prefs__head">
+      <h2 class="prefs__title" id="notify-h">Avisar quando lançar</h2>
+      <button class="flow-icon flow-icon--sm" type="button" data-notify-close aria-label="Fechar">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Formulário -->
+    <div class="notifyd__view" data-notify-view="form">
+      <p class="notifyd__lead">Deixe o seu contato e avisamos por e-mail assim que <strong data-notify-name>este serviço</strong> entrar no ar. Sem spam, só o aviso do lançamento.</p>
+      <form class="authd__form" data-notify-form novalidate>
+        <label class="field"><span class="field__label">Nome</span><input class="ds-input" type="text" name="nome" required autocomplete="name" placeholder="Como podemos te chamar"></label>
+        <label class="field"><span class="field__label">E-mail</span><input class="ds-input" type="email" name="email" required autocomplete="email" placeholder="voce@email.com"></label>
+        <p class="notifyd__consent">Ao enviar, você concorda com os
+          <a href="https://clubedeautores.com.br/termos-de-uso" target="_blank" rel="noopener">Termos de uso</a> e a
+          <a href="https://clubedeautores.com.br/politica-de-privacidade" target="_blank" rel="noopener">Política de privacidade</a> do KlooBR.</p>
+        <button class="btn btn-primary authd__submit" type="submit">Quero ser avisado</button>
+      </form>
+    </div>
+
+    <!-- Feedback de sucesso -->
+    <div class="notifyd__view notifyd__done" data-notify-view="done" hidden>
+      <span class="notifyd__check" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </span>
+      <h3 class="notifyd__done-title">Pronto! Você está na lista.</h3>
+      <p class="notifyd__done-text">Avisaremos <strong data-notify-mail>o seu e-mail</strong> assim que <strong data-notify-name>este serviço</strong> for lançado. Enquanto isso, explore os serviços que já estão no ar.</p>
+      <button class="btn btn-primary authd__submit" type="button" data-notify-close>Fechar</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  /* Preferências (idioma + moeda) e conta (login/cadastro).
+     Protótipo: seleções e sessão são simuladas no cliente e lembradas em localStorage. */
+  (function () {
+    var LANGS = {
+      'pt-BR': { short: 'PT-BR' }, 'pt-PT': { short: 'PT-PT' },
+      'es': { short: 'ES' }, 'en': { short: 'EN' }, 'de': { short: 'DE' }
+    };
+    var CURS = {
+      'BRL': { sym: 'R$' }, 'EUR': { sym: '€' }, 'USD': { sym: 'US$' }, 'GBP': { sym: '£' }
+    };
+    function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+    function read(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+
+    /* ---------- idioma + moeda ---------- */
+    var prefsDlg = document.querySelector('[data-prefs-dialog]');
+    var langLabel = document.querySelector('[data-lang-label]');
+    var curLabel = document.querySelector('[data-cur-label]');
+    var curSym = document.querySelector('[data-cur-sym]');
+    var langBtns = Array.prototype.slice.call(document.querySelectorAll('[data-lang]'));
+    var curBtns = Array.prototype.slice.call(document.querySelectorAll('[data-cur]'));
+
+    function setLang(code) {
+      var L = LANGS[code]; if (!L) return;
+      document.documentElement.lang = code;
+      if (langLabel) langLabel.textContent = L.short;
+      langBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.lang === code)); });
+      store('kloobr-lang', code);
+    }
+    function setCur(code) {
+      var C = CURS[code]; if (!C) return;
+      if (curLabel) curLabel.textContent = code;
+      if (curSym) curSym.textContent = C.sym;
+      curBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.cur === code)); });
+      store('kloobr-cur', code);
+    }
+    langBtns.forEach(function (b) { b.addEventListener('click', function () { setLang(b.dataset.lang); }); });
+    curBtns.forEach(function (b) { b.addEventListener('click', function () { setCur(b.dataset.cur); }); });
+
+    /* dropdowns de idioma/moeda (desktop): abrem abaixo do próprio botão */
+    var ddToggles = Array.prototype.slice.call(document.querySelectorAll('[data-dd-toggle]'));
+    function panelOf(t) { return document.getElementById(t.getAttribute('aria-controls')); }
+    function closeDD(keep) {
+      ddToggles.forEach(function (t) {
+        var p = panelOf(t);
+        if (p && p !== keep) { p.hidden = true; t.setAttribute('aria-expanded', 'false'); }
+      });
+    }
+    ddToggles.forEach(function (t) {
+      t.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var p = panelOf(t); if (!p) return;
+        var abrir = p.hidden;
+        closeDD();
+        if (abrir) { p.hidden = false; t.setAttribute('aria-expanded', 'true'); }
+      });
+    });
+    // escolher um item fecha o dropdown
+    document.querySelectorAll('[data-dd] [data-lang], [data-dd] [data-cur]').forEach(function (b) {
+      b.addEventListener('click', function () { closeDD(); });
+    });
+    document.addEventListener('click', function (e) { if (!e.target.closest('[data-ctrl]')) closeDD(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeDD(); });
+
+    function openPrefs() { if (prefsDlg.showModal) prefsDlg.showModal(); else prefsDlg.setAttribute('open', ''); }
+    function closePrefs() { if (prefsDlg.close) prefsDlg.close(); else prefsDlg.removeAttribute('open'); }
+    document.querySelectorAll('[data-prefs-open]').forEach(function (b) { b.addEventListener('click', openPrefs); });
+    var pc = document.querySelector('[data-prefs-close]'); if (pc) pc.addEventListener('click', closePrefs);
+    prefsDlg.addEventListener('click', function (e) { if (e.target === prefsDlg) closePrefs(); });
+
+    setLang(read('kloobr-lang') || 'pt-BR');
+    setCur(read('kloobr-cur') || 'BRL');
+
+    /* ---------- conta: login / cadastro ---------- */
+    var acc = document.querySelector('[data-account]');
+    var authDlg = document.querySelector('[data-auth-dialog]');
+    if (!acc || !authDlg) return;
+    var iniEls = Array.prototype.slice.call(document.querySelectorAll('.js-ini'));
+    var nameEls = Array.prototype.slice.call(document.querySelectorAll('.js-name'));
+    var mailEl = document.querySelector('[data-user-mail]');
+    var accToggle = document.querySelector('[data-account-toggle]');
+    var accMenu = document.querySelector('[data-account-menu]');
+
+    function iniciais(nome) {
+      var p = String(nome).trim().split(/\s+/);
+      return (((p[0] || '')[0] || '') + (p.length > 1 ? (p[p.length - 1][0] || '') : '')).toUpperCase() || '·';
+    }
+    function login(nome, email) {
+      iniEls.forEach(function (e) { e.textContent = iniciais(nome); });
+      nameEls.forEach(function (e) { e.textContent = nome; });
+      if (mailEl) mailEl.textContent = email;
+      acc.dataset.logged = 'true';
+      store('kloobr-user', JSON.stringify({ nome: nome, email: email }));
+    }
+    function logout() {
+      acc.dataset.logged = 'false';
+      if (accMenu) accMenu.dataset.open = 'false';
+      if (accToggle) accToggle.setAttribute('aria-expanded', 'false');
+      try { localStorage.removeItem('kloobr-user'); } catch (e) {}
+    }
+
+    function openAuth() { if (authDlg.showModal) authDlg.showModal(); else authDlg.setAttribute('open', ''); }
+    function closeAuth() { if (authDlg.close) authDlg.close(); else authDlg.removeAttribute('open'); }
+    document.querySelectorAll('[data-auth-open]').forEach(function (b) { b.addEventListener('click', openAuth); });
+    var ac = document.querySelector('[data-auth-close]'); if (ac) ac.addEventListener('click', closeAuth);
+    authDlg.addEventListener('click', function (e) { if (e.target === authDlg) closeAuth(); });
+
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-authtab]'));
+    var formLogin = document.querySelector('[data-authform="login"]');
+    var formSignup = document.querySelector('[data-authform="signup"]');
+    var authTitle = document.querySelector('[data-auth-title]');
+    var authMsg = document.querySelector('[data-auth-msg]');
+    function showTab(which) {
+      tabs.forEach(function (t) { t.setAttribute('aria-selected', String(t.dataset.authtab === which)); });
+      formLogin.hidden = which !== 'login';
+      formSignup.hidden = which !== 'signup';
+      if (authTitle) authTitle.textContent = which === 'login' ? 'Entrar na KlooBR' : 'Criar a sua conta';
+      if (authMsg) authMsg.hidden = true;
+    }
+    tabs.forEach(function (t) { t.addEventListener('click', function () { showTab(t.dataset.authtab); }); });
+
+    formLogin.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!formLogin.checkValidity()) { formLogin.reportValidity(); return; }
+      var email = formLogin.querySelector('[name="email"]').value;
+      login(email.split('@')[0].replace(/[._-]+/g, ' '), email);   // sem nome no login: deriva do e-mail
+      closeAuth();
+    });
+    formSignup.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!formSignup.checkValidity()) { formSignup.reportValidity(); return; }
+      login(formSignup.querySelector('[name="nome"]').value, formSignup.querySelector('[name="email"]').value);
+      closeAuth();
+    });
+
+    var forgot = document.querySelector('[data-forgot]');
+    if (forgot) forgot.addEventListener('click', function () {
+      var email = formLogin.querySelector('[name="email"]');
+      if (!email.value) { email.focus(); return; }
+      if (authMsg) { authMsg.textContent = 'Enviamos um link de recuperação para ' + email.value + '.'; authMsg.hidden = false; }
+    });
+
+    if (accToggle) accToggle.addEventListener('click', function () {
+      var open = accMenu.dataset.open === 'true';
+      accMenu.dataset.open = String(!open);
+      accToggle.setAttribute('aria-expanded', String(!open));
+    });
+    var logoutBtn = document.querySelector('[data-logout]');
+    if (logoutBtn) logoutBtn.addEventListener('click', logout);
+    document.addEventListener('click', function (e) {
+      if (accMenu && accMenu.dataset.open === 'true' && !acc.contains(e.target)) {
+        accMenu.dataset.open = 'false';
+        if (accToggle) accToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && accMenu && accMenu.dataset.open === 'true') {
+        accMenu.dataset.open = 'false';
+        if (accToggle) accToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    var saved = read('kloobr-user');
+    if (saved) { try { var u = JSON.parse(saved); if (u && u.email) login(u.nome, u.email); } catch (e) {} }
+    showTab('login');
+  })();
+
+  // Avise-me: serviços "em breve" abrem um modal com nome + e-mail e tela de confirmação.
+  (function () {
+    var dlg = document.querySelector('[data-notify-dialog]');
+    if (!dlg) return;
+    var form = dlg.querySelector('[data-notify-form]');
+    var viewForm = dlg.querySelector('[data-notify-view="form"]');
+    var viewDone = dlg.querySelector('[data-notify-view="done"]');
+    var nameEls = Array.prototype.slice.call(dlg.querySelectorAll('[data-notify-name]'));
+    var mailEl = dlg.querySelector('[data-notify-mail]');
+
+    function open() { if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', ''); }
+    function close() { if (dlg.close) dlg.close(); else dlg.removeAttribute('open'); }
+
+    function showView(which) {
+      viewForm.hidden = which !== 'form';
+      viewDone.hidden = which !== 'done';
+    }
+
+    document.querySelectorAll('[data-notify-open]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var svc = b.getAttribute('data-notify-svc') || 'este serviço';
+        nameEls.forEach(function (e) { e.textContent = svc; });
+        form.reset();
+        showView('form');
+        open();
+      });
+    });
+
+    dlg.querySelectorAll('[data-notify-close]').forEach(function (b) {
+      b.addEventListener('click', close);
+    });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      if (mailEl) mailEl.textContent = form.querySelector('[name="email"]').value;
+      showView('done');
+    });
+  })();
+
+  // Rodapé: fases viram accordion no mobile (fechadas) e ficam abertas no desktop.
+  (function () {
+    var phases = document.querySelectorAll(".footer-phase");
+    if (!phases.length) return;
+    var mq = window.matchMedia("(min-width: 640px)");
+    function sync() { phases.forEach(function (d) { d.open = mq.matches; }); }
+    sync();
+    if (mq.addEventListener) mq.addEventListener("change", sync);
+    else if (mq.addListener) mq.addListener(sync);
+  })();
+</script>
+
+</body>
+</html>

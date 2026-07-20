@@ -1,0 +1,6580 @@
+/* ==========================================================================
+   KlooBR — Canal próprio · Folha de estilo compartilhada
+   Tarefa 4 (UI Designer). Derivada do Design System
+   (_paginas-atuais/design-system.html): mesmas cores, tipografia (Exo),
+   botões, cards, tabelas e motion. Aqui apenas ADAPTAMOS o DS ao canal
+   (nav própria, responsividade mobile-first e acessibilidade AA).
+
+   Sumário:
+     1. Tokens (cores/tipografia do DS)
+     2. Reset e base
+     3. Acessibilidade (skip-link, foco, reduced-motion, utilitários)
+     4. Layout (container, seções, backgrounds do DS)
+     5. Nav-bar própria KlooBR + menu mobile
+     6. Botões (DS)
+     7. Hero (DS, adaptado a 2 colunas)
+     8. Tipografia de seção / headings
+     9. Placeholders de imagem (marcam onde a arte entra — Tarefa 5)
+    10. Barra de prova/tração + selos
+    11. Passos (step-card do DS)
+    12. Serviços por fase + service-card (DS) responsivo
+    13. Comparativo: comparison-card + pricing-table (DS)
+    14. Delivery boxes (DS) / "o que você recebe"
+    15. Critérios "como a IA faz"
+    16. Confiança
+    17. Prova social / depoimentos
+    18. FAQ (details/summary)
+    19. CTA final
+    20. Rodapé
+    21. Breadcrumb
+    22. Simulador de economia
+   ========================================================================== */
+
+/* 1. TOKENS ---------------------------------------------------------------- */
+:root {
+  /* Paleta do Design System */
+  --brand-pink: #F4477C;
+  /* botões, acentos */
+  --accent-purple: #574C9B;
+  /* headers, cards médios */
+  --hl-pink: #FF00BF;
+  /* gradientes, spans de título, números */
+  --hl-blue: #8B84D7;
+  /* highlights, labels, foco */
+  --light-purple: #7265C6;
+  /* delivery box light */
+  --dark-bp: #30295C;
+  /* delivery box dark */
+  --bg-dark: #19162d;
+  /* fundo escuro base */
+  --market-dark: #1E1E1E;
+  /* market-card do DS */
+
+  /* Magenta do LOGO (marca aplicada; não é cor de UI) */
+  --logo-magenta: #A62D84;
+
+  /* Texto sobre fundos escuros (níveis com contraste AA garantido) */
+  --text: #FFFFFF;
+  /* corpo/realce — ~15:1 sobre #19162d */
+  --text-soft: rgba(255, 255, 255, .88);
+  /* secundário   — ~11:1 */
+  --text-mut: rgba(255, 255, 255, .72);
+  /* terciário/label — ~7:1 (AA em ≥16px) */
+
+  /* Gradientes do DS */
+  --radial: radial-gradient(circle at 36% 66%, #000000 0%, #574C9B 100%);
+  --table-grad: linear-gradient(180deg, #19162d 0%, #403870 87%);
+
+  --font: 'Exo', system-ui, -apple-system, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  --maxw: 1200px;
+  --nav-h: 80px;
+  /* nav no topo da página (transparente) */
+  --nav-h-min: 64px;
+  /* nav condensada, depois do scroll */
+  --svc-bar-h: 56px;
+  /* barra sticky com as fases do livro */
+  --radius: 16px;
+}
+
+/* 2. RESET E BASE ---------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Garante que âncoras não fiquem escondidas atrás da nav fixa */
+:target {
+  scroll-margin-top: calc(var(--nav-h) + 12px);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg-dark);
+  /* Rede de segurança contra estouro horizontal. `clip` e não `hidden`:
+     `hidden` computa overflow-y para `auto` e torna o body um container de
+     rolagem, o que quebra o `position: sticky` dos descendentes. */
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--hl-blue);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.2;
+  margin: 0 0 .75rem;
+  color: var(--text);
+}
+
+/* 3. ACESSIBILIDADE -------------------------------------------------------- */
+/* Skip-link (teclado / leitores de tela) */
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -60px;
+  background: var(--brand-pink);
+  color: #fff;
+  padding: .7rem 1.1rem;
+  border-radius: 0 0 8px 8px;
+  z-index: 10001;
+  font-weight: 700;
+  transition: top .2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Foco visível global (requisito AA) */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--hl-blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Conteúdo só para leitores de tela */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Respeita quem prefere menos movimento (desliga motion do DS) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 4. LAYOUT ---------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+main {
+  display: block;
+}
+
+/* Seções e seus fundos (reaproveita as superfícies do DS) */
+.section {
+  padding-block: clamp(3rem, 7vw, 5.5rem);
+  position: relative;
+}
+
+.section--dark {
+  background: var(--bg-dark);
+}
+
+.section--radial {
+  background: var(--radial);
+}
+
+/* = .info-section do DS */
+.section--table {
+  background: var(--table-grad);
+}
+
+/* Decorator sutil do DS (ícone marca-d'água) — meramente decorativo */
+.section--radial::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 85% 15%, rgba(255, 0, 191, .08), transparent 40%);
+  pointer-events: none;
+}
+
+.section__head {
+  max-width: 760px;
+  margin-bottom: 2.5rem;
+}
+
+.section__eyebrow {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--hl-blue);
+  margin-bottom: .75rem;
+}
+
+.section--centered .section__head {
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* Desktop: os títulos de seção usam a largura toda e ficam em uma única linha
+   quando couber (o lead mantém a sua própria largura de leitura de 60ch).
+   Só quebram — de forma equilibrada — quando realmente forem longos demais. */
+@media (min-width: 900px) {
+  .section__head {
+    max-width: none;
+  }
+
+  .section__head .h2 {
+    text-wrap: balance;
+  }
+
+  #cf-h {
+    font-size: clamp(1.6rem, 2.8vw, 2.15rem);
+  }
+}
+
+/* 5. NAV-BAR PRÓPRIA KLOOBR ------------------------------------------------ */
+/* Peso reduzido: só hambúrguer + logo + CTA. Transparente sobre o hero e
+   condensada ao rolar, para não competir com a barra de fases (.svc-bar). */
+.site-nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 10000;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background .3s ease, border-color .3s ease, backdrop-filter .3s ease;
+}
+
+.site-nav[data-scrolled="true"] {
+  background: rgba(25, 22, 45, .72);
+  border-bottom-color: rgba(255, 255, 255, .08);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+/* Com o drawer aberto a barra precisa de fundo, mesmo no topo da página */
+.site-nav:has(.nav-drawer[data-open="true"]) {
+  background: rgba(25, 22, 45, .96);
+  border-bottom-color: rgba(255, 255, 255, .08);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+.site-nav__inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: var(--nav-h);
+  padding-block: 8px;
+  transition: min-height .3s ease;
+}
+
+.site-nav[data-scrolled="true"] .site-nav__inner {
+  min-height: var(--nav-h-min);
+}
+
+.site-nav__logo {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+/* Mobile: logo menor para não encostar no hambúrguer e no CTA */
+.site-nav__logo-img {
+  height: 42px;
+  width: auto;
+  display: block;
+  transition: height .3s ease;
+}
+
+.site-nav[data-scrolled="true"] .site-nav__logo-img {
+  height: 36px;
+}
+
+@media (min-width: 760px) {
+  .site-nav__logo-img {
+    height: 60px;
+  }
+
+  .site-nav[data-scrolled="true"] .site-nav__logo-img {
+    height: 44px;
+  }
+}
+
+/* Hambúrguer: agora em todos os breakpoints, e discreto (sem moldura) */
+.nav-toggle {
+  order: -1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px;
+  margin-left: -8px;
+  /* alinha o traço do ícone com a margem do container */
+  background: none;
+  border: 0;
+  color: #fff;
+  font-family: var(--font);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: color .25s ease;
+}
+
+.nav-toggle:hover {
+  color: var(--hl-pink);
+}
+
+.nav-toggle:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: 2px;
+}
+
+.nav-toggle__bars {
+  display: inline-block;
+  width: 20px;
+  height: 14px;
+  position: relative;
+}
+
+.nav-toggle__bars::before,
+.nav-toggle__bars::after,
+.nav-toggle__bars span {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform .3s ease, opacity .2s ease;
+}
+
+.nav-toggle__bars::before {
+  top: 0;
+}
+
+.nav-toggle__bars span {
+  top: 6px;
+}
+
+.nav-toggle__bars::after {
+  bottom: 0;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars::before {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars span {
+  opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars::after {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Só o ícone: o label vira nome acessível do botão (não pode virar display:none,
+   senão o botão fica sem nome para leitores de tela). */
+.nav-toggle__label {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* CTA sempre visível, empurrado para a direita */
+.site-nav .site-nav__cta {
+  margin-left: auto;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+/* Nome do serviço na nav (páginas de serviço) — só no desktop, ao lado do CTA */
+.site-nav__service {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .site-nav__service {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: auto;
+    padding-right: 1rem;
+    min-width: 0;
+    text-align: right;
+    line-height: 1.25;
+  }
+
+  .site-nav__service-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--hl-blue);
+  }
+
+  .site-nav__service-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* o `margin-left:auto` passa para o nome; o CTA fica colado nele */
+  .site-nav:has(.site-nav__service) .site-nav__cta {
+    margin-left: 0;
+  }
+}
+
+/* ---- Controles da nav: idioma + moeda + conta -------------------------- */
+.nav-prefs {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+/* Só no desktop o nome do serviço empurra os controles; no mobile eles
+   voltam a ficar alinhados à direita (margin-left:auto herdado). */
+@media (min-width: 900px) {
+  .site-nav:has(.site-nav__service) .nav-prefs {
+    margin-left: 0;
+  }
+}
+
+/* Mobile: um único botão abre o painel de idioma/moeda; os dois pills somem */
+.nav-locale {
+  display: none;
+}
+
+.nav-prefs-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .16);
+  color: #fff;
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.nav-prefs-toggle:hover {
+  border-color: rgba(255, 255, 255, .32);
+  background: rgba(255, 255, 255, .1);
+}
+
+.nav-locale:focus-visible,
+.nav-prefs-toggle:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: 2px;
+}
+
+@media (min-width: 900px) {
+  .nav-prefs-toggle {
+    display: none;
+  }
+
+  .nav-locale {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .5rem .75rem;
+    border-radius: 999px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, .16);
+    color: #fff;
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: border-color .2s ease, background .2s ease;
+  }
+
+  .nav-locale:hover {
+    border-color: rgba(255, 255, 255, .32);
+    background: rgba(255, 255, 255, .1);
+  }
+}
+
+.nav-locale svg,
+.nav-prefs-toggle svg {
+  flex: 0 0 auto;
+}
+
+.nav-locale__chevron {
+  color: var(--text-mut);
+}
+
+.nav-cur__sym {
+  font-weight: 700;
+}
+
+/* Controle de idioma/moeda: wrapper que ancora o dropdown (só desktop) */
+.nav-ctrl { display: none; }
+@media (min-width: 900px) {
+  .nav-ctrl { display: block; position: relative; }
+}
+/* Dropdown que abre logo abaixo do próprio botão */
+.nav-dd {
+  position: absolute;
+  top: calc(100% + .5rem);
+  right: 0;
+  z-index: 9500;
+  width: 260px;
+  padding: .4rem;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 14px;
+  background: #1b182f;
+  box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .9);
+}
+.nav-dd[hidden] { display: none; }
+.nav-dd .prefs__langs { gap: .25rem; }
+.nav-locale__chevron { transition: transform .2s ease; }
+.nav-locale[aria-expanded="true"] .nav-locale__chevron { transform: rotate(180deg); }
+
+/* Conta: login/cadastro (deslogado) ou usuário (logado) */
+.nav-account {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav-login,
+.nav-user {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  cursor: pointer;
+  font-family: var(--font);
+  color: #fff;
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.nav-login {
+  padding: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .16);
+}
+
+.nav-login:hover {
+  border-color: rgba(255, 255, 255, .32);
+  background: rgba(255, 255, 255, .1);
+}
+
+.nav-login__txt {
+  display: none;
+}
+
+.nav-user {
+  padding: 5px 8px 5px 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .16);
+}
+
+.nav-user:hover {
+  border-color: rgba(255, 255, 255, .32);
+  background: rgba(255, 255, 255, .1);
+}
+
+.nav-user__avatar {
+  flex: 0 0 auto;
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--hl-pink), var(--hl-blue));
+}
+
+.nav-user__name {
+  display: none;
+}
+
+.nav-user__chevron {
+  color: var(--text-mut);
+}
+
+.nav-login:focus-visible,
+.nav-user:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: 2px;
+}
+
+/* estados logado / deslogado */
+.nav-account .nav-user {
+  display: none;
+}
+
+.nav-account[data-logged="true"] .nav-login {
+  display: none;
+}
+
+.nav-account[data-logged="true"] .nav-user {
+  display: inline-flex;
+}
+
+@media (min-width: 900px) {
+  .nav-login {
+    padding: .5rem .85rem;
+    min-width: 0;
+    border-radius: 999px;
+  }
+
+  .nav-login__txt {
+    display: inline;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .nav-user__name {
+    display: inline;
+    font-size: 14px;
+    font-weight: 600;
+    max-width: 12ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* Menu da conta (dropdown do usuário logado) */
+.account-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + .5rem);
+  right: 0;
+  z-index: 9500;
+  width: 240px;
+  padding: .6rem;
+  border-radius: 14px;
+  background: #1b182f;
+  border: 1px solid rgba(255, 255, 255, .14);
+  box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .9);
+}
+
+.account-menu[data-open="true"] {
+  display: block;
+}
+
+.account-menu__head {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .5rem .5rem .75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
+  margin-bottom: .5rem;
+}
+
+.account-menu__id {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.account-menu__name {
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account-menu__mail {
+  color: var(--text-mut);
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account-menu__item {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  width: 100%;
+  padding: .6rem .5rem;
+  border-radius: 9px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-family: var(--font);
+  font-size: 14px;
+}
+
+.account-menu__item:hover {
+  background: rgba(255, 255, 255, .06);
+  color: #fff;
+}
+
+.account-menu__item svg {
+  flex: 0 0 auto;
+  color: var(--text-mut);
+}
+
+/* Painel de preferências + diálogo de conta (modais, servem desktop e mobile) */
+.prefs,
+.authd {
+  width: min(440px, calc(100% - 2rem));
+  padding: 0;
+  margin: auto;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 18px;
+  background: #1b182f;
+  color: var(--text);
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .95);
+}
+
+.prefs::backdrop,
+.authd::backdrop {
+  background: rgba(10, 8, 20, .7);
+  backdrop-filter: blur(3px);
+}
+
+.prefs[open],
+.authd[open] {
+  animation: tipIn .2s ease-out;
+}
+
+.prefs__inner {
+  padding: 1.5rem;
+}
+
+.prefs__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.prefs__title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.prefs__sec+.prefs__sec {
+  margin-top: 1.5rem;
+}
+
+.prefs__label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--hl-blue);
+  margin: 0 0 .6rem;
+}
+
+.prefs__langs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+
+/* Diálogo de login/cadastro */
+.authd__tabs {
+  display: flex;
+  gap: .3rem;
+  padding: .3rem;
+  margin-bottom: 1.25rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .05);
+}
+
+.authd__tab {
+  flex: 1 1 0;
+  padding: .6rem;
+  border-radius: 9px;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  color: var(--text-soft);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  transition: background .2s ease, color .2s ease;
+}
+
+.authd__tab[aria-selected="true"] {
+  background: rgba(255, 0, 191, .14);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 0, 191, .35);
+}
+
+.authd__tab:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: 2px;
+}
+
+.authd__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.authd__form[hidden] {
+  display: none;
+}
+
+.authd__submit {
+  width: 100%;
+  margin-top: .25rem;
+}
+
+.authd__alt {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-soft);
+  text-align: center;
+}
+
+.linkish {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--hl-blue);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.linkish:hover {
+  text-decoration: underline;
+}
+
+.authd__msg {
+  margin: 0;
+  padding: .7rem .85rem;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #bff2d5;
+  background: rgba(80, 220, 140, .1);
+  border: 1px solid rgba(80, 220, 140, .35);
+}
+
+.authd__msg[hidden] {
+  display: none;
+}
+
+/* Aviso: contas do Clube de Autores / Literary Highways servem no KlooBR.
+   Usado no diálogo de login da nav e no passo de identificação do fluxo. */
+.auth-note {
+  display: flex;
+  align-items: flex-start;
+  gap: .6rem;
+  margin: 0 0 1.25rem;
+  padding: .75rem .85rem;
+  border-radius: 12px;
+  background: rgba(139, 132, 215, .12);
+  border: 1px solid rgba(139, 132, 215, .32);
+  color: var(--text-soft);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.auth-note__ico {
+  flex: 0 0 auto;
+  color: var(--hl-blue);
+  margin-top: 1px;
+}
+.auth-note strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Diálogo "Avise-me" (serviços em breve) */
+.notifyd__lead {
+  margin: 0 0 1.25rem;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+.notifyd__lead strong {
+  color: #fff;
+  font-weight: 600;
+}
+.notifyd__consent {
+  margin: -.25rem 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+.notifyd__consent a {
+  color: var(--hl-blue);
+  font-weight: 600;
+}
+.notifyd__consent a:hover {
+  text-decoration: underline;
+}
+
+/* Tela de confirmação */
+.notifyd__done {
+  text-align: center;
+  padding: .25rem 0 .25rem;
+}
+.notifyd__done[hidden] {
+  display: none;
+}
+.notifyd__check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  margin: .5rem 0 1.1rem;
+  border-radius: 50%;
+  color: #bff2d5;
+  background: rgba(80, 220, 140, .12);
+  border: 1px solid rgba(80, 220, 140, .4);
+}
+.notifyd__done-title {
+  margin: 0 0 .5rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+}
+.notifyd__done-text {
+  margin: 0 0 1.5rem;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-soft);
+}
+.notifyd__done-text strong {
+  color: #fff;
+  font-weight: 600;
+}
+.notifyd__view[hidden] {
+  display: none;
+}
+
+.lang {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  width: 100%;
+  padding: .7rem .85rem;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+  background: rgba(255, 255, 255, .03);
+  border: 1px solid rgba(255, 255, 255, .1);
+  color: var(--text-soft);
+  font-family: var(--font);
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+
+.lang:hover {
+  border-color: rgba(255, 255, 255, .28);
+  color: #fff;
+}
+
+.lang:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: 2px;
+}
+
+.lang__flag {
+  font-size: 1.15rem;
+  flex: 0 0 auto;
+  line-height: 1;
+}
+
+.lang__name {
+  color: #fff;
+  font-weight: 500;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.lang__cur {
+  font-size: 12px;
+  color: var(--text-mut);
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.lang__check {
+  flex: 0 0 auto;
+  color: var(--hl-pink);
+  opacity: 0;
+}
+
+.lang[aria-pressed="true"] {
+  border-color: var(--hl-pink);
+  background: rgba(255, 0, 191, .08);
+}
+
+.lang[aria-pressed="true"] .lang__check {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .prefs[open],
+  .authd[open] {
+    animation: none;
+  }
+}
+
+/* CTA ancorado no rodapé da janela (mobile) ------------------------------- */
+.cta-dock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .75rem 20px calc(.75rem + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, rgba(25, 22, 45, .9), rgba(25, 22, 45, .98));
+  border-top: 1px solid rgba(255, 255, 255, .1);
+  box-shadow: 0 -18px 40px -22px rgba(0, 0, 0, .95);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  /* Mobile: escondido na 1ª dobra (redundante com o hero); o JS revela quando
+     a rolagem deixa o hero. Sem JS/IO, o dock recebe --show e fica visível. */
+  transform: translateY(115%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .32s cubic-bezier(.4, 0, .2, 1), opacity .32s ease;
+}
+
+.cta-dock.cta-dock--show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-dock {
+    transition: none;
+  }
+}
+
+.cta-dock__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.cta-dock__price {
+  font-size: 1.35rem;
+  font-weight: 200;
+  color: #fff;
+  letter-spacing: -.5px;
+}
+
+.cta-dock__note {
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--text-mut);
+}
+
+.cta-dock .cta-dock__btn {
+  margin-left: auto;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+/* Espaço para o dock não cobrir o fim da página */
+body:has(.cta-dock) .site-footer {
+  padding-bottom: 6rem;
+}
+
+/* O CTA desce para o dock: não deve ficar duplicado na nav */
+body:has(.cta-dock) .site-nav .site-nav__cta {
+  display: none;
+}
+
+/* No desktop o CTA volta para a nav e o dock some */
+@media (min-width: 900px) {
+  .cta-dock {
+    display: none;
+  }
+
+  body:has(.cta-dock) .site-nav .site-nav__cta {
+    display: inline-flex;
+  }
+
+  body:has(.cta-dock) .site-footer {
+    padding-bottom: 3rem;
+  }
+}
+
+/* Com o drawer aberto o dock não deve flutuar por cima */
+body.has-drawer-open .cta-dock {
+  display: none;
+}
+
+/* Drawer: serviços agrupados por fase ------------------------------------- */
+.nav-drawer {
+  display: none;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(25, 22, 45, .98);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .9);
+  max-height: calc(100dvh - var(--nav-h-min));
+  overflow-y: auto;
+}
+
+.nav-drawer[data-open="true"] {
+  display: block;
+  animation: drawerIn .28s cubic-bezier(.22, .61, .36, 1);
+}
+
+@keyframes drawerIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.nav-drawer__inner {
+  display: grid;
+  gap: 1.75rem;
+  grid-template-columns: 1fr;
+  padding-block: 1.75rem 2rem;
+}
+
+.nav-drawer__phase {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  margin-bottom: .9rem;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color .2s ease;
+}
+
+.nav-drawer__phase-ico {
+  flex: 0 0 auto;
+  display: inline-flex;
+  color: var(--hl-pink);
+}
+.nav-drawer__phase-ico svg {
+  width: 17px;
+  height: 17px;
+}
+
+.nav-drawer__phase:hover {
+  color: var(--hl-pink);
+}
+
+.nav-drawer__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-drawer__list a {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: 7px 10px 7px 7px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  color: var(--text-soft);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.nav-drawer__list a:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, .05);
+  border-color: rgba(255, 255, 255, .12);
+  transform: translateX(2px);
+}
+
+/* Chip de ícone premium ao lado do serviço */
+.nav-drawer__ico {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  color: var(--hl-blue);
+  background: rgba(139, 132, 215, .12);
+  border: 1px solid rgba(139, 132, 215, .28);
+  transition: color .2s ease, background .2s ease, border-color .2s ease;
+}
+.nav-drawer__ico svg {
+  width: 20px;
+  height: 20px;
+}
+.nav-drawer__list a:hover .nav-drawer__ico {
+  color: var(--hl-pink);
+  background: rgba(255, 0, 191, .12);
+  border-color: rgba(255, 0, 191, .4);
+}
+
+.nav-drawer__name {
+  min-width: 0;
+}
+
+.nav-drawer__list .badge-soon {
+  margin-left: auto;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.nav-drawer__foot {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+}
+
+.nav-drawer__extra {
+  color: var(--text-mut);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.nav-drawer__extra:hover {
+  color: var(--hl-pink);
+}
+
+body.has-drawer-open {
+  overflow: hidden;
+}
+
+@media (min-width: 760px) {
+  .nav-drawer__inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .nav-drawer__foot {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-drawer__foot .btn {
+    flex: 0 0 auto;
+  }
+}
+
+@media (min-width: 1040px) {
+  .nav-drawer__inner {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  body.has-drawer-open {
+    overflow: auto;
+  }
+
+  /* no desktop o drawer é curto, não trava a página */
+}
+
+/* Espaço para a nav fixa não cobrir o conteúdo */
+.page {
+  padding-top: var(--nav-h);
+}
+
+/* Home: o hero passa POR BAIXO da nav, que fica transparente sobre a imagem.
+   O respiro vira padding do próprio hero. */
+.page--flush {
+  padding-top: 0;
+}
+
+/* soma a altura da nav ao padding próprio do hero, em vez de substituí-lo */
+.page--flush>.hero-section:first-child {
+  padding-top: calc(var(--nav-h) + clamp(3rem, 8vw, 6rem));
+}
+
+/* 6. BOTÕES (Design System) ----------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  min-height: 44px;
+  /* alvo tocável AA */
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: var(--font);
+  border: none;
+  cursor: pointer;
+  transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
+}
+
+.btn-primary {
+  background: var(--brand-pink);
+  color: #fff;
+  padding: 15px 30px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 0;
+  box-shadow: rgba(17, 17, 26, .1) 0 4px 16px, rgba(17, 17, 26, .1) 0 8px 24px, rgba(17, 17, 26, .1) 0 16px 56px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  background: #d81b60;
+  box-shadow: 0 8px 25px rgba(233, 30, 99, .4);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, .2);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, .35);
+  border-radius: 8px;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, .3);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.btn-outline:hover {
+  background: linear-gradient(330deg, rgba(87, 76, 155, .25) 0%, rgba(255, 0, 191, .25) 25%, rgba(244, 71, 124, .25) 50%, rgba(25, 22, 45, .25) 75%, rgba(64, 56, 112, .25) 100%);
+  background-size: 400% 400%;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: gradientMove 6s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 7. HERO (DS, adaptado a 2 colunas com espaço p/ imagem) ------------------ */
+.hero-section {
+  position: relative;
+  background: var(--radial);
+  color: #fff;
+  overflow: hidden;
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+
+.hero-ellipse {
+  position: absolute;
+  width: 485px;
+  height: 1005px;
+  background: var(--hl-pink);
+  border-radius: 50%;
+  opacity: .5;
+  filter: blur(300px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-ellipse--top-right {
+  top: -27rem;
+  right: -10px;
+  transform: rotate(-62deg);
+}
+
+.hero-ellipse--bottom-left {
+  bottom: -30rem;
+  left: -6rem;
+  transform: rotate(62deg);
+}
+
+/* Hero com a imagem integrada ao background (sem moldura).
+   A foto é uma variável (--hero-img) para que o MESMO scrim sirva a qualquer
+   página; cada página só troca a imagem. */
+.hero-section--image {
+  --hero-img: url('img/hero-home-lifestyle.webp');
+  background:
+    linear-gradient(90deg, rgba(20, 17, 38, .94) 0%, rgba(20, 17, 38, .80) 42%, rgba(20, 17, 38, .45) 72%, rgba(20, 17, 38, .35) 100%),
+    var(--hero-img) center right / cover no-repeat,
+    var(--radial);
+  min-height: min(78vh, 720px);
+  display: flex;
+  align-items: center;
+}
+
+/* Imagem específica por página (mesma lógica de scrim).
+   SLOT: hero-image — a mesma arte do card do serviço na home. */
+.hero-section--servico {
+  --hero-img: url('img/hero-edicao-revisao.webp');
+}
+
+/* Desktop: camada em gradiente (esquerda → direita) que escurece a metade
+   esquerda do hero (onde fica o texto) e revela a foto progressivamente da
+   esquerda para a direita — reforça o contraste AA sem esconder a imagem. */
+@media (min-width: 860px) {
+  .hero-section--image {
+    background:
+      linear-gradient(90deg,
+        rgba(20, 17, 38, .97) 0%,
+        rgba(20, 17, 38, .93) 30%,
+        rgba(20, 17, 38, .72) 50%,
+        rgba(20, 17, 38, .32) 74%,
+        rgba(20, 17, 38, .08) 100%),
+      var(--hero-img) center right / cover no-repeat,
+      var(--radial);
+  }
+}
+
+.hero-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+  grid-template-columns: 1fr;
+}
+
+.hero-copy {
+  max-width: 620px;
+}
+
+.hero-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle__line {
+  flex: 0 0 3rem;
+  max-width: 3rem;
+  height: 1px;
+  background: rgba(255, 255, 255, .5);
+}
+
+.hero-subtitle__text {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.hero-title {
+  font-size: clamp(2.2rem, 5.2vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.title-blue {
+  color: var(--hl-blue);
+}
+
+.title-pink {
+  color: var(--hl-pink);
+}
+
+/* "com IA" nunca quebra no meio; se o título não couber numa linha, a quebra
+   acontece antes de "com" (o espaço anterior ao span é o único ponto de quebra). */
+.title-ia {
+  white-space: nowrap;
+}
+
+.hero-description {
+  font-size: clamp(16px, 2vw, 18px);
+  font-weight: 300;
+  /* + peso que o DS p/ melhor contraste */
+  color: var(--text-soft);
+  margin-bottom: 2rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+/* Card único de preço no hero — mesma diagramação do card da home:
+   preço à esquerda, badge de economia + valor de mercado tachado à direita. */
+.hero-price {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.1rem 1.5rem;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .03));
+  border: 1px solid rgba(255, 255, 255, .16);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+.hero-price__value {
+  display: flex;
+  align-items: flex-start;
+  gap: .28rem;
+  color: #fff;
+  flex: 0 0 auto;
+  font-size: clamp(2.6rem, 6vw, 3.4rem);
+  font-weight: 200;
+  line-height: .95;
+  letter-spacing: -2px;
+}
+
+.hero-price__cur {
+  font-size: .34em;
+  font-weight: 300;
+  margin-top: .5em;
+}
+
+.hero-price__savings {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .35rem;
+  min-width: 0;
+}
+
+.hero-price__save {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  background: rgba(255, 0, 191, .2);
+  border: 1px solid rgba(255, 0, 191, .45);
+  border-radius: 999px;
+  padding: 4px 11px;
+}
+
+.hero-price__market {
+  font-size: 13px;
+  color: var(--text-mut);
+  text-decoration: line-through;
+  line-height: 1.35;
+}
+
+.hero-section--home {
+  position: relative;
+  /* fundo profundo escuro (como a referência): brilho magenta no topo-direito
+     atrás das ondas, sobre uma base quase preta arroxeada. */
+  background:
+    radial-gradient(88% 56% at 84% 24%, rgba(196, 64, 178, .34) 0%, rgba(90, 40, 130, .12) 46%, transparent 72%),
+    linear-gradient(180deg, #17122f 0%, #0e0a1c 60%, #0a0715 100%);
+  overflow: hidden;
+  min-height: min(94svh, 780px);
+  padding-bottom: 0;
+}
+
+/* Mobile: a imagem compõe o hero — pessoa à direita, ondas subindo por trás do
+   título. O topo (área escura da foto) já se funde ao fundo; leve fade só na borda. */
+.hero-section--home::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: auto;
+  right: -80px;
+  top: 12%;
+  bottom: auto;
+  width: 82%;
+  height: 76%;
+  z-index: 0;
+  /* à direita e mais alta: a cabeça sobe e preenche o espaço ao lado do título */
+  background: url('img/hero-home-mobile.webp') right top / cover no-repeat;
+  /* realça as ondas magenta e aprofunda os escuros (tom da referência) */
+  filter: saturate(1.25) contrast(1.1);
+  /* funde a imagem no fundo: a borda esquerda e o topo dissolvem (interseção
+     das duas máscaras), mantendo a pessoa sólida no canto inferior-direito */
+  -webkit-mask-image:
+    linear-gradient(to left, #000 58%, transparent 100%),
+    linear-gradient(to top, #000 84%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to left, #000 58%, transparent 100%),
+    linear-gradient(to top, #000 84%, transparent 100%);
+  mask-composite: intersect;
+}
+
+/* Gradiente do hero desktop: escuro só na faixa esquerda p/ o texto branco;
+   o centro e a direita revelam as ondas e a pessoa sem esmaecer. */
+.hero-section--home::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(90deg,
+      rgba(12, 9, 22, .92) 0%, rgba(12, 9, 22, .58) 20%, rgba(12, 9, 22, .14) 40%, transparent 58%);
+}
+
+/* Ajustes finos do hero da home no mobile */
+@media (max-width: 859px) {
+
+  /* menos espaço acima do conteúdo (sobrepõe o padding grande do flush) */
+  .page--flush>.hero-section--home:first-child {
+    padding-top: calc(var(--nav-h) + .25rem);
+  }
+
+  /* mais espaço na base, antes da barra de selos que flutua sobre o hero */
+  .hero-section--home {
+    padding-bottom: 168px;
+  }
+
+  .hero-section--home .hero-subtitle {
+    margin-bottom: .75rem;
+    gap: .75rem;
+  }
+
+  .hero-section--home .hero-subtitle__line {
+    flex-basis: 2rem;
+    max-width: 2rem;
+  }
+
+  .hero-section--home .hero-subtitle__text {
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  /* o subtítulo ocupa ~metade do container p/ não cair sobre o rosto da pessoa */
+  .hero-section--home .hero-description {
+    font-size: 14px;
+    margin-bottom: 1.75rem;
+    max-width: 54%;
+  }
+
+  /* Botões lado-a-lado, dividindo a largura da tela */
+  .hero-section--home .hero-actions {
+    flex-wrap: nowrap;
+    gap: .7rem;
+  }
+
+  .hero-section--home .hero-actions .btn {
+    flex: 1 1 0;
+    justify-content: center;
+    text-align: center;
+    padding-inline: .75rem;
+    white-space: nowrap;
+  }
+}
+
+/* Hero de SERVIÇO no mobile: espelha o hero da home — o grafismo (imagem de
+   fundo) fica alinhado à direita e mais visível, e o subtítulo (descrição) vai
+   para a coluna da esquerda, com a mesma fonte menor da home. */
+@media (max-width: 859px) {
+  .hero-section--servico {
+    background:
+      linear-gradient(90deg,
+        rgba(20, 17, 38, .95) 0%,
+        rgba(20, 17, 38, .88) 20%,
+        rgba(20, 17, 38, .55) 44%,
+        rgba(20, 17, 38, .18) 66%,
+        transparent 84%),
+      var(--hero-img) center right / cover no-repeat,
+      var(--radial);
+  }
+
+  .hero-section--servico .hero-subtitle {
+    gap: .75rem;
+  }
+
+  .hero-section--servico .hero-subtitle__line {
+    flex-basis: 2rem;
+    max-width: 2rem;
+  }
+
+  .hero-section--servico .hero-subtitle__text {
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  .hero-section--servico .hero-description {
+    font-size: 14px;
+    max-width: 56%;
+  }
+}
+
+@media (min-width: 860px) {
+  .hero-section--home {
+    /* O hero preenche a primeira dobra; a barra de selos flutua sobre a base.
+       Topo e base equilibrados p/ o conteúdo ficar centrado (não "puxado"). */
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    background: var(--radial);
+    /* Mantém o gradiente radial sutil de fundo no desktop */
+    padding-bottom: 6rem;
+    /* reserva a faixa da barra flutuante */
+  }
+
+  /* equilibra o espaço superior com o inferior (sobrepõe o padding grande do flush) */
+  .page--flush>.hero-section--home:first-child {
+    padding-top: 6rem;
+  }
+
+  /* No desktop o véu de legibilidade do mobile é dispensado (o ::before já mascara) */
+  .hero-section--home::after {
+    display: none;
+  }
+
+  /* Pseudo-elemento ativado no desktop como background na direita (um pouco p/ cima) */
+  .hero-section--home::before {
+    display: block;
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: auto;
+    width: 55%;
+    height: 100%;
+    z-index: 1;
+    background: url('img/hero-home-desktop.webp') right 38% / cover no-repeat;
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 40%);
+    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 40%);
+  }
+
+  .hero-proof {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1240px) {
+
+  /* Em telas largas, a imagem alarga junto (sem vão à direita) e ganha um
+     pouco mais de área para a figura não ficar excessivamente ampliada. */
+  .hero-section--home::before {
+    width: 60%;
+  }
+}
+
+@media (min-width: 1600px) {
+  .hero-section--home::before {
+    width: 64%;
+  }
+}
+
+/* 8. HEADINGS DE SEÇÃO ----------------------------------------------------- */
+.h2 {
+  font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+  font-weight: 300;
+}
+
+.h2 strong {
+  font-weight: 700;
+}
+
+.h2 .accent {
+  color: var(--hl-pink);
+  font-weight: 700;
+}
+
+.section__lead {
+  color: var(--text-soft);
+  font-size: clamp(15px, 1.6vw, 18px);
+  font-weight: 300;
+}
+
+/* 9. PLACEHOLDERS DE IMAGEM (arte entra na Tarefa 5) ----------------------- */
+/* Cada .img-placeholder marca posição, proporção e alt (via aria-label).
+   O Diretor de Arte substitui por <img>/<picture> mantendo classe e alt. */
+.img-placeholder {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: var(--radius);
+  border: 2px dashed rgba(255, 255, 255, .28);
+  background:
+    linear-gradient(135deg, rgba(255, 0, 191, .14), rgba(87, 76, 155, .22)),
+    var(--bg-dark);
+  color: var(--text-mut);
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.img-placeholder::after {
+  content: attr(data-label);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--text-soft);
+  background: rgba(0, 0, 0, .35);
+  padding: 6px 10px;
+  border-radius: 20px;
+}
+
+.img-placeholder--tech {
+  background: linear-gradient(135deg, rgba(255, 0, 191, .18), rgba(48, 41, 92, .6)), var(--bg-dark);
+}
+
+.img-placeholder--product {
+  background: repeating-linear-gradient(45deg, rgba(255, 255, 255, .04) 0 12px, transparent 12px 24px), var(--bg-dark);
+}
+
+/* 10. BARRA DE PROVA / TRAÇÃO + SELOS -------------------------------------- */
+/* Big numbers SEM cards — grandes e no mesmo peso light dos números do self-service */
+/* Cabeçalho dos big numbers: centralizado para casar com os números */
+.section__head--stats {
+  max-width: 720px;
+  margin-inline: auto;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section__head--stats .section__lead {
+  margin-top: 1rem;
+}
+
+.stats-grid {
+  list-style: none;
+  margin: 0 0 2.5rem;
+  padding: 0;
+  display: grid;
+  gap: 2rem 1rem;
+  grid-template-columns: repeat(2, 1fr);
+  text-align: center;
+}
+
+.stats-grid li {
+  padding: .25rem;
+}
+
+.stats-grid .stat-num {
+  display: block;
+  font-weight: 200;
+  line-height: 1;
+  letter-spacing: -1px;
+  font-size: clamp(2rem, 4.5vw, 3.8rem);
+  color: var(--hl-pink);
+  white-space: nowrap;
+  /* evita quebra do número (ex.: "+40 mil") */
+}
+
+.stats-grid .stat-label {
+  display: block;
+  color: var(--text-soft);
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Divisórias sutis entre os números (desktop) */
+@media (min-width: 640px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .stats-grid li+li {
+    border-left: 1px solid rgba(255, 255, 255, .1);
+  }
+}
+
+/* Barra de garantias — card de vidro que FLUTUA sobre a base do hero
+   (glassmorfismo): borra a imagem do hero atrás dela. Vale mobile e desktop. */
+.trust-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 16px;
+  z-index: 5;
+  background: none;
+  border: 0;
+}
+
+.trust-bar__list {
+  list-style: none;
+  margin: 0;
+  padding: .5rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .08);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  box-shadow: 0 20px 50px -24px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .12);
+}
+
+.trust-bar__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: .55rem;
+  text-align: center;
+  padding: 1.05rem .3rem;
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 500;
+}
+
+.trust-bar .seal-ico {
+  flex: 0 0 auto;
+  display: inline-flex;
+  color: var(--hl-blue);
+}
+
+.trust-bar .seal-ico svg {
+  width: 26px;
+  height: 26px;
+  display: block;
+}
+
+.trust-bar .seal-text {
+  line-height: 1.32;
+}
+
+/* Desktop: o mesmo card de vidro, centrado no container e em linha */
+@media (min-width: 860px) {
+  .trust-bar {
+    bottom: 24px;
+  }
+
+  .trust-bar__list {
+    padding: .35rem;
+    border-radius: 20px;
+  }
+
+  .trust-bar__item {
+    flex-direction: row;
+    justify-content: center;
+    gap: .7rem;
+    padding: 1.05rem .5rem;
+    font-size: 14px;
+    text-align: left;
+  }
+
+  .trust-bar__item+.trust-bar__item {
+    border-left: 1px solid rgba(255, 255, 255, .12);
+  }
+
+  .trust-bar .seal-ico svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* 11. PASSOS (step-card do DS) -------------------------------------------- */
+.steps-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+  counter-reset: step;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.step-card {
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.step-number {
+  font-size: 56px;
+  font-weight: 200;
+  color: var(--hl-pink);
+  line-height: 1;
+  margin-bottom: .5rem;
+}
+
+.step-card h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: .4rem;
+}
+
+.step-card p {
+  color: var(--text-soft);
+  font-size: 14px;
+  font-weight: 300;
+  margin: 0;
+}
+
+@media (min-width: 760px) {
+  .steps-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .steps-grid--4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 12. SERVIÇOS POR FASE + service-card (DS) responsivo -------------------- */
+.phase {
+  margin-top: 3rem;
+}
+
+.phase:first-of-type {
+  margin-top: 1.5rem;
+}
+
+.phase__banner {
+  aspect-ratio: 21 / 9;
+  margin-bottom: 1.25rem;
+}
+
+.phase__title {
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 700;
+}
+
+.phase__title .num {
+  display: inline-block;
+  color: var(--hl-blue);
+  font-weight: 300;
+  margin-right: .5rem;
+}
+
+.phase__desc {
+  color: var(--text-soft);
+  font-weight: 300;
+  max-width: 60ch;
+  margin-bottom: 1.5rem;
+}
+
+/* 12b. CABEÇALHO DOS SERVIÇOS (integrado às categorias) ------------------- */
+.services-intro__head {
+  max-width: 780px;
+}
+
+.services-intro__title {
+  margin-bottom: 1rem;
+}
+
+.services-intro__lead {
+  color: var(--text-soft);
+  font-weight: 300;
+  font-size: clamp(15px, 1.8vw, 19px);
+  line-height: 1.6;
+  max-width: 66ch;
+  margin: 0;
+}
+
+/* 12c. BARRA STICKY DAS FASES (âncoras + scroll-spy) ---------------------- */
+/* Mobile: gatilho estilo select (rótulo inteiro). Desktop: segmentos de vidro. */
+.svc-bar {
+  position: sticky;
+  top: var(--nav-h-min);
+  z-index: 20;
+  padding-block: .75rem;
+  margin-bottom: 2.5rem;
+  background: linear-gradient(180deg, rgba(25, 22, 45, .92), rgba(25, 22, 45, .78));
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid rgba(255, 255, 255, .07);
+}
+
+.svc-glyph {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+/* ---- Gatilho (mobile) ---- */
+.svc-select {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  width: 100%;
+  padding: .6rem .9rem;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font);
+  color: #fff;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .03));
+  border: 1px solid rgba(255, 255, 255, .14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  transition: border-color .25s ease, background .25s ease;
+}
+
+.svc-select:hover {
+  border-color: rgba(255, 0, 191, .4);
+}
+
+.svc-select[aria-expanded="true"] {
+  border-color: rgba(255, 0, 191, .5);
+}
+
+.svc-select__ico {
+  flex: 0 0 auto;
+  display: inline-flex;
+  color: var(--hl-pink);
+}
+
+.svc-select__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.svc-select__eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--hl-blue);
+}
+
+.svc-select__label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.svc-select__chevron {
+  flex: 0 0 auto;
+  margin-left: auto;
+  color: var(--text-mut);
+  transition: transform .25s ease;
+}
+
+.svc-select[aria-expanded="true"] .svc-select__chevron {
+  transform: rotate(180deg);
+}
+
+/* ---- Lista ---- */
+/* Mobile: painel suspenso do "select" (fechado por padrão) */
+.svc-bar__list {
+  list-style: none;
+  margin: .5rem 0 0;
+  padding: 6px;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  border-radius: 14px;
+  background: rgba(25, 22, 45, .98);
+  border: 1px solid rgba(255, 255, 255, .14);
+  box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .9);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+.svc-bar__list[data-open="true"] {
+  display: flex;
+  animation: drawerIn .22s cubic-bezier(.22, .61, .36, 1);
+}
+
+.svc-bar__item {
+  display: flex;
+  min-width: 0;
+}
+
+.svc-bar__link {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  min-height: 46px;
+  padding: .55rem .8rem;
+  border-radius: 10px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.25;
+  transition: color .25s ease, background .25s ease;
+}
+
+.svc-bar__link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, .06);
+}
+
+.svc-bar__link:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: -2px;
+}
+
+.svc-bar__ico {
+  flex: 0 0 auto;
+  display: inline-flex;
+  color: var(--hl-blue);
+  transition: color .25s ease;
+}
+
+.svc-bar__text {
+  min-width: 0;
+}
+
+.svc-bar__link.is-active {
+  color: #fff;
+  background: rgba(255, 0, 191, .14);
+}
+
+.svc-bar__link.is-active .svc-bar__ico {
+  color: var(--hl-pink);
+}
+
+/* ---- Desktop (>=780px): segmentos de vidro numa pílula ---- */
+@media (min-width: 780px) {
+  .svc-select {
+    display: none;
+  }
+
+  .svc-bar__list {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    margin: 0 auto;
+    padding: 6px;
+    width: fit-content;
+    max-width: 100%;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .03);
+    border: 1px solid rgba(255, 255, 255, .08);
+    box-shadow: none;
+    animation: none;
+  }
+
+  .svc-bar__item {
+    flex: 0 0 auto;
+  }
+
+  /* Botão de vidro plano (padrão do site: sem gradiente/volume) */
+  .svc-bar__link {
+    min-height: 0;
+    padding: .55rem 1.1rem;
+    border-radius: 999px;
+    font-size: 14px;
+    white-space: nowrap;
+    color: var(--text-mut);
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, .12);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    transition: color .25s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+
+  .svc-bar__link:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, .28);
+    background: rgba(255, 255, 255, .1);
+  }
+
+  .svc-bar__link.is-active {
+    color: #fff;
+    background: rgba(255, 0, 191, .12);
+    border-color: rgba(255, 0, 191, .5);
+    box-shadow: inset 0 0 0 1px rgba(255, 0, 191, .3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .svc-bar__link,
+  .svc-bar__ico,
+  .svc-select,
+  .svc-select__chevron {
+    transition: none;
+  }
+
+  .svc-bar__list[data-open="true"] {
+    animation: none;
+  }
+}
+
+/* 12d. FASES — carrossel de cards de serviço ------------------------------ */
+/* Alvo das âncoras: precisa passar por baixo da nav condensada E da barra. */
+.phase--carousel {
+  scroll-margin-top: calc(var(--nav-h-min) + var(--svc-bar-h) + 16px);
+  margin-top: 4rem;
+}
+
+.phase--carousel:first-of-type {
+  margin-top: 0;
+}
+
+.phase__head {
+  margin-bottom: 1.25rem;
+}
+
+.phase__head .phase__desc {
+  margin-bottom: 0;
+  max-width: 60ch;
+}
+
+.svc-carousel {
+  margin-top: 1.5rem;
+}
+
+.svc-track {
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  gap: 1.25rem;
+  align-items: stretch;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.svc-track::-webkit-scrollbar {
+  display: none;
+}
+
+.svc-slide {
+  scroll-snap-align: start;
+  display: flex;
+}
+
+/* Card = mesmo conteúdo do antigo .service-detail, agora como slide */
+.svc-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: calc(var(--radius) + 6px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .02));
+  border: 1px solid rgba(255, 255, 255, .12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07), 0 24px 50px -30px rgba(0, 0, 0, .9);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  transition: border-color .25s ease, transform .25s ease;
+}
+
+.svc-card:hover {
+  border-color: rgba(255, 0, 191, .35);
+  transform: translateY(-3px);
+}
+
+.svc-card--future {
+  border-style: dashed;
+}
+
+.svc-card--future .sd__body {
+  gap: .85rem;
+}
+
+.svc-card--future .sd__name {
+  position: static;
+  text-shadow: none;
+}
+
+.svc-card--future .badge-soon {
+  align-self: flex-start;
+  margin-left: 0;
+}
+
+.svc-card--future .sd__cta {
+  margin-top: auto;
+}
+
+/* Conteúdo interno do card (inalterado) */
+/* Só a imagem é clipada (cantos superiores) — o conteúdo nunca é cortado */
+.sd__media {
+  position: relative;
+  flex: 0 0 auto;
+  height: 132px;                 /* banner curto no mobile p/ o card caber na tela */
+  overflow: hidden;
+  border-radius: calc(var(--radius) + 5px) calc(var(--radius) + 5px) 0 0;
+}
+
+.sd__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Gradiente que funde a base da imagem ao corpo do card */
+.sd__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(20, 17, 38, 0) 30%, rgba(20, 17, 38, .55) 72%, rgba(24, 20, 44, .96) 100%);
+}
+
+.sd__media--future {
+  height: 120px;
+  background: linear-gradient(150deg, rgba(255, 0, 191, .22), rgba(87, 76, 155, .34));
+}
+
+.sd__name {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.sd__media .sd__name {
+  position: absolute;
+  z-index: 1;
+  left: clamp(1.1rem, 3vw, 1.9rem);
+  right: 1rem;
+  bottom: .7rem;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, .6);
+}
+
+.sd__body {
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+  padding: clamp(1.1rem, 3vw, 1.5rem);
+  flex: 1 1 auto;
+}
+
+/* Preço à esquerda; à direita, o badge de economia sobre o valor de mercado
+   tachado (mesma diagramação do desktop) — mais compacto que empilhado. */
+.sd__pricing {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: .9rem;
+}
+
+.sd__price {
+  display: flex;
+  align-items: flex-start;
+  gap: .24rem;
+  flex: 0 0 auto;
+  color: #fff;
+  font-size: clamp(2.2rem, 8vw, 2.8rem);
+  font-weight: 200;
+  line-height: .95;
+  letter-spacing: -1.5px;
+}
+
+.sd__cur {
+  font-size: .38em;
+  font-weight: 300;
+  margin-top: .5em;
+}
+
+.sd__savings {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .3rem;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+.sd__save {
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  background: rgba(255, 0, 191, .2);
+  border: 1px solid rgba(255, 0, 191, .45);
+  border-radius: 999px;
+  padding: 4px 11px;
+}
+
+.sd__market {
+  font-size: 12px;
+  color: var(--text-mut);
+  text-decoration: line-through;
+  line-height: 1.35;
+}
+
+.sd__save {
+  font-size: 11px;
+  padding: 3px 9px;
+}
+
+.sd__tagline {
+  color: var(--text-soft);
+  font-weight: 300;
+  font-size: 13.5px;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.sd__features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+
+.sd__features li {
+  position: relative;
+  padding-left: 1.6rem;
+  color: var(--text-soft);
+  font-size: 13px;
+}
+
+.sd__features li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 16px;
+  height: 16px;
+  background: no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF00BF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
+}
+
+.sd__foot {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+  padding-top: .3rem;
+}
+
+.sd__note {
+  color: var(--text-mut);
+  font-size: 13px;
+  font-weight: 300;
+  margin: 0;
+}
+
+.sd__cta {
+  width: 100%;
+}
+
+/* Navegação do carrossel (some sozinha quando tudo já cabe na tela) */
+.svc-carousel__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.svc-carousel__nav[hidden] {
+  display: none;
+}
+
+.svc-arrow {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  cursor: pointer;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .16);
+  color: #fff;
+  transition: background .2s ease, border-color .2s ease, opacity .2s ease;
+}
+
+.svc-arrow:hover:not(:disabled) {
+  background: rgba(255, 0, 191, .16);
+  border-color: var(--hl-pink);
+}
+
+.svc-arrow:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+.svc-arrow:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: 2px;
+}
+
+.svc-dots {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.svc-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  background: rgba(255, 255, 255, .22);
+  border: 0;
+  transition: background .25s ease, width .25s ease;
+}
+
+.svc-dot[aria-current="true"] {
+  background: var(--hl-pink);
+  width: 22px;
+  border-radius: 4px;
+}
+
+.svc-dot:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: 3px;
+}
+
+/* Tablet (700–899px): 2 cards por vez. */
+@media (min-width: 700px) and (max-width: 899px) {
+  .svc-track {
+    grid-auto-columns: calc((100% - 1.25rem) / 2);
+  }
+}
+
+/* ---- Card em 2 colunas (imagem à esquerda, conteúdo à direita) ----
+   A arte dos cards é 450x600 (retrato 3:4). Como banner largo ela era cortada
+   em ~73% da altura, escondendo elementos importantes. Virando coluna, a
+   proporção é respeitada E o card fica bem mais baixo.
+
+   Só a partir de 1100px: abaixo disso a lista lateral (430px) + a coluna da
+   imagem + um corpo legível (~273px) não cabem, e o conteúdo estourava o card.
+   Entre 900 e 1099px o card segue no formato empilhado. */
+@media (min-width: 1100px) {
+  .svc-card {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  /* A altura vem do stretch (conteúdo do corpo) e o aspect-ratio deriva a
+     largura a partir dela — assim a proporção 3:4 é exata, sem corte. */
+  .svc-card .sd__media {
+    flex: 0 0 auto;
+    width: auto;
+    height: auto;
+    align-self: stretch;
+    aspect-ratio: 3 / 4;
+    border-radius: calc(var(--radius) + 5px) 0 0 calc(var(--radius) + 5px);
+  }
+
+  /* Dois degradês: um funde a lateral direita da imagem com o corpo do card,
+     o outro é o scrim que garante a leitura do nome sobre a arte. */
+  .svc-card .sd__media::after {
+    background:
+      linear-gradient(90deg, rgba(20, 17, 38, 0) 55%, rgba(24, 20, 44, .92) 100%),
+      linear-gradient(180deg, rgba(20, 17, 38, 0) 55%, rgba(20, 17, 38, .75) 100%);
+  }
+
+  .svc-card .sd__media .sd__name {
+    left: 1.25rem;
+    right: 1.25rem;
+    bottom: 1.1rem;
+    font-size: 1.2rem;
+  }
+
+  .svc-card .sd__media--future {
+    aspect-ratio: 3 / 4;
+  }
+
+  .svc-card .sd__body {
+    justify-content: center;
+    gap: .85rem;
+    padding: 2.4rem 1.5rem;
+  }
+
+  /* Preço à esquerda e, à direita, uma coluna com o badge sobre o valor de
+     mercado. Lado a lado em vez de empilhados, o bloco fica mais baixo. */
+  .svc-card .sd__pricing {
+    flex-direction: row;
+    align-items: center;
+    gap: .9rem;
+  }
+
+  .svc-card .sd__price {
+    font-size: 3rem;
+    flex: 0 0 auto;
+  }
+
+  .svc-card .sd__savings {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .3rem;
+    flex-wrap: nowrap;
+    min-width: 0;
+  }
+
+  .svc-card .sd__save {
+    font-size: 11px;
+    padding: 3px 9px;
+  }
+
+  .svc-card .sd__market {
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  /* mantém o desktop com os tamanhos originais (a redução é só do mobile) */
+  .svc-card .sd__tagline {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .svc-card .sd__features li {
+    font-size: 14px;
+  }
+}
+
+/* Lista lateral de serviços — só existe no desktop */
+.phase-nav {
+  display: none;
+}
+
+/* ---- Desktop (>=900px): lista à esquerda + serviço aberto à direita ---- */
+@media (min-width: 900px) {
+  .phase--carousel {
+    margin-top: 6rem;
+  }
+
+  .phase--carousel:first-of-type {
+    margin-top: 0;
+  }
+
+  .services-intro__head {
+    margin-bottom: 3rem;
+  }
+
+  .phase__pin {
+    display: grid;
+    grid-template-columns: minmax(320px, 430px) 1fr;
+    column-gap: 2rem;
+    row-gap: 1.25rem;
+    align-items: stretch;
+  }
+
+  .phase__head {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
+  }
+
+  .phase-nav {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+
+  .svc-carousel {
+    grid-column: 2;
+    margin-top: 0;
+    min-width: 0;
+  }
+
+  /* O track vira a "janela" do detalhe: um card por vez, sem setas nem dots */
+  .svc-track {
+    grid-auto-columns: 100%;
+    height: 100%;
+  }
+
+  .svc-carousel__nav {
+    display: none;
+  }
+
+  /* Botões da lista dividem a altura do detalhe (nada é cortado) */
+  .phase-card {
+    flex: 1 1 auto;
+    min-height: 84px;
+  }
+}
+
+/* Card clicável da lista (estilo app: ícone + título + texto de apoio) */
+.phase-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font);
+  padding: 1rem 1.15rem;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .02));
+  border: 1px solid rgba(255, 255, 255, .09);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+.phase-card:hover {
+  background: rgba(255, 255, 255, .07);
+}
+
+.phase-card[aria-selected="true"] {
+  background: rgba(255, 255, 255, .09);
+  border-color: rgba(255, 0, 191, .5);
+  box-shadow: 0 0 0 1px rgba(255, 0, 191, .22);
+}
+
+/* Feedback de rolagem (desktop travado): a própria BORDA ESQUERDA do card ativo
+   se forma como progresso à medida que o usuário rola, até trocar de card.
+   As tiras ficam coladas na borda (left:0) e são recortadas pelos cantos
+   arredondados via overflow:hidden — parecem, de fato, a borda do card. */
+@media (min-width: 1100px) {
+  .phase-card {
+    overflow: hidden;   /* recorta as tiras nos cantos arredondados */
+  }
+  .phase-card::before,
+  .phase-card::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  /* trilho: a borda esquerda inteira, bem sutil */
+  .phase-card::before {
+    bottom: 0;
+    background: rgba(255, 255, 255, .16);
+  }
+  /* preenchimento: a borda esquerda "se formando" de cima p/ baixo */
+  .phase-card::after {
+    height: calc(var(--svc-prog, 0) * 100%);
+    background: linear-gradient(180deg, var(--hl-pink), var(--hl-blue));
+    box-shadow: 0 0 12px -1px rgba(255, 0, 191, .7);
+  }
+  /* no card ativo a borda esquerda some — quem a desenha é a barra */
+  .phase-card[aria-selected="true"] {
+    border-left-color: transparent;
+  }
+  .phase-card[aria-selected="true"]::before,
+  .phase-card[aria-selected="true"]::after {
+    opacity: 1;
+  }
+}
+
+.phase-card:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: 3px;
+}
+
+.phase-card__icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  color: var(--hl-blue);
+  background: rgba(139, 132, 215, .1);
+  border: 1px solid rgba(139, 132, 215, .28);
+  transition: color .25s ease, background .25s ease, border-color .25s ease;
+}
+
+.phase-card__glyph {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.phase-card[aria-selected="true"] .phase-card__icon {
+  color: var(--hl-pink);
+  background: rgba(255, 0, 191, .1);
+  border-color: rgba(255, 0, 191, .4);
+}
+
+.phase-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.phase-card__name {
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.phase-card__name .badge-soon {
+  margin-left: 0;
+}
+
+.phase-card__support {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-mut);
+  line-height: 1.35;
+}
+
+.phase-card__chevron {
+  flex: 0 0 auto;
+  margin-left: auto;
+  color: var(--text-mut);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity .25s ease, transform .25s ease, color .25s ease;
+}
+
+.phase-card[aria-selected="true"] .phase-card__chevron {
+  color: var(--hl-pink);
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Scroll com pin: o bloco da fase trava e a rolagem passa os serviços ----
+   Cada serviço ganha um "trecho" de rolagem (--step). A altura extra da fase
+   (padding-bottom) é o que dá espaço para o sticky viajar antes de destravar.
+   Só quando há altura de tela suficiente para o bloco caber travado. */
+.phase__spacer {
+  display: none;
+}
+
+/* Só a partir de 1100px, onde o card é o de 2 colunas (~385px). Entre 900 e
+   1099px o card é empilhado (~700px+) e o bloco travado não caberia na tela. */
+@media (min-width: 1100px) and (min-height: 700px) {
+
+  /* O curso do sticky vem de um ESPAÇADOR, não de padding: o bloco de
+     posicionamento do sticky é o content box do pai, e padding fica fora
+     dele — com padding-bottom o pin ficava sem curso e nunca travava. */
+  .phase__spacer {
+    display: block;
+    height: calc((var(--n, 3) - 1) * var(--step, 62vh));
+  }
+
+  .phase__pin {
+    position: sticky;
+    top: calc(var(--pin-top, 150px));
+  }
+
+  /* Sem transição horizontal no modo pin: a troca de card acompanha a rolagem */
+  .phase__pin .svc-track {
+    scroll-behavior: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-card {
+    transition: none;
+  }
+
+  .svc-card:hover {
+    transform: none;
+  }
+
+  .svc-track {
+    scroll-behavior: auto;
+  }
+
+  .phase-card,
+  .phase-card__icon,
+  .phase-card__chevron {
+    transition: none;
+  }
+}
+
+/* Diferenciais — "Por que escolher nossos serviços de IA" */
+.reasons-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+}
+
+.reason-card {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
+  border: 1px solid rgba(255, 255, 255, .12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+
+.reason-card__icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 13px;
+  color: var(--hl-pink);
+  background: rgba(255, 0, 191, .08);
+  border: 1px solid rgba(255, 0, 191, .3);
+}
+
+.reason-card__icon svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.reason-card__title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.reason-card__text {
+  margin: 0;
+  color: var(--text-soft);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+@media (min-width: 760px) {
+  .reasons-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* ---- GLASSMORFISMO — superfícies translúcidas com blur (página inteira) ---- */
+.step-card,
+.comparison-card,
+.trust-grid li,
+.reason-card,
+.faq details,
+.proof-chip,
+.testimonial,
+.table-wrap,
+.ds-input,
+.footer-news form {
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+/* Profundidade atrás do vidro nas seções escuras */
+.section--dark {
+  background:
+    radial-gradient(120% 90% at 12% -12%, rgba(87, 76, 155, .24), transparent 46%),
+    radial-gradient(90% 80% at 100% 0%, rgba(255, 0, 191, .10), transparent 42%),
+    var(--bg-dark);
+}
+
+/* Grid flexível: ocupa toda a largura e se adapta ao número de produtos.
+   1 → largura total · 2 → metade cada · 3 → terços · 4 → quartos
+   5 → 2 grandes acima + 3 menores abaixo (colunas base = mmc(2,3) = 6). */
+.cards-grid {
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 560px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 940px) {
+  .cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* fallback: 3+ itens */
+
+  .cards-grid:has(> .service-card:nth-child(2):last-child) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cards-grid:has(> .service-card:nth-child(3):last-child) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cards-grid:has(> .service-card:nth-child(4):last-child) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Exatamente 5 produtos: 2 grandes em cima, 3 menores embaixo */
+  .cards-grid:has(> .service-card:nth-child(5):last-child) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .cards-grid:has(> .service-card:nth-child(5):last-child)>.service-card:nth-child(-n+2) {
+    grid-column: span 3;
+  }
+
+  .cards-grid:has(> .service-card:nth-child(5):last-child)>.service-card:nth-child(n+3) {
+    grid-column: span 2;
+  }
+}
+
+/* service-card do DS, tornado fluido (mobile-first) e alinhado à esquerda */
+.service-card {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: rgba(50, 50, 93, .25) 0 30px 60px -25px, rgba(0, 0, 0, .3) 0 18px 36px -30px;
+  transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, .25);
+}
+
+/* Gradientes de card do DS */
+.linear-gradient-card-1 {
+  background: linear-gradient(153deg, rgba(244, 71, 124, .30) 0%, rgba(247, 245, 240, .10) 70%);
+}
+
+.linear-gradient-card-2 {
+  background: linear-gradient(153deg, rgba(247, 245, 240, .10) 0%, rgba(87, 76, 155, 1) 100%);
+}
+
+.linear-gradient-card-3 {
+  background: linear-gradient(320deg, rgba(244, 71, 124, .30) 0%, rgba(247, 245, 240, .10) 70%);
+}
+
+.linear-gradient-card-4 {
+  background: linear-gradient(200deg, rgba(255, 0, 191, .30) 0%, rgba(87, 76, 155, .40) 50%, rgba(247, 245, 240, .10) 100%);
+}
+
+.service-card__media {
+  aspect-ratio: 16 / 10;
+  border-radius: 12px;
+}
+
+.service-card__name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.service-card__description {
+  color: var(--text-soft);
+  font-size: 14px;
+  font-weight: 300;
+  margin: 0;
+  flex: 1 1 auto;
+}
+
+/* Bloco de preço comparativo dentro do card */
+.price-compare {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .35rem .6rem;
+}
+
+.price-compare .price-ia {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -1px;
+}
+
+.price-compare .price-ia .cur {
+  font-size: .9rem;
+  font-weight: 600;
+  vertical-align: super;
+  margin-right: 1px;
+}
+
+.price-compare .price-lbl {
+  font-size: 12px;
+  color: var(--text-mut);
+}
+
+.price-compare .price-market {
+  font-size: 13px;
+  color: var(--text-mut);
+  text-decoration: line-through;
+  width: 100%;
+}
+
+.deadline-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  align-self: flex-start;
+  background: rgba(255, 0, 191, .16);
+  color: #fff;
+  border: 1px solid rgba(255, 0, 191, .4);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.service-card__footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .6rem;
+}
+
+.service-card__footer .btn {
+  width: 100%;
+}
+
+.link-secondary {
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, .4);
+  padding-bottom: 2px;
+}
+
+.link-secondary:hover {
+  color: var(--hl-pink);
+  border-color: var(--hl-pink);
+}
+
+/* Card de serviço futuro (escalável) */
+.service-card--future {
+  background: rgba(255, 255, 255, .03);
+  border: 1px dashed rgba(255, 255, 255, .28);
+  box-shadow: none;
+  justify-content: center;
+  text-align: left;
+}
+
+.service-card--future:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.service-card--future .service-card__name {
+  color: var(--text-soft);
+}
+
+.badge-soon {
+  display: inline-block;
+  margin-left: .5rem;
+  vertical-align: middle;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--hl-blue);
+  background: rgba(139, 132, 215, .14);
+  border: 1px solid rgba(139, 132, 215, .4);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.service-card--future p {
+  color: var(--text-mut);
+  font-size: 13px;
+  margin: .5rem 0 0;
+}
+
+/* 13. COMPARATIVO: comparison-card + pricing-table (DS) ------------------- */
+.comparison-cards {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 1.25rem;
+}
+
+.comparison-card {
+  border-radius: 20px;
+  padding: 1rem 1.25rem;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.aila-card {
+  background: linear-gradient(209deg, #ff00bf6b 0%, #574C9B 54%, #574C9B 100%);
+  box-shadow: rgba(50, 50, 93, 1) -20px -19px 100px -20px, rgba(0, 0, 0, 1) -20px 18px 60px -30px;
+}
+
+.market-card {
+  background: var(--market-dark);
+  border: 1px solid rgba(255, 255, 255, .1);
+}
+
+.card-header h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.card-header h3 small {
+  display: block;
+  font-size: 12px;
+  opacity: .8;
+  font-weight: 400;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+}
+
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+  min-width: 640px;
+}
+
+.pricing-table th,
+.pricing-table td {
+  padding: 1rem;
+  text-align: center;
+  color: #fff;
+  font-family: var(--font);
+  border-bottom: 1px solid rgba(255, 255, 255, .2);
+}
+
+.pricing-table thead th {
+  font-weight: 600;
+  font-size: .9rem;
+}
+
+.pricing-table td {
+  font-size: .92rem;
+  font-weight: 300;
+}
+
+.pricing-table .service-name,
+.pricing-table th[scope="row"] {
+  text-align: left;
+  font-weight: 600;
+}
+
+/* Coluna KlooBR destacada (reforçada por texto além da cor — AA) */
+.pricing-table .col-kloobr {
+  background: rgba(255, 0, 191, .12);
+  color: #fff;
+  font-weight: 600;
+}
+
+.pricing-table thead .col-kloobr {
+  background: rgba(255, 0, 191, .2);
+}
+
+.pricing-table .save {
+  color: #6BE3A0;
+  font-weight: 700;
+}
+
+/* verde de economia (contraste alto no escuro) */
+.table-note {
+  font-size: 12px;
+  color: var(--text-mut);
+  margin-top: .75rem;
+}
+
+/* Comparativo de 3 colunas (página de serviço) */
+.pricing-table--service {
+  min-width: 480px;
+}
+
+/* ---- Mobile: a tabela por serviço (home) vira cards (sem rolagem lateral) ----
+   Cada serviço é um card: nome no topo; KlooBR (preço + prazo) x Mercado
+   (preço + prazo) lado a lado; e a economia destacada embaixo. */
+@media (max-width: 700px) {
+  #por-que-ia .comparison-cards { display: none; }
+  #por-que-ia .table-wrap { overflow: visible; border-radius: 0; }
+  #por-que-ia .pricing-table { min-width: 0; }
+
+  #por-que-ia .pricing-table thead { display: none; }
+  #por-que-ia .pricing-table,
+  #por-que-ia .pricing-table tbody { display: block; }
+
+  #por-que-ia .pricing-table tbody tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: .5rem;
+    row-gap: 0;
+    margin-bottom: .75rem;
+    padding: .9rem;
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .02));
+    border: 1px solid rgba(255, 255, 255, .12);
+  }
+
+  /* nome do serviço */
+  #por-que-ia .pricing-table tbody th[scope="row"] {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    border: 0;
+    padding: 0 0 .6rem;
+    text-align: left;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  /* células de valor (reset) */
+  #por-que-ia .pricing-table tbody td {
+    border: 0;
+    text-align: left;
+    padding: .3rem .8rem;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  /* posiciona: coluna 1 = KlooBR (preço/prazo), coluna 2 = Mercado (preço/prazo) */
+  #por-que-ia .pricing-table tbody td:nth-child(2) { grid-column: 1; grid-row: 2; padding-top: .7rem; border-radius: 12px 12px 0 0; }
+  #por-que-ia .pricing-table tbody td:nth-child(3) { grid-column: 1; grid-row: 3; padding-bottom: .7rem; border-radius: 0 0 12px 12px; }
+  #por-que-ia .pricing-table tbody td:nth-child(4) { grid-column: 2; grid-row: 2; padding-top: .7rem; border-radius: 12px 12px 0 0; }
+  #por-que-ia .pricing-table tbody td:nth-child(5) { grid-column: 2; grid-row: 3; padding-bottom: .7rem; border-radius: 0 0 12px 12px; }
+
+  /* rótulos das colunas (no topo de cada coluna) */
+  #por-que-ia .pricing-table tbody td:nth-child(2)::before,
+  #por-que-ia .pricing-table tbody td:nth-child(4)::before {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    margin-bottom: .2rem;
+  }
+  #por-que-ia .pricing-table tbody td:nth-child(2)::before { content: "✓ KlooBR"; color: var(--hl-pink); }
+  #por-que-ia .pricing-table tbody td:nth-child(4)::before { content: "Mercado"; color: var(--text-mut); }
+
+  /* coluna KlooBR: destaque magenta */
+  #por-que-ia .pricing-table tbody td:nth-child(2),
+  #por-que-ia .pricing-table tbody td:nth-child(3) {
+    background: rgba(255, 0, 191, .12);
+  }
+  /* coluna Mercado: apagada */
+  #por-que-ia .pricing-table tbody td:nth-child(4),
+  #por-que-ia .pricing-table tbody td:nth-child(5) {
+    background: rgba(255, 255, 255, .03);
+    color: var(--text-soft);
+  }
+
+  /* prazo (2ª linha de cada coluna): menor e mais discreto */
+  #por-que-ia .pricing-table tbody td:nth-child(3),
+  #por-que-ia .pricing-table tbody td:nth-child(5) {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-soft);
+  }
+
+  /* economia: badge verde centralizado embaixo */
+  #por-que-ia .pricing-table tbody td.save {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    justify-self: center;
+    margin-top: .75rem;
+    padding: .35rem .9rem;
+    border-radius: 999px;
+    background: rgba(107, 227, 160, .14);
+    border: 1px solid rgba(107, 227, 160, .4);
+    color: #6BE3A0;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  #por-que-ia .pricing-table tbody td.save::before {
+    content: "Economia ";
+    font-weight: 500;
+    opacity: .85;
+  }
+
+  #por-que-ia .table-note { margin-top: 1rem; }
+}
+
+/* ---- Mobile: a tabela vira UM ÚNICO card (sem rolagem lateral) ----
+   Dentro do card, cada critério traz o rótulo e, um abaixo do outro, os dados
+   do KlooBR (vencedor, em destaque) e do mercado (apagado). */
+@media (max-width: 640px) {
+  #comparativo .comparison-cards { display: none; }   /* rótulos passam p/ dentro */
+  #comparativo .table-wrap { overflow: visible; border-radius: 0; }
+  #comparativo .pricing-table--service { min-width: 0; }
+
+  .pricing-table--service thead { display: none; }
+  .pricing-table--service { display: block; }
+
+  /* o tbody é o card único que envolve todos os critérios */
+  .pricing-table--service tbody {
+    display: block;
+    padding: .4rem .9rem;
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .02));
+    border: 1px solid rgba(255, 255, 255, .12);
+  }
+
+  /* cada critério é um bloco, separado por uma divisória */
+  .pricing-table--service tbody tr {
+    display: block;
+    padding: 1rem 0;
+  }
+  .pricing-table--service tbody tr + tr {
+    border-top: 1px solid rgba(255, 255, 255, .08);
+  }
+
+  /* critério: rótulo no topo */
+  .pricing-table--service tbody th[scope="row"] {
+    display: block;
+    border: 0;
+    padding: 0 0 .6rem;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--hl-blue);
+  }
+
+  /* dados KlooBR e Mercado — um abaixo do outro */
+  .pricing-table--service tbody td {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    border: 0;
+    padding: .7rem .8rem;
+    border-radius: 12px;
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+  .pricing-table--service tbody td + td {
+    margin-top: .5rem;
+  }
+  .pricing-table--service tbody td::before {
+    content: attr(data-label);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  /* KlooBR: o vencedor (destaque magenta + check) */
+  .pricing-table--service tbody td.col-kloobr {
+    background: rgba(255, 0, 191, .12);
+    border: 1px solid rgba(255, 0, 191, .4);
+    color: #fff;
+    font-weight: 600;
+  }
+  .pricing-table--service tbody td.col-kloobr::before {
+    content: "✓ " attr(data-label);
+    color: var(--hl-pink);
+  }
+
+  /* Mercado: a opção mais cara/lenta (apagada) */
+  .pricing-table--service tbody td:not(.col-kloobr) {
+    background: rgba(255, 255, 255, .03);
+    border: 1px solid rgba(255, 255, 255, .1);
+    color: var(--text-soft);
+    font-weight: 300;
+  }
+  .pricing-table--service tbody td:not(.col-kloobr)::before {
+    color: var(--text-mut);
+  }
+
+  #comparativo .table-note { margin-top: 1rem; }
+}
+
+/* Base glassmorfismo reutilizável (cards premium) */
+.glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .025));
+  border: 1px solid rgba(255, 255, 255, .12);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 24px 50px -30px rgba(0, 0, 0, .7);
+}
+
+/* Lead abaixo do título de seção */
+.section__lead {
+  max-width: 60ch;
+  margin: 1rem 0 0;
+  color: var(--text-soft);
+  font-size: clamp(15px, 1.7vw, 17px);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.section--centered .section__lead {
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* 14. "O QUE VOCÊ RECEBE" — cards glass com ícone + tag de formato --------- */
+.delivery-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 760px) {
+  .delivery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.delivery-box {
+  position: relative;
+  padding: 1.9rem 1.6rem;
+  border-radius: 20px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+
+.delivery-box__ico {
+  display: inline-grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  margin-bottom: .9rem;
+  color: var(--hl-blue);
+  background: rgba(139, 132, 215, .14);
+  border: 1px solid rgba(139, 132, 215, .32);
+}
+
+.delivery-box__tag {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.4rem;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: var(--hl-pink);
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(255, 0, 191, .12);
+  border: 1px solid rgba(255, 0, 191, .4);
+}
+
+.delivery-box__tag--muted {
+  color: var(--text-soft);
+  background: rgba(255, 255, 255, .06);
+  border-color: rgba(255, 255, 255, .18);
+}
+
+.delivery-box h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: .35rem;
+}
+
+.delivery-box p {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.6;
+  margin: 0;
+  color: var(--text-soft);
+}
+
+/* 15. "COMO A IA APRIMORA O SEU TEXTO" — grade glass numerada ------------- */
+/* Empilhados: cada card ocupa a largura toda, com o cabeçalho (ícone + título)
+   à esquerda e os itens à direita em duas colunas, usando bem o espaço. */
+.howai {
+  list-style: none;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.howai__card {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  padding: 1.75rem;
+  border-radius: 20px;
+}
+
+@media (min-width: 760px) {
+  .howai__card {
+    grid-template-columns: minmax(240px, 320px) 1fr;
+    align-items: center;
+    gap: 2.25rem;
+  }
+}
+
+.howai__head {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.howai__ico {
+  flex: 0 0 auto;
+  display: inline-grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  color: var(--hl-pink);
+  background: rgba(255, 0, 191, .12);
+  border: 1px solid rgba(255, 0, 191, .35);
+}
+
+.howai__title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.howai__list {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: .5rem 2rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 760px) {
+  .howai__list {
+    padding-left: 2.25rem;
+    border-left: 1px solid rgba(255, 255, 255, .12);
+  }
+}
+
+.howai__list li {
+  position: relative;
+  padding-left: 1.6rem;
+  color: var(--text-soft);
+  font-size: 14.5px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.howai__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .15rem;
+  width: 16px;
+  height: 16px;
+  background: no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF00BF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
+}
+
+/* 15.5 "COMBINA COM ESTE SERVIÇO" — cross-sell de serviços complementares --- */
+.cross-sell {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+  margin-top: 2.5rem;
+}
+@media (min-width: 760px) {
+  .cross-sell { grid-template-columns: repeat(3, 1fr); }
+}
+.xs-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 18px;
+  text-decoration: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
+  border: 1px solid rgba(255, 255, 255, .12);
+  transition: border-color .2s ease, background .2s ease, transform .2s ease;
+}
+.xs-card:hover {
+  border-color: rgba(255, 0, 191, .4);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .03));
+  transform: translateY(-3px);
+}
+/* Imagem do serviço no topo do card */
+.xs-card__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+.xs-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.xs-card__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(20, 17, 38, 0) 60%, rgba(24, 20, 44, .55) 100%);
+}
+.xs-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+  padding: 1.5rem;
+  flex: 1 1 auto;
+}
+.xs-card__name {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+}
+.xs-card__desc {
+  flex: 1 1 auto;
+  color: var(--text-soft);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.55;
+}
+.xs-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: .25rem;
+  padding-top: .9rem;
+  border-top: 1px solid rgba(255, 255, 255, .1);
+}
+.xs-card__price {
+  color: #fff;
+  font-weight: 600;
+}
+.xs-card__cta {
+  color: var(--hl-pink);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 16. CONFIANÇA ----------------------------------------------------------- */
+.trust-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .trust-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 940px) {
+  .trust-grid--4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.trust-grid li {
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.trust-grid strong {
+  display: block;
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: .35rem;
+}
+
+.trust-grid span {
+  color: var(--text-soft);
+  font-size: 14px;
+  font-weight: 300;
+}
+
+/* 17. PROVA SOCIAL / CARROSSEL DE DEPOIMENTOS ----------------------------- */
+.testimonial-carousel {
+  position: relative;
+}
+
+.testimonial-carousel__viewport {
+  overflow: hidden;
+  border-radius: calc(var(--radius) + 8px);
+}
+
+.testimonial-carousel__track {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  transition: transform .55s cubic-bezier(.22, .61, .36, 1);
+  will-change: transform;
+}
+
+.testimonial-carousel__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  padding: 4px;
+}
+
+/* Card de citação — vidro + borda com gradiente da marca */
+.quote-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin: 0;
+  padding: clamp(1.75rem, 5vw, 3.75rem);
+  border-radius: calc(var(--radius) + 4px);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .02)),
+    var(--bg-dark);
+  border: 1px solid rgba(255, 255, 255, .1);
+  box-shadow: 0 30px 70px -35px rgba(0, 0, 0, .85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Brilho magenta sutil no topo */
+.quote-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(120% 80% at 85% -10%, rgba(255, 0, 191, .20), transparent 55%);
+  pointer-events: none;
+}
+
+/* Aspas gigantes como marca d'água */
+.quote-card__mark {
+  position: absolute;
+  top: clamp(-.6rem, -1vw, -.2rem);
+  right: clamp(1rem, 4vw, 2.5rem);
+  font-size: clamp(9rem, 20vw, 16rem);
+  line-height: 1;
+  font-weight: 800;
+  color: rgba(255, 0, 191, .12);
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.quote-card>* {
+  position: relative;
+  z-index: 1;
+}
+
+.quote-card__stars {
+  color: var(--hl-pink);
+  letter-spacing: 3px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.quote-card__text {
+  margin: 0 0 1.5rem;
+  max-width: 46ch;
+  color: #fff;
+  font-weight: 300;
+  font-size: clamp(1.15rem, 2.4vw, 1.7rem);
+  line-height: 1.45;
+  letter-spacing: -.01em;
+}
+
+.quote-card__text::before {
+  content: "“";
+}
+
+.quote-card__text::after {
+  content: "”";
+}
+
+.quote-card__author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.quote-card__avatar {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--hl-pink), var(--accent-purple));
+  color: #fff;
+  font-weight: 700;
+  font-size: .95rem;
+  letter-spacing: .02em;
+  box-shadow: 0 8px 20px -8px rgba(255, 0, 191, .6);
+}
+
+.quote-card__meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.35;
+}
+
+.quote-card__meta cite {
+  font-style: normal;
+  font-weight: 600;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.quote-card__meta span {
+  color: var(--text-mut);
+  font-size: .85rem;
+}
+
+/* Controles */
+.testimonial-carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.testimonial-carousel__btn {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .14);
+  transition: background .2s, border-color .2s, transform .2s;
+}
+
+.testimonial-carousel__btn:hover {
+  background: rgba(255, 0, 191, .16);
+  border-color: var(--hl-pink);
+  transform: translateY(-2px);
+}
+
+.testimonial-carousel__btn:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: 3px;
+}
+
+.testimonial-carousel__dots {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+.testimonial-carousel__dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .22);
+  transition: background .25s, width .25s, border-radius .25s;
+}
+
+.testimonial-carousel__dot[aria-selected="true"] {
+  width: 26px;
+  border-radius: 5px;
+  background: var(--hl-pink);
+}
+
+.testimonial-carousel__dot:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonial-carousel__track {
+    transition: none;
+  }
+}
+
+/* Desktop: depoimentos em 3 por página — cards menores, sem foto da pessoa.
+   O carrossel pagina de 3 em 3; os controles só aparecem quando há mais de 3.
+   (o espaçamento vem do padding dos slides, p/ o translateX por página ser exato).
+   No mobile continua 1 card por vez. */
+@media (min-width: 900px) {
+  .testimonial-carousel__track {
+    gap: 0;
+  }
+  .testimonial-carousel__slide {
+    flex: 0 0 33.333%;            /* 3 depoimentos por página */
+    padding: 0 .625rem;          /* vira o "gap" entre os cards */
+    display: flex;
+  }
+
+  .quote-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 1.75rem;
+    box-shadow: 0 20px 45px -30px rgba(0, 0, 0, .8);
+  }
+  .quote-card__mark {
+    font-size: 6rem;
+    top: -.3rem;
+    right: 1.1rem;
+  }
+  .quote-card__stars {
+    font-size: .9rem;
+    margin-bottom: .75rem;
+  }
+  .quote-card__text {
+    font-size: 1.02rem;
+    line-height: 1.55;
+    margin-bottom: 1.5rem;
+    max-width: none;
+  }
+  .quote-card__author {
+    margin-top: auto;             /* nome fixa na base — alinhado entre os cards */
+    gap: 0;
+  }
+  .quote-card__avatar {
+    display: none;                /* sem a foto/placeholder da pessoa */
+  }
+}
+
+/* 18. FAQ ----------------------------------------------------------------- */
+.faq {
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, .02);
+}
+
+.faq details {
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+
+.faq details:last-child {
+  border-bottom: none;
+}
+
+.faq summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 1.1rem 1.25rem;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary::after {
+  content: "+";
+  color: var(--hl-pink);
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1;
+  flex: 0 0 auto;
+  transition: transform .3s ease;
+}
+
+.faq details[open] summary::after {
+  content: "–";
+}
+
+.faq .faq__answer {
+  padding: 0 1.25rem 1.25rem;
+  color: var(--text-soft);
+  font-weight: 300;
+}
+
+/* 19. CTA FINAL ----------------------------------------------------------- */
+.cta-final {
+  text-align: center;
+}
+
+.cta-final .h2 {
+  margin-bottom: 1rem;
+}
+
+.cta-final p {
+  color: var(--text-soft);
+  font-weight: 300;
+  max-width: 60ch;
+  margin: 0 auto 1.75rem;
+}
+
+.cta-final .hero-actions {
+  justify-content: center;
+}
+
+/* Mobile: botões do CTA final ocupam toda a largura do container */
+@media (max-width: 640px) {
+  .cta-final .hero-actions {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+  }
+  .cta-final .hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+.cta-final__price {
+  margin: 0 auto 1.75rem;
+}
+
+/* 20. RODAPÉ -------------------------------------------------------------- */
+.site-footer {
+  background: #120f22;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+  padding-block: 3rem 2rem;
+}
+
+.footer-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .footer-services {
+    grid-column: 1 / -1;   /* serviços ocupam a linha toda no tablet */
+  }
+}
+
+@media (min-width: 940px) {
+  .footer-grid {
+    grid-template-columns: 1.3fr 2.6fr 1fr;   /* marca · serviços (largo) · institucional */
+  }
+  .footer-services {
+    grid-column: auto;
+  }
+}
+
+/* Serviços por fase (rodapé) — accordion no mobile, grade aberta no desktop */
+.footer-services__phases {
+  display: grid;
+  grid-template-columns: 1fr;   /* mobile: fases empilhadas (accordion) */
+}
+.footer-phase {
+  border-top: 1px solid rgba(255, 255, 255, .08);
+}
+.footer-phase:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+.footer-phase__name {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .85rem 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+.footer-phase__name::-webkit-details-marker { display: none; }
+.footer-phase__chev {
+  flex: 0 0 auto;
+  color: var(--text-mut);
+  transition: transform .25s ease;
+}
+.footer-phase[open] > .footer-phase__name .footer-phase__chev { transform: rotate(180deg); }
+.footer-phase > ul { padding-bottom: .8rem; }
+
+@media (min-width: 640px) {
+  .footer-services__phases {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .footer-phase,
+  .footer-phase:last-child {
+    border: 0;
+  }
+  .footer-phase > .footer-phase__name {
+    cursor: default;
+    pointer-events: none;     /* no desktop não colapsa */
+    padding: 0 0 .55rem;
+    font-size: 13px;
+  }
+  .footer-phase__chev { display: none; }
+  .footer-phase > ul {
+    display: block;           /* sempre visível no desktop */
+    padding-bottom: 0;
+  }
+}
+
+.footer-brand__logo .site-nav__logo-img {
+  height: 58px;
+}
+
+.footer-brand p {
+  color: var(--text-mut);
+  font-size: 14px;
+  margin: .75rem 0 0;
+}
+
+.site-footer h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--hl-blue);
+  margin-bottom: 1rem;
+}
+
+.site-footer nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-footer nav li {
+  margin-bottom: .6rem;
+}
+
+.site-footer nav a {
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.site-footer nav a:hover {
+  color: var(--hl-pink);
+}
+
+.footer-news label {
+  display: block;
+  color: var(--text-soft);
+  font-size: 14px;
+  margin-bottom: .5rem;
+}
+
+.footer-copy {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+  color: var(--text-mut);
+  font-size: 13px;
+}
+
+/* Inputs (DS) */
+.ds-input {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, .25);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 6px;
+  width: 100%;
+  font-family: var(--font);
+  font-size: 15px;
+  transition: border-color .3s ease;
+}
+
+.ds-input::placeholder {
+  color: rgba(255, 255, 255, .5);
+}
+
+.ds-input:focus {
+  outline: none;
+  border-color: var(--brand-pink);
+}
+
+/* 21. BREADCRUMB ---------------------------------------------------------- */
+.breadcrumb {
+  padding-block: 1rem;
+}
+
+.breadcrumb ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  color: var(--text-mut);
+}
+
+.breadcrumb a {
+  color: var(--text-soft);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--hl-pink);
+}
+
+.breadcrumb li[aria-current="page"] {
+  color: #fff;
+}
+
+.breadcrumb li+li::before {
+  content: "›";
+  margin-right: .4rem;
+  color: var(--text-mut);
+}
+
+/* 22. SIMULADOR DE ECONOMIA ---------------------------------------------- */
+.simulator {
+  margin-top: 1.5rem;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.simulator h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.simulator p {
+  color: var(--text-soft);
+  font-weight: 300;
+}
+
+.simulator__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.simulator label {
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+.simulator input {
+  max-width: 8rem;
+}
+
+/* Utilitário de espaçamento entre blocos */
+.stack>*+* {
+  margin-top: 1.25rem;
+}
+
+.mt-2 {
+  margin-top: 2rem;
+}
+
+.mt-3 {
+  margin-top: 3rem;
+}
+
+/* Custom image overrides to replace placeholders with real images */
+img.img-placeholder {
+  border: none;
+  background: none;
+  padding: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius);
+}
+
+img.avatar {
+  border: none;
+  background: none;
+  padding: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+img.img-placeholder--product {
+  background: none;
+}
+
+img.img-placeholder--tech {
+  background: none;
+}
+
+/* ==========================================================================
+   23. FLUXO DO SERVIÇO (fluxo.html) — ambiente imersivo, 5 passos
+   ========================================================================== */
+:root {
+  --flow-nav-h: 64px;
+  --flow-bar-h: 78px;
+}
+
+.flow-body {
+  background: var(--bg-dark);
+}
+
+/* --- Nav do fluxo --- */
+.flow-nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  background: rgba(25, 22, 45, .9);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+
+.flow-nav__inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: var(--flow-nav-h);
+  padding-inline: 20px;
+}
+
+.flow-nav .site-nav__logo-img {
+  height: 38px;
+}
+
+.flow-nav__right {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  margin-left: auto;
+  min-width: 0;
+}
+
+.flow-nav__service {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  padding-right: .5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flow-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .14);
+  color: var(--text-soft);
+  transition: color .2s ease, background .2s ease, border-color .2s ease;
+}
+
+.flow-icon:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, .12);
+  border-color: rgba(255, 255, 255, .28);
+}
+
+.flow-icon:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: 2px;
+}
+
+.flow-icon--sm {
+  width: 32px;
+  height: 32px;
+}
+
+.flow-progress {
+  height: 3px;
+  background: rgba(255, 255, 255, .07);
+}
+
+.flow-progress__bar {
+  display: block;
+  height: 100%;
+  width: 20%;
+  background: linear-gradient(90deg, var(--hl-blue), var(--hl-pink));
+  transition: width .4s cubic-bezier(.22, .61, .36, 1);
+}
+
+/* --- Área do conteúdo --- */
+.flow-main {
+  padding-top: calc(var(--flow-nav-h) + 3px);
+  padding-bottom: calc(var(--flow-bar-h) + 2rem);
+  min-height: 100dvh;
+}
+
+.flow-step {
+  width: 100%;
+  max-width: 900px;
+  margin-inline: auto;
+  padding: clamp(2rem, 5vw, 3.5rem) 20px 0;
+}
+
+.flow-step[hidden] {
+  display: none;
+}
+
+.flow-step__head {
+  margin-bottom: 2rem;
+}
+
+.flow-step__head--center {
+  text-align: center;
+}
+
+.flow-step__eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--hl-blue);
+  margin: 0 0 .6rem;
+}
+
+.flow-step__title {
+  font-size: clamp(1.6rem, 3.6vw, 2.3rem);
+  font-weight: 700;
+  margin: 0 0 .6rem;
+}
+
+.flow-step__title:focus {
+  outline: none;
+}
+
+.flow-step__support {
+  color: var(--text-soft);
+  font-weight: 300;
+  font-size: clamp(15px, 1.7vw, 17px);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 62ch;
+}
+
+.flow-step__head--center .flow-step__support {
+  margin-inline: auto;
+}
+
+.flow-step__body--split {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 860px) {
+  .flow-step__body--split {
+    grid-template-columns: 1fr 1.1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+}
+
+/* --- Passo 1 (Análise): dados do livro (título + autor) --- */
+.book-fields {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  margin-bottom: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .book-fields {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* --- Passo 3 (Análise): resumo do pedido antes do pagamento --- */
+.buy-summary {
+  max-width: 600px;
+  margin-inline: auto;
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  border-radius: 20px;
+}
+
+.buy-summary__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.25rem 2rem;
+}
+
+.buy-summary__intro {
+  flex: 1 1 240px;
+  min-width: 220px;
+}
+
+.buy-summary__name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 .5rem;
+}
+
+.buy-summary__tagline {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--text-soft);
+}
+
+.buy-summary__price {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.buy-summary__val {
+  display: flex;
+  align-items: flex-start;
+  gap: .15rem;
+  font-size: 2.6rem;
+  font-weight: 300;
+  color: #fff;
+  line-height: 1;
+}
+
+.buy-summary__cur {
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin-top: .35rem;
+}
+
+.buy-summary__save {
+  margin-top: .55rem;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--hl-pink);
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(255, 0, 191, .12);
+  border: 1px solid rgba(255, 0, 191, .4);
+}
+
+.buy-summary__market {
+  margin-top: .4rem;
+  font-size: 12px;
+  color: var(--text-mut);
+}
+
+.buy-summary__list {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid rgba(255, 255, 255, .1);
+  display: grid;
+  gap: .65rem;
+}
+
+.buy-summary__list li {
+  position: relative;
+  padding-left: 1.75rem;
+  font-size: 14.5px;
+  font-weight: 300;
+  line-height: 1.45;
+  color: var(--text-soft);
+}
+
+.buy-summary__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .1rem;
+  width: 18px;
+  height: 18px;
+  background: no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF00BF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
+}
+
+.buy-summary__note {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  margin: 1.5rem 0 0;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+
+.buy-summary__note svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: var(--hl-blue);
+}
+
+.buy-summary__note strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* --- Barra inferior --- */
+.flow-bar {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 60;
+  background: rgba(25, 22, 45, .92);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-top: 1px solid rgba(255, 255, 255, .08);
+}
+
+/* mesmas extremidades da nav do fluxo (largura total + 20px de padding) */
+.flow-bar__inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: var(--flow-bar-h);
+  padding: .9rem 20px calc(.9rem + env(safe-area-inset-bottom));
+}
+
+.flow-bar__next[hidden] {
+  display: none;
+}
+
+.flow-bar__back {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+.flow-bar__back[hidden] {
+  display: none;
+}
+
+.flow-bar__next {
+  margin-left: auto;
+}
+
+.flow-bar__next[disabled] {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+/* --- Passo 1: dropzone --- */
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: .5rem;
+  padding: clamp(2rem, 6vw, 3.5rem) 1.5rem;
+  cursor: pointer;
+  border: 2px dashed rgba(255, 255, 255, .2);
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .01));
+  transition: border-color .25s ease, background .25s ease;
+}
+
+.dropzone:hover,
+.dropzone:focus-visible {
+  border-color: var(--hl-pink);
+  background: rgba(255, 0, 191, .05);
+}
+
+.dropzone:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: 3px;
+}
+
+.dropzone[data-over="true"] {
+  border-color: var(--hl-pink);
+  background: rgba(255, 0, 191, .1);
+}
+
+.dropzone[hidden] {
+  display: none;
+}
+
+.dropzone__icon {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  color: var(--hl-pink);
+  background: rgba(255, 0, 191, .1);
+  border: 1px solid rgba(255, 0, 191, .3);
+  margin-bottom: .5rem;
+}
+
+.dropzone__title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.dropzone__or {
+  color: var(--text-mut);
+  font-size: 14px;
+  margin: 0;
+}
+
+.dropzone__link {
+  color: var(--hl-pink);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.dropzone__hint {
+  color: var(--text-mut);
+  font-size: 13px;
+  font-weight: 300;
+  margin: .75rem 0 0;
+}
+
+.dropzone__error {
+  margin: 1rem 0 0;
+  padding: .75rem 1rem;
+  border-radius: 10px;
+  background: rgba(255, 60, 60, .12);
+  border: 1px solid rgba(255, 60, 60, .4);
+  color: #ffc9c9;
+  font-size: 14px;
+}
+
+.dropzone__error[hidden] {
+  display: none;
+}
+
+.upload-card {
+  padding: 1.15rem 1.25rem;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
+  border: 1px solid rgba(255, 255, 255, .12);
+}
+
+.upload-card[hidden] {
+  display: none;
+}
+
+.upload-card[data-done="true"] {
+  border-color: rgba(255, 0, 191, .4);
+}
+
+.upload-card__row {
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+}
+
+.upload-card__icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  color: var(--hl-blue);
+  background: rgba(139, 132, 215, .12);
+  border: 1px solid rgba(139, 132, 215, .3);
+}
+
+.upload-card[data-done="true"] .upload-card__icon {
+  color: var(--hl-pink);
+  background: rgba(255, 0, 191, .1);
+  border-color: rgba(255, 0, 191, .4);
+}
+
+.upload-card__meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.upload-card__name {
+  font-weight: 600;
+  color: #fff;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.upload-card__sub {
+  color: var(--text-mut);
+  font-size: 13px;
+  font-weight: 300;
+}
+
+.upload-card__pct {
+  margin-left: auto;
+  color: var(--text-soft);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.upload-card__track {
+  height: 6px;
+  margin-top: .9rem;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, .1);
+}
+
+.upload-card__fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--hl-blue), var(--hl-pink));
+  transition: width .15s linear;
+}
+
+.upload-card[data-done="true"] .upload-card__track {
+  opacity: .5;
+}
+
+/* --- Passo 2: processamento + auth --- */
+.processing {
+  padding: 1.5rem;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(139, 132, 215, .12), rgba(255, 255, 255, .02));
+  border: 1px solid rgba(139, 132, 215, .25);
+}
+
+.processing__spin {
+  display: block;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, .15);
+  border-top-color: var(--hl-pink);
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.processing__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 .4rem;
+}
+
+.processing__text {
+  color: var(--text-soft);
+  font-size: 14px;
+  font-weight: 300;
+  margin: 0 0 1.15rem;
+}
+
+.processing__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+
+.processing__list li {
+  position: relative;
+  padding-left: 1.6rem;
+  color: var(--text-mut);
+  font-size: 14px;
+  transition: color .3s ease;
+}
+
+.processing__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, .25);
+  transition: all .3s ease;
+}
+
+.processing__list li[data-ok="true"] {
+  color: var(--text-soft);
+}
+
+.processing__list li[data-ok="true"]::before {
+  border-color: var(--hl-pink);
+  background: var(--hl-pink) no-repeat center/9px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
+}
+
+/* Processamento concluído: o spinner vira check e o bloco ganha destaque */
+.processing__done-ico {
+  display: none;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--hl-pink);
+  margin-bottom: 1rem;
+}
+
+.processing[data-done="true"] {
+  border-color: rgba(255, 0, 191, .45);
+  background: linear-gradient(180deg, rgba(255, 0, 191, .14), rgba(255, 255, 255, .02));
+}
+
+.processing[data-done="true"] .processing__spin {
+  display: none;
+}
+
+.processing[data-done="true"] .processing__done-ico {
+  display: grid;
+  animation: tipIn .3s ease-out;
+}
+
+/* Card de conta identificada */
+.account {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: .9rem;
+  align-items: center;
+}
+
+.account[hidden] {
+  display: none;
+}
+
+.auth[data-logged="true"] .auth__tabs,
+.auth[data-logged="true"] .auth__pane {
+  display: none;
+}
+
+.account__avatar {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 0, 191, .16);
+  border: 1px solid rgba(255, 0, 191, .45);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+
+.account__meta {
+  min-width: 0;
+}
+
+.account__hello {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--hl-blue);
+}
+
+.account__name {
+  margin: 2px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account__mail {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-mut);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account__check {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--hl-pink);
+}
+
+.account__switch {
+  grid-column: 1 / -1;
+  justify-self: start;
+  margin-top: .25rem;
+}
+
+.auth {
+  padding: 1.5rem;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
+  border: 1px solid rgba(255, 255, 255, .12);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  display: flex;
+  flex-direction: column;
+}
+
+/* A nota sobre contas de outros canais vai para o FIM do bloco (abaixo do
+   formulário), para o botão de login não ficar fora da área visível. */
+.auth .auth-note {
+  order: 1;
+  margin: 1.5rem 0 0;
+}
+
+.auth__tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 1.25rem;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 999px;
+}
+
+.auth__tab {
+  padding: .6rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  border: 0;
+  background: none;
+  color: var(--text-mut);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  transition: color .2s ease, background .2s ease;
+}
+
+.auth__tab:hover {
+  color: #fff;
+}
+
+.auth__tab[aria-selected="true"] {
+  color: #fff;
+  background: rgba(255, 0, 191, .22);
+}
+
+.auth__tab:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: -2px;
+}
+
+.auth__pane {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth__pane[hidden] {
+  display: none;
+}
+
+.auth__forgot-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.auth__forgot-text {
+  color: var(--text-soft);
+  font-size: 14px;
+  font-weight: 300;
+  margin: -.5rem 0 0;
+}
+
+.auth__link {
+  align-self: flex-start;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: var(--hl-blue);
+  font-family: var(--font);
+  font-size: 13px;
+  text-decoration: underline;
+}
+
+.auth__link:hover {
+  color: var(--hl-pink);
+}
+
+.auth__submit {
+  width: 100%;
+}
+
+.auth__ok {
+  margin: 1rem 0 0;
+  padding: .75rem 1rem;
+  border-radius: 10px;
+  background: rgba(255, 0, 191, .12);
+  border: 1px solid rgba(255, 0, 191, .4);
+  color: #fff;
+  font-size: 14px;
+}
+
+.auth__ok[hidden] {
+  display: none;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  min-width: 0;
+}
+
+.field__label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-soft);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.field .ds-input::placeholder {
+  color: rgba(255, 255, 255, .35);
+}
+
+select.ds-input {
+  appearance: none;
+  cursor: pointer;
+}
+
+select.ds-input option {
+  background: #19162d;
+  color: #fff;
+}
+
+/* --- Passo 3: amostra --- */
+.sample-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  margin: 0 0 1.25rem;
+  padding: .6rem 1.15rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 0, 191, .22), rgba(255, 0, 191, .1));
+  border: 1px solid rgba(255, 0, 191, .45);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.sample-badge__spark {
+  display: inline-flex;
+  color: #fff;
+}
+
+/* Passo 1 (Tradução): seletor de idioma acima da área de envio */
+.lang-field {
+  margin-bottom: 1.25rem;
+}
+
+/* Aviso da amostra quando o idioma escolhido ainda não tem prévia pronta */
+.sample-note {
+  margin: -.5rem 0 1.25rem;
+  padding: .7rem 1rem;
+  border-radius: 12px;
+  background: rgba(139, 132, 215, .12);
+  border: 1px solid rgba(139, 132, 215, .32);
+  color: var(--text-soft);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.sample-note[hidden] {
+  display: none;
+}
+
+.sample {
+  position: relative;
+}
+
+/* A altura é definida por JS a partir do fim da 3a edição (--veil de folga),
+   para o véu nunca cobrir as revisões. O 70vh é só o fallback sem JS. */
+.sample__paper {
+  max-height: 70vh;
+  overflow: hidden;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border-radius: 14px 14px 0 0;
+  background: #fff;
+  color: #333;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .8);
+}
+
+.doc-h {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 1.1rem;
+}
+
+.doc-p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: #444;
+  margin: 0 0 1.1rem;
+  text-align: justify;
+}
+
+.doc-edit {
+  background: #fdf3a7;
+  border-radius: 3px;
+  padding: 2px 4px;
+  margin-inline: -4px;
+  cursor: help;
+  font-weight: 600;
+  color: #232323;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .12);
+  transition: background .2s ease;
+}
+
+.doc-edit:hover,
+.doc-edit:focus-visible {
+  background: #fbe96a;
+  outline: none;
+}
+
+/* --- Passo 3 (Diagramação): amostra = página de miolo diagramada --- */
+.sample--dgm .sample__paper {
+  max-width: 470px;
+  margin-inline: auto;
+  padding: clamp(2rem, 5vw, 3rem) clamp(2rem, 6vw, 3.4rem);
+}
+
+.dgm-page {
+  font-family: Georgia, "Times New Roman", serif;
+  color: #2b2b2b;
+}
+
+.dgm-page__header {
+  text-align: center;
+  padding-bottom: .5rem;
+  margin-bottom: 2.4rem;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.dgm-page__running {
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #9a9a9a;
+}
+
+.dgm-page__chapnum {
+  text-align: center;
+  font-size: 2.6rem;
+  font-weight: 400;
+  line-height: 1;
+  color: #c3c3c3;
+  margin: 0 0 .35rem;
+}
+
+.dgm-page__chaptitle {
+  text-align: center;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #222;
+  line-height: 1.3;
+  margin: 0 0 1.7rem;
+}
+
+.dgm-p {
+  font-size: 13.5px;
+  line-height: 1.72;
+  text-align: justify;
+  hyphens: auto;
+  margin: 0;
+  text-indent: 1.4em;
+}
+
+.dgm-p--first {
+  text-indent: 0;
+}
+
+.dgm-page__footer {
+  text-align: center;
+  margin-top: 1.6rem;
+}
+
+.dgm-page__folio {
+  font-size: 11px;
+  color: #9a9a9a;
+}
+
+/* Balão com a explicação do ajuste */
+.doc-tip {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  background: #2b2a3d;
+  border: 1px solid rgba(255, 255, 255, .14);
+  box-shadow: 0 24px 50px -20px rgba(0, 0, 0, .9);
+  animation: tipIn .18s ease-out;
+}
+
+.doc-tip[hidden] {
+  display: none;
+}
+
+@keyframes tipIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.doc-tip__label {
+  margin: 0 0 .25rem;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.doc-tip__text {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--text-soft);
+}
+
+/* Véu de desbloqueio */
+.sample__lock {
+  position: relative;
+  margin-top: calc(var(--veil, 240px) * -1);
+  padding-top: calc(var(--veil, 240px) + 2.5rem);
+  border-radius: 0 0 14px 14px;
+  /* o degradê fecha antes do conteúdo começar, para o ícone e o título
+     ficarem sobre fundo escuro e legível */
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .5) 14%, rgba(25, 22, 45, .9) 42%, var(--bg-dark) 62%);
+}
+
+.sample__lock-inner {
+  max-width: 620px;
+  margin-inline: auto;
+  padding: 0 1.5rem 1rem;
+  text-align: center;
+}
+
+.sample__lock-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  color: var(--hl-pink);
+  background: rgba(255, 0, 191, .12);
+  border: 1px solid rgba(255, 0, 191, .4);
+  margin-bottom: 1rem;
+}
+
+.sample__lock-title {
+  font-size: clamp(1.25rem, 2.6vw, 1.7rem);
+  font-weight: 700;
+  margin: 0 0 .6rem;
+}
+
+.sample__lock-text {
+  color: var(--text-soft);
+  font-weight: 300;
+  margin: 0 auto 1.25rem;
+  max-width: 48ch;
+}
+
+.sample__lock-list {
+  list-style: none;
+  margin: 0 auto 1.75rem;
+  padding: 0;
+  max-width: 44ch;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  text-align: left;
+}
+
+.sample__lock-list li {
+  position: relative;
+  padding-left: 1.7rem;
+  color: var(--text-soft);
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.sample__lock-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  background: no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF00BF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
+}
+
+.sample__lock-note {
+  color: var(--text-mut);
+  font-size: 13px;
+  font-weight: 300;
+  margin: .85rem 0 0;
+}
+
+.sample__lock-note strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* --- Passo 4: ofertas + carrinho --- */
+.flow-step__body--cart {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 900px) {
+  .flow-step__body--cart {
+    grid-template-columns: 1fr 300px;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .cart {
+    position: sticky;
+    top: calc(var(--flow-nav-h) + 1.5rem);
+  }
+}
+
+.offers {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.offer {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: .9rem 1rem;
+  align-items: start;
+  padding: 1.25rem;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .02));
+  border: 1px solid rgba(255, 255, 255, .12);
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.offer[data-on="true"] {
+  border-color: var(--hl-pink);
+  background: rgba(255, 0, 191, .07);
+}
+
+.offer__ico {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  flex: 0 0 auto;
+  color: var(--hl-blue);
+  background: rgba(139, 132, 215, .12);
+  border: 1px solid rgba(139, 132, 215, .3);
+}
+
+.offer[data-on="true"] .offer__ico {
+  color: var(--hl-pink);
+  background: rgba(255, 0, 191, .14);
+  border-color: rgba(255, 0, 191, .4);
+}
+
+.offer__info {
+  min-width: 0;
+}
+
+.offer__name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 .3rem;
+}
+
+.offer__desc {
+  color: var(--text-soft);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.offer__market {
+  color: var(--text-mut);
+  font-size: 12px;
+  font-weight: 300;
+  margin: .5rem 0 0;
+  text-decoration: line-through;
+}
+
+.offer__buy {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.offer__price {
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.offer__btn {
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 660px) {
+  .offer {
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+  }
+
+  .offer__buy {
+    grid-column: auto;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: .5rem;
+  }
+}
+
+.cart {
+  padding: 1.25rem;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
+  border: 1px solid rgba(255, 255, 255, .12);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+.cart__title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--hl-blue);
+  margin: 0 0 1rem;
+}
+
+.cart__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+
+.cart__list:empty {
+  display: none;
+}
+
+.cart__list+.cart__list {
+  margin-top: .6rem;
+}
+
+.cart__item {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+.cart__name {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.cart__val {
+  color: #fff;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.cart__rm {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .16);
+  color: var(--text-mut);
+  transition: color .2s ease, border-color .2s ease;
+}
+
+.cart__rm:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, .4);
+}
+
+.cart__rm:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: 2px;
+}
+
+.cart__empty {
+  color: var(--text-mut);
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.5;
+  margin: .85rem 0 0;
+}
+
+.cart__empty[hidden] {
+  display: none;
+}
+
+.cart__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, .12);
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.cart__total strong {
+  font-size: 1.4rem;
+  font-weight: 300;
+}
+
+/* --- Passo 5: pagamento (página inteira) --- */
+.flow-step--wide {
+  max-width: 1080px;
+}
+
+.pay__cols {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+.pay__main {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+@media (min-width: 900px) {
+  .pay__cols {
+    grid-template-columns: 1fr 340px;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .pay__aside {
+    position: sticky;
+    top: calc(var(--flow-nav-h) + 1.5rem);
+  }
+}
+
+.order {
+  padding: 1.5rem;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
+  border: 1px solid rgba(255, 255, 255, .12);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+.order__brand {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--hl-blue);
+  margin: 0 0 .35rem;
+}
+
+.order__title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0 0 1.25rem;
+}
+
+.order__card {
+  padding: 1.15rem 1.25rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .1);
+}
+
+.order__num {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 .75rem;
+}
+
+.order__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.order__line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+.order__line+.order__line {
+  margin-top: .6rem;
+}
+
+.order__val {
+  color: #fff;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.order__line--total {
+  margin-top: .9rem;
+  padding-top: .9rem;
+  border-top: 1px solid rgba(255, 255, 255, .1);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.order__line--total .order__val {
+  font-size: 1.3rem;
+  font-weight: 300;
+}
+
+.pay__sec {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin: .25rem 0 0;
+}
+
+.wallet {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 54px;
+  cursor: pointer;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, .15);
+  transition: transform .15s ease;
+}
+
+.wallet:hover {
+  transform: translateY(-1px);
+}
+
+.wallet__logo {
+  font-weight: 700;
+  color: #3c4043;
+  font-size: 15px;
+  letter-spacing: -.2px;
+}
+
+.pay__or {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: .25rem 0;
+  color: var(--text-mut);
+  font-size: 12px;
+}
+
+.pay__or::before,
+.pay__or::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: rgba(255, 255, 255, .12);
+}
+
+.methods {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+
+@media (min-width: 560px) {
+  .methods {
+    flex-direction: row;
+  }
+
+  .methods .method {
+    flex: 1 1 0;
+  }
+}
+
+.method {
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+  width: 100%;
+  cursor: pointer;
+  padding: .9rem 1rem;
+  border-radius: 12px;
+  text-align: left;
+  background: rgba(255, 255, 255, .03);
+  border: 1px solid rgba(255, 255, 255, .12);
+  color: var(--text-soft);
+  font-family: var(--font);
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+
+.method:hover {
+  border-color: rgba(255, 255, 255, .28);
+  color: #fff;
+}
+
+.method:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: 2px;
+}
+
+.method[aria-checked="true"] {
+  color: #fff;
+  background: rgba(255, 0, 191, .1);
+  border-color: var(--hl-pink);
+  box-shadow: inset 0 0 0 1px rgba(255, 0, 191, .35);
+}
+
+.method__ico {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  flex: 0 0 auto;
+  background: rgba(255, 255, 255, .06);
+  color: currentColor;
+}
+
+.method[aria-checked="true"] .method__ico {
+  background: rgba(255, 0, 191, .16);
+  color: var(--hl-pink);
+}
+
+.method__name {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.pay__card-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pay__card-fields[hidden] {
+  display: none;
+}
+
+.pay__error {
+  margin: 0;
+  padding: .75rem 1rem;
+  border-radius: 10px;
+  background: rgba(255, 60, 60, .12);
+  border: 1px solid rgba(255, 60, 60, .4);
+  color: #ffc9c9;
+  font-size: 14px;
+}
+
+.pay__error[hidden] {
+  display: none;
+}
+
+.pay__secure {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  margin: 1rem 0 0;
+  color: var(--text-mut);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.45;
+}
+
+.pay__secure svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+/* --- Passo 5: redirecionamento para o pagamento (canal externo) --- */
+.redir {
+  max-width: 440px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.redir__spin {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, .14);
+  border-top-color: var(--hl-pink);
+  animation: spin 1s linear infinite;
+  margin-bottom: 1.75rem;
+}
+
+.redir__order {
+  width: 100%;
+  text-align: left;
+}
+
+.redir__status {
+  margin: 1.5rem 0 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.redir__hint {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: .45rem;
+  margin: .6rem 0 0;
+  color: var(--text-mut);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.45;
+}
+
+.redir__hint svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .redir__spin {
+    animation-duration: 2.4s;
+  }
+}
+
+/* --- Passo 6: confirmação --- */
+.done {
+  max-width: 620px;
+  margin-inline: auto;
+  text-align: center;
+  padding: 2rem clamp(1.25rem, 4vw, 2.25rem);
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
+  border: 1px solid rgba(255, 255, 255, .12);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+.done__check {
+  display: inline-grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  color: var(--hl-pink);
+  background: rgba(255, 0, 191, .1);
+  border: 1px solid rgba(255, 0, 191, .4);
+  margin-bottom: 1rem;
+}
+
+.done__order {
+  color: var(--text-soft);
+  font-size: 15px;
+  margin: 0 0 .3rem;
+}
+
+.done__order strong {
+  color: #fff;
+}
+
+.done__what {
+  color: var(--text-mut);
+  font-size: 13px;
+  font-weight: 300;
+  margin: 0 0 1.75rem;
+}
+
+.done__list {
+  list-style: none;
+  margin: 0 0 1.75rem;
+  padding: 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.done__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: .85rem;
+  color: var(--text-soft);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.done__list strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.done__ico {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  color: var(--hl-blue);
+  background: rgba(139, 132, 215, .12);
+  border: 1px solid rgba(139, 132, 215, .3);
+}
+
+.done__actions {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+@media (min-width: 560px) {
+  .done__actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+/* --- Diálogos (sair / tutorial) --- */
+.ask {
+  width: min(460px, calc(100% - 2rem));
+  padding: 1.75rem;
+  margin: auto;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 18px;
+  background: #1b182f;
+  color: var(--text);
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .95);
+}
+
+.ask--wide {
+  width: min(560px, calc(100% - 2rem));
+}
+
+.ask::backdrop {
+  background: rgba(10, 8, 20, .7);
+  backdrop-filter: blur(3px);
+}
+
+.ask[open] {
+  animation: tipIn .2s ease-out;
+}
+
+.ask__title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 .75rem;
+}
+
+.ask__text {
+  color: var(--text-soft);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+}
+
+.ask__text strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.ask__actions {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+
+@media (min-width: 460px) {
+  .ask__actions {
+    flex-direction: row;
+  }
+
+  .ask__actions .btn {
+    flex: 1 1 0;
+  }
+
+  .ask__actions--end {
+    justify-content: flex-end;
+  }
+
+  .ask__actions--end .btn {
+    flex: 0 0 auto;
+  }
+}
+
+.btn-danger {
+  background: rgba(255, 60, 60, .16);
+  border: 1px solid rgba(255, 90, 90, .6);
+  color: #ffb3b3;
+}
+
+.btn-danger:hover {
+  background: rgba(255, 60, 60, .28);
+  color: #fff;
+}
+
+.tut {
+  margin: 0 0 1.5rem;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+}
+
+.tut li {
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+.tut li::marker {
+  color: var(--hl-pink);
+  font-weight: 700;
+}
+
+.tut strong {
+  display: block;
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.tut span {
+  font-weight: 300;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .processing__spin {
+    animation: none;
+  }
+
+  .ask[open],
+  .doc-tip {
+    animation: none;
+  }
+
+  .flow-progress__bar,
+  .upload-card__fill {
+    transition: none;
+  }
+}
+/* ==========================================================================
+   REVEAL ON LOAD / SCROLL — animações suaves de entrada
+   --------------------------------------------------------------------------
+   Estado inicial escondido só sob `html.has-anim` (ativado por gate no <head>
+   apenas com IntersectionObserver e sem prefers-reduced-motion). JS adiciona
+   `.is-in` quando o elemento entra na viewport. Mantenha a lista de seletores
+   em sincronia com SELECTOR em assets/kloobr-anim.js.
+   Anima só opacity/transform de blocos internos — nunca de ancestrais de
+   elementos sticky/fixed (nav, cta-dock, svc-bar, phase__pin).
+   ========================================================================== */
+html.has-anim :is(
+  .hero-copy > *,
+  .trust-bar__item,
+  .section__head,
+  .stats-grid > li,
+  .steps-grid > li,
+  .howai > li,
+  .delivery-grid > *,
+  .pricing-table,
+  .testimonial-carousel,
+  .faq > details,
+  .cross-sell > *,
+  .cta-final > *
+) {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity .7s cubic-bezier(.22, .61, .36, 1),
+    transform .7s cubic-bezier(.22, .61, .36, 1);
+  transition-delay: var(--rd, 0ms);
+}
+
+html.has-anim :is(
+  .hero-copy > *,
+  .trust-bar__item,
+  .section__head,
+  .stats-grid > li,
+  .steps-grid > li,
+  .howai > li,
+  .delivery-grid > *,
+  .pricing-table,
+  .testimonial-carousel,
+  .faq > details,
+  .cross-sell > *,
+  .cta-final > *
+).is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Segurança extra: se o usuário pedir movimento reduzido, nada se move. */
+@media (prefers-reduced-motion: reduce) {
+  html.has-anim :is(
+    .hero-copy > *,
+    .trust-bar__item,
+    .section__head,
+    .stats-grid > li,
+    .steps-grid > li,
+    .howai > li,
+    .delivery-grid > *,
+    .pricing-table,
+    .testimonial-carousel,
+    .faq > details,
+    .cross-sell > *,
+    .cta-final > *
+  ) {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

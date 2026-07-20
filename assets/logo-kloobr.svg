@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  KlooBR — logo primário (versão marca, magenta) para fundos claros.
+  Recriação vetorial fiel do lockup de _refs/logo KLOOBR.ai (ícone livro/marcador +
+  wordmark "KlooBR" + tagline). O vetor original .ai permanece em _refs para produção.
+  Para fundos ESCUROS (nav/rodapé) usa-se a versão invertida, embutida inline no HTML.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470 132" role="img" aria-label="KlooBR — Publishing, re-engineered.">
+  <title>KlooBR — Publishing, re-engineered.</title>
+  <!-- Ícone: livro/marcador estilizado -->
+  <g fill="none" stroke="#A62D84" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M40 50 L40 104"/>                     <!-- lombada -->
+    <path d="M40 50 Q94 47 94 79 Q94 105 52 104"/> <!-- capa / bojo do livro -->
+    <path d="M28 38 Q54 22 86 35"/>                <!-- páginas / marcador -->
+  </g>
+  <!-- Wordmark -->
+  <text x="150" y="74" font-family="'Exo', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+        font-size="66" font-weight="800" letter-spacing="-1" fill="#A62D84">KlooBR</text>
+  <!-- Tagline -->
+  <text x="152" y="104" font-family="'Exo', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+        font-size="20.5" font-weight="500" letter-spacing="0.3" fill="#A62D84">Publishing, re-engineered.</text>
+</svg>

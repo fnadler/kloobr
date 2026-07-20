@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Testar grátis: Edição &amp; Revisão | KlooBR</title>
+<meta name="description" content="Envie seu livro e veja gratuitamente como a IA da KlooBR revisa o seu texto.">
+<meta name="theme-color" content="#19162d">
+<meta name="robots" content="noindex">
+
+<!--
+  ============================================================================
+  FLUXO DO SERVIÇO — ambiente imersivo (sem rodapé), 6 passos.
+  SLOTS para replicar em outro serviço: service-name · price · sample-doc · offers.
+  Protótipo: upload, autenticação e pagamento são SIMULADOS no cliente.
+  ============================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/kloobr.css">
+</head>
+<body class="flow-body">
+
+<a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
+
+<!-- ===================== NAV DO FLUXO ===================== -->
+<header class="flow-nav">
+  <div class="flow-nav__inner">
+    <a class="site-nav__logo" href="home.html" aria-label="KlooBR · página inicial">
+      <img class="site-nav__logo-img" src="assets/logo-kloobr-white.svg" alt="" aria-hidden="true">
+    </a>
+
+    <div class="flow-nav__right">
+      <!-- SLOT: service-name -->
+      <span class="flow-nav__service">Edição &amp; Revisão</span>
+
+      <button class="flow-icon" type="button" data-tutorial-open aria-label="Ver tutorial do fluxo">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/><path d="M9.6 9.2a2.5 2.5 0 1 1 3.3 2.4c-.6.2-.9.8-.9 1.4v.4"/><path d="M12 17h.01"/>
+        </svg>
+      </button>
+
+      <button class="flow-icon" type="button" data-close-open aria-label="Fechar e sair do fluxo">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Progresso dos passos -->
+  <div class="flow-progress" role="progressbar" aria-label="Progresso do fluxo" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1">
+    <span class="flow-progress__bar" data-progress-bar></span>
+  </div>
+</header>
+
+<main class="flow-main" id="conteudo">
+
+  <!-- ============ PASSO 1 · ENVIAR ARQUIVO ============ -->
+  <section class="flow-step" data-step="1" data-next-label="Continuar" aria-labelledby="s1-h">
+    <div class="flow-step__head">
+      <p class="flow-step__eyebrow">Passo 1 de 6</p>
+      <h1 class="flow-step__title" id="s1-h">Envie o seu livro</h1>
+      <p class="flow-step__support">Suba o arquivo em Word (.docx). Leva menos de um minuto e não exige nenhum conhecimento técnico. Você só paga se gostar da amostra.</p>
+    </div>
+
+    <div class="flow-step__body">
+      <!-- Área de envio: clique ou arraste -->
+      <div class="dropzone" data-dropzone tabindex="0" role="button" aria-describedby="dz-hint">
+        <input class="sr-only" type="file" id="file-input" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" data-file-input>
+        <span class="dropzone__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 8l5-5 5 5"/><path d="M12 3v13"/>
+          </svg>
+        </span>
+        <p class="dropzone__title">Arraste o seu arquivo aqui</p>
+        <p class="dropzone__or">ou <span class="dropzone__link">clique para selecionar</span></p>
+        <p class="dropzone__hint" id="dz-hint">Formato aceito: <strong>.docx</strong> (Word) · até 50 MB · livro de qualquer tamanho</p>
+      </div>
+
+      <p class="dropzone__error" data-dz-error hidden role="alert"></p>
+
+      <!-- Carregamento / arquivo pronto -->
+      <div class="upload-card" data-upload-card hidden>
+        <div class="upload-card__row">
+          <span class="upload-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 3.5v4.5h4.5"/><path d="M15 3.5H6.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/>
+            </svg>
+          </span>
+          <span class="upload-card__meta">
+            <span class="upload-card__name" data-up-name>documento.docx</span>
+            <span class="upload-card__sub" data-up-sub>Enviando…</span>
+          </span>
+          <span class="upload-card__pct" data-up-pct>0%</span>
+          <button class="flow-icon flow-icon--sm" type="button" data-up-remove aria-label="Remover arquivo" hidden>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div class="upload-card__track"><span class="upload-card__fill" data-up-fill></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PASSO 2 · IDENTIFICAÇÃO ============ -->
+  <section class="flow-step" data-step="2" data-next-label="Continuar" aria-labelledby="s2-h" hidden>
+    <div class="flow-step__head">
+      <p class="flow-step__eyebrow">Passo 2 de 6</p>
+      <h1 class="flow-step__title" id="s2-h">Identifique-se para ver a amostra</h1>
+      <p class="flow-step__support">A nossa IA já começou a trabalhar no seu livro. Entre ou crie a sua conta para receber a amostra e acompanhar o pedido.</p>
+    </div>
+
+    <div class="flow-step__body flow-step__body--split">
+      <!-- Processando: incentiva a identificação -->
+      <aside class="processing" data-processing aria-live="polite">
+        <span class="processing__spin" aria-hidden="true"></span>
+        <span class="processing__done-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        </span>
+        <h2 class="processing__title" data-proc-title>Processando o seu livro…</h2>
+        <p class="processing__text" data-proc-text>Lendo o arquivo e preparando o trecho de amostra.</p>
+        <ul class="processing__list">
+          <li data-proc-item="0">Arquivo recebido</li>
+          <li data-proc-item="1">Analisando estrutura e capítulos</li>
+          <li data-proc-item="2">Revisando o trecho de amostra</li>
+        </ul>
+      </aside>
+
+      <div class="auth" data-auth>
+        <!-- Identificado: mostrado após entrar/criar conta, ou já na chegada -->
+        <div class="account" data-account hidden>
+          <span class="account__avatar" aria-hidden="true" data-acc-initials>FN</span>
+          <div class="account__meta">
+            <p class="account__hello">Você está identificado</p>
+            <p class="account__name" data-acc-name>Fabiano Dihl Nadler</p>
+            <p class="account__mail" data-acc-mail>fnadler@gmail.com</p>
+          </div>
+          <span class="account__check" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
+          <button class="auth__link account__switch" type="button" data-acc-switch>Não é você? Usar outra conta</button>
+        </div>
+
+        <div class="auth__tabs" role="tablist" aria-label="Entrar ou criar conta">
+          <button class="auth__tab" type="button" role="tab" id="tab-login" aria-controls="pane-login" aria-selected="true">Já tenho conta</button>
+          <button class="auth__tab" type="button" role="tab" id="tab-signup" aria-controls="pane-signup" aria-selected="false" tabindex="-1">Criar conta</button>
+        </div>
+
+        <p class="auth-note">
+          <svg class="auth-note__ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.5h.01"/></svg>
+          <span>Já tem conta no <strong>Clube de Autores</strong>, na <strong>Literary Highways</strong> ou no <strong>Club de Autores</strong>? Entre com o mesmo e-mail e senha.</span>
+        </p>
+
+        <!-- Entrar -->
+        <form class="auth__pane" id="pane-login" role="tabpanel" aria-labelledby="tab-login" data-auth-form novalidate>
+          <label class="field">
+            <span class="field__label">E-mail</span>
+            <input class="ds-input" type="email" name="email" autocomplete="email" required placeholder="voce@email.com">
+          </label>
+          <label class="field">
+            <span class="field__label">Senha</span>
+            <input class="ds-input" type="password" name="senha" autocomplete="current-password" required placeholder="Sua senha">
+          </label>
+          <button class="auth__link" type="button" data-forgot-open>Esqueci minha senha</button>
+          <button class="btn btn-primary auth__submit" type="submit">Entrar</button>
+        </form>
+
+        <!-- Criar conta -->
+        <form class="auth__pane" id="pane-signup" role="tabpanel" aria-labelledby="tab-signup" data-auth-form novalidate hidden>
+          <label class="field">
+            <span class="field__label">Nome completo</span>
+            <input class="ds-input" type="text" name="nome" autocomplete="name" required placeholder="Como você assina seus livros">
+          </label>
+          <label class="field">
+            <span class="field__label">E-mail</span>
+            <input class="ds-input" type="email" name="email" autocomplete="email" required placeholder="voce@email.com">
+          </label>
+          <label class="field">
+            <span class="field__label">Senha</span>
+            <input class="ds-input" type="password" name="senha" autocomplete="new-password" required minlength="8" placeholder="Mínimo de 8 caracteres">
+          </label>
+          <button class="btn btn-primary auth__submit" type="submit">Criar conta</button>
+        </form>
+
+        <!-- Recuperar senha -->
+        <form class="auth__pane" id="pane-forgot" data-auth-forgot novalidate hidden>
+          <h2 class="auth__forgot-title">Recuperar senha</h2>
+          <p class="auth__forgot-text">Informe o seu e-mail: enviamos um link para você criar uma nova senha.</p>
+          <label class="field">
+            <span class="field__label">E-mail</span>
+            <input class="ds-input" type="email" name="email" autocomplete="email" required placeholder="voce@email.com">
+          </label>
+          <button class="btn btn-primary auth__submit" type="submit">Enviar link</button>
+          <button class="auth__link" type="button" data-forgot-back>Voltar para o login</button>
+        </form>
+
+        <p class="auth__ok" data-auth-ok hidden role="status"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PASSO 3 · AMOSTRA ============ -->
+  <section class="flow-step" data-step="3" data-next-label="Comprar agora por R$ 299,00" aria-labelledby="s3-h" hidden>
+    <div class="flow-step__head">
+      <p class="flow-step__eyebrow">Passo 3 de 6</p>
+      <h1 class="flow-step__title" id="s3-h">Amostra do seu livro revisado</h1>
+      <p class="flow-step__support">Veja o que a IA fez em um trecho real do seu texto. Passe o mouse (ou o foco do teclado) sobre os trechos grifados para entender cada ajuste.</p>
+    </div>
+
+    <div class="flow-step__body">
+      <p class="sample-badge">
+        <span class="sample-badge__spark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>
+        </span>
+        <strong>3 alterações</strong> realizadas neste trecho (nos parágrafos grifados).
+      </p>
+
+      <!-- SLOT: sample-doc -->
+      <div class="sample" data-sample>
+        <div class="sample__paper" data-paper>
+          <p class="doc-h">A Evolução do Futebol Entre as Copas do Mundo</p>
+          <p class="doc-p">Uma análise das transformações táticas, tecnológicas, físicas e culturais que moldaram o esporte mais popular do planeta</p>
+          <p class="doc-p">Marcos Ribeiro de Andrade · Primeira Edição · 2024</p>
+
+          <p class="doc-h">Prefácio</p>
+          <p class="doc-p">Escrever sobre a evolução do futebol é, de certo modo, escrever sobre a evolução do século XX e do início do século XXI. Poucos fenômenos culturais acompanharam tão de perto as transformações da tecnologia, da economia e do comportamento humano quanto este jogo aparentemente simples de vinte e dois jogadores disputando uma bola em um retângulo de grama.</p>
+
+          <p class="doc-p doc-edit" tabindex="0" data-obs="O termo &quot;ultra alta definição&quot; foi hifenizado para &quot;ultra-alta definição&quot;, forma mais adequada em pt-BR quando o prefixo &quot;ultra&quot; modifica um adjetivo composto.">
+            Este livro nasceu de uma inquietação. Ao assistir a uma partida da Copa de 1958 em preto e branco e, logo em seguida, a uma partida moderna transmitida em ultra-alta definição com dezenas de câmeras e gráficos em tempo real, percebi que estava diante de dois esportes quase distintos. As regras eram essencialmente as mesmas, mas tudo o mais havia mudado: a velocidade, a preparação dos atletas, a organização tática, a relação com o público e o dinheiro envolvido.
+          </p>
+
+          <p class="doc-p doc-edit" tabindex="0" data-obs="Trecho reescrito para fluidez: a frase original tinha 68 palavras e três orações subordinadas encadeadas. A pontuação foi ajustada com travessões para separar o aposto, tornando a leitura mais leve sem alterar o sentido.">
+            Ao longo dos próximos capítulos, proponho uma viagem que parte dos campos de terra dos anos 1950 e chega aos centros de treinamento de última geração dos dias atuais. Não pretendo esgotar o assunto, o que seria impossível, mas oferecer um mapa que ajude o leitor a compreender por que o futebol de hoje é como é e como chegamos até aqui.
+          </p>
+
+          <p class="doc-p">Que este livro sirva tanto ao torcedor curioso quanto ao estudante do esporte, e que desperte a mesma paixão que me moveu a escrevê-lo.</p>
+
+          <p class="doc-h">1. Introdução: O Futebol como Espelho da Sociedade</p>
+
+          <p class="doc-p doc-edit" tabindex="0" data-obs="Repetição eliminada: &quot;evolução&quot; aparecia três vezes no mesmo parágrafo. Duas ocorrências foram substituídas por &quot;transformação&quot; e &quot;mudança&quot;, preservando o sentido e o seu tom.">
+            O futebol é muito mais do que um jogo: é um reflexo da sociedade, da tecnologia e da transformação humana em cada época. Desde a primeira Copa do Mundo, disputada no Uruguai em 1930, até os torneios contemporâneos, o esporte passou por mudanças radicais que vão muito além da simples alteração de regras.
+          </p>
+
+          <p class="doc-p">Cada geração de jogadores herdou o conhecimento da anterior e o transformou. O que antes era transmitido oralmente, nos campos de várzea e nas conversas de vestiário, hoje é sistematizado em bancos de dados, vídeos analíticos e modelos estatísticos. E, no entanto, algo permanece imutável: a paixão que o jogo desperta.</p>
+          <p class="doc-p">Poucas atividades humanas conseguem unir pessoas de culturas tão diferentes quanto o futebol. Um torcedor japonês e um torcedor argentino podem não compartilhar idioma, religião ou tradição, mas compartilham a compreensão instintiva de um belo drible, de um passe preciso, de um gol no último minuto.</p>
+          <p class="doc-p">À medida que o futebol se espalhou pelo mundo, ele absorveu características locais. O drible brasileiro, a organização alemã, a garra uruguaia, a técnica espanhola: cada nação imprimiu sua identidade cultural na forma de jogar.</p>
+        </div>
+
+        <!-- Véu que "esconde" o restante e leva ao desbloqueio -->
+        <div class="sample__lock">
+          <div class="sample__lock-inner">
+            <span class="sample__lock-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4.5" y="10.5" width="15" height="9.5" rx="2.2"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/>
+              </svg>
+            </span>
+            <h2 class="sample__lock-title">Isto é só uma amostra do seu livro.</h2>
+            <p class="sample__lock-text">O que você viu é um trecho revisado, para mostrar como a IA trabalha no seu texto. Para receber o livro inteiro, do prefácio ao último capítulo, compre a Edição &amp; Revisão completa.</p>
+            <ul class="sample__lock-list">
+              <li>Todos os capítulos revisados, não apenas este trecho.</li>
+              <li>Você recebe um e-mail assim que o arquivo ficar pronto (em até 24h).</li>
+              <li>O arquivo também fica em <strong>Meus Pedidos</strong>, na sua área logada.</li>
+              <li>Entregue em Word (.docx) + relatório de alterações (.xlsx).</li>
+            </ul>
+            <!-- A compra é o botão da barra inferior (SLOT: price no data-next-label) -->
+            <p class="sample__lock-note">Use o botão <strong>Comprar agora</strong> aqui embaixo. Pagamento seguro no Clube de Autores.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Balão com a observação do ajuste (posicionado por JS) -->
+      <div class="doc-tip" data-doc-tip hidden role="tooltip">
+        <p class="doc-tip__label">Observação:</p>
+        <p class="doc-tip__text" data-doc-tip-text></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PASSO 4 · OFERTAS ============ -->
+  <section class="flow-step" data-step="4" data-next-label="Pular esta etapa" aria-labelledby="s4-h" hidden>
+    <div class="flow-step__head">
+      <p class="flow-step__eyebrow">Passo 4 de 6</p>
+      <h1 class="flow-step__title" id="s4-h">Leve o seu livro mais longe</h1>
+      <p class="flow-step__support">Com o texto revisado, estes são os próximos passos naturais, e o arquivo que você já enviou serve para todos eles. Adicione o que fizer sentido ou siga direto para o pagamento.</p>
+    </div>
+
+    <div class="flow-step__body flow-step__body--cart">
+      <!-- SLOT: offers (id · name · price · desc) -->
+      <ul class="offers">
+        <li class="offer" data-offer data-id="ebook" data-name="Conversão para E-book" data-price="109">
+          <span class="offer__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2.5" width="16" height="19" rx="2.2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>
+          </span>
+          <div class="offer__info">
+            <h2 class="offer__name">Conversão para E-book</h2>
+            <p class="offer__desc">O seu livro em ePub, pronto para a Amazon, a Kobo e a Google Play, gerado a partir do mesmo arquivo já revisado.</p>
+            <p class="offer__market">No mercado você paga até R$ 500</p>
+          </div>
+          <div class="offer__buy">
+            <span class="offer__price">R$ 109,00</span>
+            <button class="btn btn-outline offer__btn" type="button" data-offer-toggle aria-pressed="false">
+              <span class="offer__btn-txt">Adicionar</span>
+            </button>
+          </div>
+        </li>
+
+        <li class="offer" data-offer data-id="marketing" data-name="Textos de marketing &amp; sinopse" data-price="79">
+          <span class="offer__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5v3a1.5 1.5 0 0 0 1.5 1.5H7l5 4V6.5l-5 4H4.5A1.5 1.5 0 0 0 3 12z"/><path d="M16.5 9.5a3.5 3.5 0 0 1 0 5M19 7a7 7 0 0 1 0 10"/></svg>
+          </span>
+          <div class="offer__info">
+            <h2 class="offer__name">Textos de marketing &amp; sinopse</h2>
+            <p class="offer__desc">Sinopse, texto de quarta capa e posts para as redes, escritos a partir do conteúdo do seu próprio livro.</p>
+            <p class="offer__market">No mercado você paga até R$ 600</p>
+          </div>
+          <div class="offer__buy">
+            <span class="offer__price">R$ 79,00</span>
+            <button class="btn btn-outline offer__btn" type="button" data-offer-toggle aria-pressed="false">
+              <span class="offer__btn-txt">Adicionar</span>
+            </button>
+          </div>
+        </li>
+
+        <li class="offer" data-offer data-id="traducao" data-name="Tradução" data-price="399">
+          <span class="offer__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.2 9.5h17.6M3.2 14.5h17.6"/><path d="M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9s1.3-6.4 3.8-9z"/></svg>
+          </span>
+          <div class="offer__info">
+            <h2 class="offer__name">Tradução</h2>
+            <p class="offer__desc">O livro traduzido para inglês ou espanhol, com a mesma revisão aplicada ao texto de origem.</p>
+            <p class="offer__market">No mercado você paga até R$ 4.000</p>
+          </div>
+          <div class="offer__buy">
+            <span class="offer__price">R$ 399,00</span>
+            <button class="btn btn-outline offer__btn" type="button" data-offer-toggle aria-pressed="false">
+              <span class="offer__btn-txt">Adicionar</span>
+            </button>
+          </div>
+        </li>
+      </ul>
+
+      <aside class="cart" aria-label="Resumo do pedido">
+        <h2 class="cart__title">Seu pedido</h2>
+        <ul class="cart__list">
+          <li class="cart__item">
+            <!-- SLOT: service-name / price -->
+            <span class="cart__name">Edição &amp; Revisão</span>
+            <span class="cart__val">R$ 299,00</span>
+          </li>
+        </ul>
+        <ul class="cart__list" data-cart-extras></ul>
+        <p class="cart__empty" data-cart-empty>Nenhum serviço adicional. Você pode pular esta etapa.</p>
+        <p class="cart__total"><span>Total</span><strong data-cart-total>R$ 299,00</strong></p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ PASSO 5 · PAGAMENTO (redireciona para canal externo) ============ -->
+  <!-- O pagamento é concluído em outro canal (Clube de Autores). Aqui só a tela de
+       transição: mostra o pedido, aguarda o retorno e segue para a confirmação. -->
+  <section class="flow-step" data-step="5" aria-labelledby="s5-h" hidden>
+    <div class="flow-step__head flow-step__head--center">
+      <p class="flow-step__eyebrow">Passo 5 de 6</p>
+      <h1 class="flow-step__title" id="s5-h">Levando você para o pagamento</h1>
+      <p class="flow-step__support">O pagamento é concluído com segurança no ambiente do Clube de Autores. Estamos abrindo a página com o seu pedido já montado.</p>
+    </div>
+
+    <div class="flow-step__body">
+      <div class="redir" data-redir aria-live="polite">
+        <span class="redir__spin" aria-hidden="true"></span>
+
+        <div class="order redir__order">
+          <p class="order__brand">Clube de Autores</p>
+          <div class="order__card">
+            <p class="order__num">Pedido 1073026</p>
+            <ul class="order__items" data-order-items></ul>
+            <div class="order__line order__line--total">
+              <span>Total a pagar</span><span class="order__val" data-order-total>R$ 299,00</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="redir__status" data-redir-status role="status">Abrindo o ambiente de pagamento seguro…</p>
+        <p class="redir__hint">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="9.5" rx="2.2"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/></svg>
+          Não feche esta janela. Você volta automaticamente assim que o pagamento for concluído.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PASSO 6 · CONFIRMAÇÃO ============ -->
+  <section class="flow-step" data-step="6" data-next-label="Ir para Meus Pedidos" aria-labelledby="s6-h" hidden>
+    <div class="flow-step__head flow-step__head--center">
+      <p class="flow-step__eyebrow">Passo 6 de 6</p>
+      <h1 class="flow-step__title" id="s6-h">Pagamento confirmado!</h1>
+      <p class="flow-step__support">Recebemos o seu pagamento e o seu livro já entrou na fila de revisão.</p>
+    </div>
+
+    <div class="flow-step__body">
+      <div class="done">
+        <span class="done__check" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/><path d="M8.3 12.4l2.5 2.5 4.9-5.4"/>
+          </svg>
+        </span>
+
+        <p class="done__order">Pedido <strong>1073026</strong> · <span data-done-total>R$ 299,00</span></p>
+        <p class="done__what" data-done-what>Edição &amp; Revisão</p>
+
+        <ul class="done__list">
+          <li>
+            <span class="done__ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5L12 13l8.5-6.5"/></svg>
+            </span>
+            <span><strong>Em até 24 horas</strong> você recebe um e-mail com o link para baixar o seu arquivo revisado.</span>
+          </li>
+          <li>
+            <span class="done__ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l4 4v16H6z"/><path d="M15 2v4h4"/><path d="M9 13h6M9 17h4"/></svg>
+            </span>
+            <span>O arquivo também fica disponível em <strong>Meus Pedidos</strong>, na sua área logada, junto com o relatório de alterações.</span>
+          </li>
+          <li>
+            <span class="done__ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7.5 3v5.2c0 4.7-3.2 7.9-7.5 9.3-4.3-1.4-7.5-4.6-7.5-9.3V6z"/><path d="M9 12l2 2 4-4.2"/></svg>
+            </span>
+            <span>Você recebe o arquivo em Word (.docx). A diagramação/formatação pode ser afetada pela revisão.</span>
+          </li>
+        </ul>
+
+        <div class="done__actions">
+          <a class="btn btn-primary" href="#" data-orders>Ver Meus Pedidos</a>
+          <a class="btn btn-outline" href="home.html#servicos">Ver outros serviços</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== BARRA INFERIOR ===================== -->
+<div class="flow-bar">
+  <div class="flow-bar__inner">
+    <button class="btn btn-outline flow-bar__back" type="button" data-back hidden>
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+      Voltar
+    </button>
+    <button class="btn btn-primary flow-bar__next" type="button" data-next disabled>Continuar</button>
+  </div>
+</div>
+
+<!-- ===================== CONFIRMAR SAÍDA ===================== -->
+<dialog class="ask" data-close-dialog aria-labelledby="close-h">
+  <h2 class="ask__title" id="close-h" data-close-title>Encerrar o processo?</h2>
+  <p class="ask__text" data-close-text>Se você sair agora, <strong>tudo será perdido</strong>: o arquivo enviado, a amostra gerada e os dados preenchidos. Não dá para retomar de onde parou.</p>
+  <div class="ask__actions">
+    <button class="btn btn-outline" type="button" data-close-cancel autofocus>Continuar de onde parei</button>
+    <button class="btn btn-danger" type="button" data-close-confirm>Sair e perder tudo</button>
+  </div>
+</dialog>
+
+<!-- ===================== TUTORIAL ===================== -->
+<dialog class="ask ask--wide" data-tutorial-dialog aria-labelledby="tut-h">
+  <h2 class="ask__title" id="tut-h">Como funciona o teste grátis</h2>
+  <p class="ask__text">São 6 passos. Você só paga no passo 5, depois de ver a amostra do seu próprio texto.</p>
+  <ol class="tut">
+    <li><strong>Envie o seu livro</strong><span>Suba o arquivo em Word (.docx). Nada é publicado nem compartilhado.</span></li>
+    <li><strong>Identifique-se</strong><span>Entre ou crie a conta enquanto a IA processa o texto.</span></li>
+    <li><strong>Veja a amostra grátis</strong><span>Um trecho real do seu livro, revisado, com a explicação de cada ajuste.</span></li>
+    <li><strong>Adicione outros serviços</strong><span>Opcional: dá para pular e ir direto ao pagamento.</span></li>
+    <li><strong>Pague só se gostar</strong><span>Você é levado ao pagamento seguro do Clube de Autores. Sem assinatura e sem fidelidade.</span></li>
+    <li><strong>Receba em até 24h</strong><span>Por e-mail e em Meus Pedidos, com o relatório de alterações.</span></li>
+  </ol>
+  <div class="ask__actions ask__actions--end">
+    <button class="btn btn-primary" type="button" data-tutorial-close autofocus>Entendi</button>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  'use strict';
+
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.flow-step'));
+  var barBack = document.querySelector('[data-back]');
+  var barNext = document.querySelector('[data-next]');
+  var flowBar = document.querySelector('.flow-bar');
+  var progress = document.querySelector('.flow-progress');
+  var progressBar = document.querySelector('[data-progress-bar]');
+  var atual = 1;
+  var pronto = {};   // passo -> pode avançar?
+
+  /* ---------- carrinho ---------- */
+  /* SLOT: service-name / price — o serviço do fluxo é sempre o primeiro item. */
+  var SERVICO = { id: 'edicao', nome: 'Edição & Revisão', preco: 299 };
+  var extras = [];
+
+  function moeda(v) {
+    return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  }
+  /* o passo 2 já usa a variável "itens"; aqui o nome é do carrinho */
+  function carrinho() { return [SERVICO].concat(extras); }
+  function total() {
+    return carrinho().reduce(function (soma, i) { return soma + i.preco; }, 0);
+  }
+
+  /* ---------- navegação entre passos ---------- */
+  function mostra(n) {
+    atual = Math.min(Math.max(n, 1), steps.length);
+    steps.forEach(function (s) {
+      s.hidden = Number(s.dataset.step) !== atual;
+    });
+    var s = steps[atual - 1];
+    // Da amostra em diante não há o que validar para seguir: a ação é a própria barra.
+    if (atual >= 3) pronto[atual] = true;
+    // Passo 5 é uma transição automática (pagamento em canal externo): sem barra.
+    flowBar.hidden = atual === 5;
+    barBack.hidden = atual === 1 || atual === steps.length;   // depois de pagar não há volta
+    barNext.textContent = s.dataset.nextLabel || 'Continuar';
+    barNext.disabled = !pronto[atual];
+    progress.setAttribute('aria-valuenow', String(atual));
+    progressBar.style.width = (atual / steps.length * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    var h = s.querySelector('.flow-step__title');
+    if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+    if (atual === 2) processa();
+    if (atual === 3) ajustaAmostra();
+    if (atual === 4) pintaCarrinho();
+    if (atual === 5) { pintaPedido(); iniciaRedirecionamento(); }
+    if (atual === 6) pintaConfirmacao();
+  }
+  function libera(n, ok) {
+    pronto[n] = ok !== false;
+    if (n === atual) barNext.disabled = !pronto[n];
+  }
+
+  barBack.addEventListener('click', function () { mostra(atual - 1); });
+  barNext.addEventListener('click', function () {
+    if (atual === 6) { document.querySelector('[data-orders]').click(); return; }
+    mostra(atual + 1);
+  });
+
+  /* ---------- passo 1: upload ---------- */
+  var dz = document.querySelector('[data-dropzone]');
+  var input = document.querySelector('[data-file-input]');
+  var card = document.querySelector('[data-upload-card]');
+  var upName = document.querySelector('[data-up-name]');
+  var upSub = document.querySelector('[data-up-sub]');
+  var upPct = document.querySelector('[data-up-pct]');
+  var upFill = document.querySelector('[data-up-fill]');
+  var upRemove = document.querySelector('[data-up-remove]');
+  var dzError = document.querySelector('[data-dz-error]');
+  var timerUp = null;
+
+  function erroArquivo(msg) {
+    dzError.textContent = msg;
+    dzError.hidden = false;
+  }
+  function tamanho(bytes) {
+    if (bytes >= 1048576) return (bytes / 1048576).toFixed(1).replace('.', ',') + ' MB';
+    return Math.max(1, Math.round(bytes / 1024)) + ' KB';
+  }
+  function recebe(file) {
+    dzError.hidden = true;
+    if (!/\.docx$/i.test(file.name)) {
+      erroArquivo('Formato não aceito. Envie o seu livro em Word (.docx).');
+      return;
+    }
+    if (file.size > 50 * 1024 * 1024) {
+      erroArquivo('Arquivo maior que 50 MB. Reduza o arquivo e tente de novo.');
+      return;
+    }
+    dz.hidden = true;
+    card.hidden = false;
+    upRemove.hidden = true;
+    upName.textContent = file.name;
+    upSub.textContent = 'Enviando… ' + tamanho(file.size);
+    libera(1, false);
+
+    var p = 0;
+    clearInterval(timerUp);
+    timerUp = setInterval(function () {
+      p = Math.min(100, p + 6 + Math.random() * 9);
+      upFill.style.width = p + '%';
+      upPct.textContent = Math.round(p) + '%';
+      if (p >= 100) {
+        clearInterval(timerUp);
+        card.dataset.done = 'true';
+        upSub.textContent = 'Arquivo carregado · ' + tamanho(file.size);
+        upPct.textContent = 'Pronto';
+        upRemove.hidden = false;
+        libera(1, true);
+      }
+    }, 90);
+  }
+
+  dz.addEventListener('click', function () { input.click(); });
+  dz.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); }
+  });
+  input.addEventListener('change', function () {
+    if (input.files && input.files[0]) recebe(input.files[0]);
+  });
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) { e.preventDefault(); dz.dataset.over = 'true'; });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) { e.preventDefault(); delete dz.dataset.over; });
+  });
+  dz.addEventListener('drop', function (e) {
+    var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) recebe(f);
+  });
+  upRemove.addEventListener('click', function () {
+    clearInterval(timerUp);
+    input.value = '';
+    card.hidden = true;
+    delete card.dataset.done;
+    upFill.style.width = '0%';
+    dz.hidden = false;
+    libera(1, false);
+  });
+
+  /* ---------- passo 2: processamento + autenticação ---------- */
+  var proc = document.querySelector('[data-processing]');
+  var itens = Array.prototype.slice.call(document.querySelectorAll('[data-proc-item]'));
+  var procTitle = document.querySelector('[data-proc-title]');
+  var procText = document.querySelector('[data-proc-text]');
+  var procIniciado = false;
+  function processa() {
+    if (procIniciado) return;
+    procIniciado = true;
+    var falas = [
+      'Lendo o arquivo e preparando o trecho de amostra.',
+      'Analisando a estrutura e os capítulos do seu livro.',
+      'Revisando ortografia, gramática e fluidez do trecho.'
+    ];
+    var i = 0;
+    itens[0].dataset.ok = 'true';
+    var t = setInterval(function () {
+      i++;
+      if (i < itens.length) {
+        itens[i].dataset.ok = 'true';
+        procText.textContent = falas[i];
+        return;
+      }
+      clearInterval(t);
+      // Concluído: o bloco troca de estado (spinner vira check)
+      proc.dataset.done = 'true';
+      procTitle.textContent = 'Edição & Revisão da amostra concluída';
+      procText.textContent = 'O seu trecho já está revisado e esperando por você. Identifique-se para vê-lo.';
+    }, 2200);
+  }
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.auth__tab'));
+  var paneLogin = document.getElementById('pane-login');
+  var paneSignup = document.getElementById('pane-signup');
+  var paneForgot = document.getElementById('pane-forgot');
+  var authOk = document.querySelector('[data-auth-ok]');
+
+  function abaAtiva(id) {
+    tabs.forEach(function (t) {
+      var on = t.id === id;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+    });
+    paneLogin.hidden = id !== 'tab-login';
+    paneSignup.hidden = id !== 'tab-signup';
+    paneForgot.hidden = true;
+    authOk.hidden = true;
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { abaAtiva(t.id); });
+    t.addEventListener('keydown', function (e) {
+      var j = null;
+      if (e.key === 'ArrowRight') j = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') j = (i - 1 + tabs.length) % tabs.length;
+      if (j === null) return;
+      e.preventDefault(); abaAtiva(tabs[j].id); tabs[j].focus();
+    });
+  });
+
+  document.querySelector('[data-forgot-open]').addEventListener('click', function () {
+    paneLogin.hidden = true; paneSignup.hidden = true; paneForgot.hidden = false; authOk.hidden = true;
+    paneForgot.querySelector('input').focus();
+  });
+  document.querySelector('[data-forgot-back]').addEventListener('click', function () { abaAtiva('tab-login'); });
+
+  document.querySelector('[data-auth-forgot]').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!e.target.checkValidity()) { e.target.reportValidity(); return; }
+    abaAtiva('tab-login');
+    authOk.textContent = 'Enviamos um link de recuperação para o seu e-mail.';
+    authOk.hidden = false;
+  });
+
+  /* Estado identificado: vale para quem acabou de entrar, de criar conta,
+     ou para quem já chegou logado. */
+  var authBox = document.querySelector('[data-auth]');
+  var accBox = document.querySelector('[data-account]');
+  var accName = document.querySelector('[data-acc-name]');
+  var accMail = document.querySelector('[data-acc-mail]');
+  var accIni = document.querySelector('[data-acc-initials]');
+
+  function iniciais(nome) {
+    var p = nome.trim().split(/\s+/);
+    return ((p[0] || '')[0] + (p.length > 1 ? p[p.length - 1][0] : '')).toUpperCase();
+  }
+  function entra(nome, email) {
+    accName.textContent = nome;
+    accMail.textContent = email;
+    accIni.textContent = iniciais(nome) || '·';
+    authBox.dataset.logged = 'true';
+    accBox.hidden = false;
+    authOk.hidden = true;
+    libera(2, true);
+  }
+  function sai() {
+    delete authBox.dataset.logged;
+    accBox.hidden = true;
+    abaAtiva('tab-login');
+    libera(2, false);
+    paneLogin.querySelector('input').focus();
+  }
+  document.querySelector('[data-acc-switch]').addEventListener('click', sai);
+
+  document.querySelectorAll('[data-auth-form]').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      var nome = form.querySelector('[name="nome"]');
+      var email = form.querySelector('[name="email"]').value;
+      // No login não pedimos o nome: derivamos um rótulo a partir do e-mail
+      entra(nome && nome.value ? nome.value : email.split('@')[0].replace(/[._-]+/g, ' '), email);
+      barNext.focus();
+    });
+  });
+
+  /* Sessão já ativa: troque para os dados reais na integração.
+     Ex.: entra('Fabiano Dihl Nadler', 'fnadler@gmail.com'); */
+  var SESSAO = null;   // SLOT: usuário logado (null = anônimo)
+  if (SESSAO) entra(SESSAO.nome, SESSAO.email);
+
+  /* ---------- passo 3: amostra + balão da observação ---------- */
+  var tip = document.querySelector('[data-doc-tip]');
+  var tipText = document.querySelector('[data-doc-tip-text]');
+
+  function mostraTip(el) {
+    tipText.textContent = el.dataset.obs;
+    tip.hidden = false;
+    // posiciona acima do trecho, dentro do corpo do passo
+    var pai = tip.offsetParent || document.body;
+    var pr = pai.getBoundingClientRect();
+    var r = el.getBoundingClientRect();
+    tip.style.left = Math.round(r.left - pr.left) + 'px';
+    tip.style.width = Math.round(r.width) + 'px';
+    tip.style.top = Math.round(r.top - pr.top - tip.offsetHeight - 12) + 'px';
+  }
+  function escondeTip() { tip.hidden = true; }
+
+  /* A amostra tem de mostrar as 3 primeiras revisões por inteiro antes do véu.
+     Em vez de cortar o papel numa altura fixa (que não sabe onde caem as
+     edições), medimos o fim da 3a e cortamos depois dela. */
+  var VEU = 240;   // precisa bater com --veil no CSS
+  var paper = document.querySelector('[data-paper]');
+  function ajustaAmostra() {
+    var edits = paper.querySelectorAll('.doc-edit');
+    if (!edits.length) return;
+    var alvo = edits[Math.min(2, edits.length - 1)];
+    paper.style.maxHeight = 'none';
+    var fim = alvo.getBoundingClientRect().bottom - paper.getBoundingClientRect().top;
+    paper.style.maxHeight = Math.round(fim + VEU + 60) + 'px';
+  }
+  window.addEventListener('resize', function () {
+    clearTimeout(window._amostraR);
+    window._amostraR = setTimeout(function () { if (atual === 3) ajustaAmostra(); }, 150);
+  });
+
+  document.querySelectorAll('.doc-edit').forEach(function (el) {
+    el.addEventListener('mouseenter', function () { mostraTip(el); });
+    el.addEventListener('mouseleave', escondeTip);
+    el.addEventListener('focus', function () { mostraTip(el); });
+    el.addEventListener('blur', escondeTip);
+  });
+  window.addEventListener('scroll', escondeTip, { passive: true });
+
+  /* ---------- passo 4: ofertas + carrinho ---------- */
+  var ofertas = Array.prototype.slice.call(document.querySelectorAll('[data-offer]'));
+  var cartExtras = document.querySelector('[data-cart-extras]');
+  var cartVazio = document.querySelector('[data-cart-empty]');
+  var cartTotal = document.querySelector('[data-cart-total]');
+
+  function noCarrinho(id) {
+    return extras.some(function (e) { return e.id === id; });
+  }
+  function pintaCarrinho() {
+    cartExtras.innerHTML = '';
+    extras.forEach(function (e) {
+      var li = document.createElement('li');
+      li.className = 'cart__item';
+      var nome = document.createElement('span');
+      nome.className = 'cart__name';
+      nome.textContent = e.nome;
+      var val = document.createElement('span');
+      val.className = 'cart__val';
+      val.textContent = moeda(e.preco);
+      var rm = document.createElement('button');
+      rm.className = 'cart__rm';
+      rm.type = 'button';
+      rm.setAttribute('aria-label', 'Remover ' + e.nome + ' do pedido');
+      rm.textContent = '×';
+      rm.addEventListener('click', function () { alterna(e.id); });
+      li.appendChild(nome); li.appendChild(val); li.appendChild(rm);
+      cartExtras.appendChild(li);
+    });
+    cartVazio.hidden = extras.length > 0;
+    cartTotal.textContent = moeda(total());
+
+    ofertas.forEach(function (li) {
+      var on = noCarrinho(li.dataset.id);
+      var btn = li.querySelector('[data-offer-toggle]');
+      li.dataset.on = String(on);
+      btn.setAttribute('aria-pressed', String(on));
+      btn.classList.toggle('btn-primary', on);
+      btn.classList.toggle('btn-outline', !on);
+      btn.querySelector('.offer__btn-txt').textContent = on ? 'Adicionado' : 'Adicionar';
+    });
+
+    // O rótulo da barra deixa claro se você está pulando ou levando algo junto
+    // (o total não entra aqui: ele já aparece no resumo, logo acima da barra)
+    var rot = extras.length ? 'Ir para o pagamento' : 'Pular esta etapa';
+    steps[3].dataset.nextLabel = rot;
+    if (atual === 4) barNext.textContent = rot;
+  }
+  function alterna(id) {
+    if (noCarrinho(id)) {
+      extras = extras.filter(function (e) { return e.id !== id; });
+    } else {
+      var li = ofertas.filter(function (o) { return o.dataset.id === id; })[0];
+      if (!li) return;
+      extras.push({ id: id, nome: li.dataset.name, preco: Number(li.dataset.price) });
+    }
+    pintaCarrinho();
+  }
+  ofertas.forEach(function (li) {
+    li.querySelector('[data-offer-toggle]').addEventListener('click', function () {
+      alterna(li.dataset.id);
+    });
+  });
+
+  /* ---------- passo 5: pagamento em canal externo ---------- */
+  /* O pagamento acontece fora daqui (Clube de Autores). Esta tela é só a
+     transição/placeholder: mostra o pedido, simula o vai-e-volta do checkout
+     externo e, ao fim do delay, segue automaticamente para a confirmação. */
+  var orderItems = document.querySelector('[data-order-items]');
+  var orderTotal = document.querySelector('[data-order-total]');
+  var redirStatus = document.querySelector('[data-redir-status]');
+  var redirTimers = [];
+
+  function pintaPedido() {
+    orderItems.innerHTML = '';
+    carrinho().forEach(function (i) {
+      var li = document.createElement('li');
+      li.className = 'order__line';
+      var nome = document.createElement('span');
+      nome.textContent = i.nome;
+      var val = document.createElement('span');
+      val.className = 'order__val';
+      val.textContent = moeda(i.preco);
+      li.appendChild(nome); li.appendChild(val);
+      orderItems.appendChild(li);
+    });
+    orderTotal.textContent = moeda(total());
+  }
+
+  // Placeholder do checkout externo: mensagens em sequência e, ao fim, confirmação.
+  function iniciaRedirecionamento() {
+    redirTimers.forEach(clearTimeout);
+    redirTimers = [];
+    var etapas = [
+      'Abrindo o ambiente de pagamento seguro…',
+      'Aguardando a confirmação do pagamento…',
+      'Pagamento aprovado! Voltando para a KlooBR…'
+    ];
+    redirStatus.textContent = etapas[0];
+    redirTimers.push(setTimeout(function () { redirStatus.textContent = etapas[1]; }, 1400));
+    redirTimers.push(setTimeout(function () { redirStatus.textContent = etapas[2]; }, 3000));
+    redirTimers.push(setTimeout(function () { if (atual === 5) mostra(6); }, 3900));
+  }
+
+  /* ---------- passo 6: confirmação ---------- */
+  var doneTotal = document.querySelector('[data-done-total]');
+  var doneWhat = document.querySelector('[data-done-what]');
+  function pintaConfirmacao() {
+    doneTotal.textContent = moeda(total());
+    doneWhat.textContent = carrinho().map(function (i) { return i.nome; }).join(' · ');
+  }
+
+  /* ---------- fechar o fluxo (com confirmação) ---------- */
+  var closeDlg = document.querySelector('[data-close-dialog]');
+  var closeTitle = document.querySelector('[data-close-title]');
+  var closeText = document.querySelector('[data-close-text]');
+  var closeCancel = document.querySelector('[data-close-cancel]');
+  var closeConfirm = document.querySelector('[data-close-confirm]');
+  var closeTarget = 'servico.html';
+
+  function abreFechar() {
+    if (atual === steps.length) {
+      // Última tela (confirmação): nada a perder — só sair para conhecer outros serviços.
+      closeTitle.textContent = 'Sair do fluxo?';
+      closeText.innerHTML = 'O seu pedido já está confirmado. Ao sair, levamos você para a <strong>home do KlooBR</strong> para conhecer outros serviços.';
+      closeCancel.textContent = 'Ficar nesta tela';
+      closeConfirm.textContent = 'Ver outros serviços';
+      closeConfirm.classList.remove('btn-danger');
+      closeConfirm.classList.add('btn-primary');
+      closeTarget = 'home.html';
+    } else {
+      // Meio do fluxo: sair perde o progresso.
+      closeTitle.textContent = 'Encerrar o processo?';
+      closeText.innerHTML = 'Se você sair agora, <strong>tudo será perdido</strong>: o arquivo enviado, a amostra gerada e os dados preenchidos. Não dá para retomar de onde parou.';
+      closeCancel.textContent = 'Continuar de onde parei';
+      closeConfirm.textContent = 'Sair e perder tudo';
+      closeConfirm.classList.remove('btn-primary');
+      closeConfirm.classList.add('btn-danger');
+      closeTarget = 'servico.html';
+    }
+    if (typeof closeDlg.showModal === 'function') closeDlg.showModal();
+    else closeDlg.setAttribute('open', '');
+  }
+  document.querySelector('[data-close-open]').addEventListener('click', abreFechar);
+  closeCancel.addEventListener('click', function () { closeDlg.close(); });
+  closeConfirm.addEventListener('click', function () {
+    window.location.href = closeTarget;
+  });
+
+  // Sair pela aba/recarregar também avisa (o navegador exibe o aviso padrão)
+  window.addEventListener('beforeunload', function (e) {
+    if (atual === 1 && !pronto[1]) return;   // nada a perder ainda
+    if (atual === steps.length) return;      // já concluiu
+    e.preventDefault();
+    e.returnValue = '';
+  });
+
+  /* ---------- tutorial ---------- */
+  var tutDlg = document.querySelector('[data-tutorial-dialog]');
+  document.querySelector('[data-tutorial-open]').addEventListener('click', function () {
+    if (typeof tutDlg.showModal === 'function') tutDlg.showModal();
+    else tutDlg.setAttribute('open', '');
+  });
+  document.querySelector('[data-tutorial-close]').addEventListener('click', function () { tutDlg.close(); });
+
+  /* ---------- início ---------- */
+  libera(1, false);
+  mostra(1);
+})();
+</script>
+</body>
+</html>

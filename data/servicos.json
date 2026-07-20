@@ -1,0 +1,1171 @@
+[
+  {
+    "slug": "edicao-revisao",
+    "name": "Edição &amp; Revisão",
+    "plainName": "Edição e Revisão",
+    "phase": "Com o livro pronto",
+    "heroPhase": "Com o livro pronto",
+    "heroImg": "hero-edicao-revisao.webp",
+    "card": "card-edicao-revisao.webp",
+    "title": "Edição &amp; Revisão com IA | R$ 299, em até 24h | KlooBR",
+    "metaDesc": "Edição e revisão profissional do seu livro por inteligência artificial: ortografia, gramática, fluidez e padronização por R$ 299, em até 24h. Teste grátis antes de pagar. KlooBR, do Clube de Autores.",
+    "price": "299",
+    "savePct": 94,
+    "marketText": "até R$ 5.000",
+    "ariaTestar": "Testar grátis a Edição e Revisão",
+    "promise": "Seu manuscrito impecável, com ortografia, gramática, clareza e padronização, pronto para publicar em até 24 horas.",
+    "stepInput": "Suba seu livro em Word (.docx). Rápido e sem complicação.",
+    "howaiEyebrow": "Qualidade sem jargão",
+    "howaiTitle": "<strong>Como a IA aprimora</strong> o seu texto.",
+    "howaiLead": "Cinco frentes de trabalho, aplicadas a cada página do seu livro, do ritmo da leitura ao padrão editorial.",
+    "howaiCards": [
+      {
+        "icon": "text-lines",
+        "title": "Reestruturação de frases e parágrafos",
+        "items": [
+          "Tornamos o texto mais fluido e compreensível.",
+          "Ajustamos construções que soam confusas ou ambíguas.",
+          "Melhoramos o ritmo da leitura."
+        ]
+      },
+      {
+        "icon": "target",
+        "title": "Adequação ao estilo e público-alvo",
+        "items": [
+          "Adaptamos o texto ao gênero (ficção, técnico, acadêmico etc.).",
+          "Garantimos unidade de tom e linguagem adequada ao público."
+        ]
+      },
+      {
+        "icon": "grade",
+        "title": "Correção gramatical e ortográfica",
+        "items": [
+          "Corrigimos erros de gramática, ortografia e pontuação.",
+          "Eliminamos vícios de linguagem e repetições desnecessárias."
+        ]
+      },
+      {
+        "icon": "scissors",
+        "title": "Cortes e ajustes de conteúdo",
+        "items": [
+          "Eliminamos redundâncias e trechos desnecessários.",
+          "Sugerimos a supressão ou adição de informações para melhorar o texto."
+        ]
+      },
+      {
+        "icon": "doc-rules",
+        "title": "Padronização segundo normas editoriais",
+        "items": [
+          "Adequamos às normas editoriais vigentes.",
+          "Padronizamos citações, títulos, legendas, numeração de capítulos etc."
+        ]
+      }
+    ],
+    "deliverables": [
+      {
+        "tag": ".docx",
+        "icon": "file-doc",
+        "title": "Seu texto editado e revisado",
+        "desc": "Um arquivo Word (.docx) com ortografia, gramática, fluidez e padronização corrigidas, pronto para diagramar e publicar."
+      },
+      {
+        "tag": ".xlsx",
+        "icon": "sheet",
+        "title": "Relatório de transparência",
+        "desc": "Uma planilha (.xlsx) que explica e justifica cada ajuste feito, para você entender as melhorias e manter o controle."
+      },
+      {
+        "tag": "LGPD",
+        "muted": true,
+        "icon": "shield",
+        "title": "Privacidade garantida",
+        "desc": "Seu texto não treina nossos modelos e permanece 100% seu, do envio à entrega."
+      }
+    ],
+    "compareRows": [
+      [
+        "Preço",
+        "R$ 299",
+        "a partir de R$ 5.000"
+      ],
+      [
+        "Prazo de entrega",
+        "em até 24h",
+        "6 a 10 semanas"
+      ],
+      [
+        "Como você contrata",
+        "100% online, self-service",
+        "cotações, e-mails e espera"
+      ],
+      [
+        "Teste antes de pagar",
+        "amostra grátis do seu texto",
+        "normalmente indisponível"
+      ],
+      [
+        "Relatório de alterações",
+        "incluso (planilha detalhada)",
+        "varia conforme o profissional"
+      ]
+    ],
+    "proofTitle": "Autores que revisaram com a KlooBR.",
+    "testimonials": [
+      {
+        "quote": "Meu livro voltou impecável em menos de um dia. O relatório de ajustes me garantiu que nada da minha voz se perdeu.",
+        "initials": "MA",
+        "name": "Marina Alves",
+        "meta": "autora de ficção · Belo Horizonte"
+      },
+      {
+        "quote": "Uma editora me cobrou orçamento de milhares de reais. Fiz a mesma revisão por R$ 299 e publiquei na mesma semana.",
+        "initials": "RT",
+        "name": "Rogério Tavares",
+        "meta": "autor de não ficção · Recife"
+      }
+    ],
+    "faq": [
+      {
+        "q": "A revisão altera o meu estilo de escrita?",
+        "a": "Não. A IA corrige e clareia o texto preservando a sua voz. E você recebe um relatório de cada ajuste. Nada muda sem que você saiba."
+      },
+      {
+        "q": "Qual é o tamanho máximo de livro?",
+        "a": "Atendemos livros de qualquer tamanho. O preço de R$ 299 tem como base um livro de cerca de 200 páginas; para obras maiores, o valor é calculado antes da compra, sempre com a amostra grátis primeiro."
+      },
+      {
+        "q": "O arquivo já vem diagramado?",
+        "a": "O arquivo é entregue em Word (.docx), pronto para ser diagramado ou formatado como você preferir. Precisa de diagramação? Ela chega em breve na fase “Para publicar”."
+      },
+      {
+        "q": "Posso pedir ajustes depois de receber?",
+        "a": "Sim. Você valida a amostra antes de comprar e conta com o nosso suporte para garantir que o resultado atenda às suas expectativas."
+      }
+    ],
+    "xsEyebrow": "Combina com a Edição &amp; Revisão",
+    "xsTitle": "<strong>Quem revisou com a KlooBR</strong> também levou.",
+    "xsLead": "Com o texto impecável, estes são os próximos passos naturais do seu livro, e o mesmo arquivo já serve para todos.",
+    "xsDesc": "Ortografia, gramática, fluidez e padronização. Seu texto impecável e pronto para publicar.",
+    "crossSell": [
+      "traducao",
+      "conversao-ebook",
+      "textos-marketing"
+    ],
+    "ctaTitle": "Comece pela amostra grátis da sua Edição &amp; Revisão.",
+    "ctaText": "Envie seu livro e veja, sem pagar nada, como a IA da KlooBR deixa seu texto pronto para publicar.",
+    "flowUrl": "fluxo.html"
+  },
+  {
+    "slug": "analise-livro",
+    "name": "Análise de Livro",
+    "plainName": "Análise de Livro",
+    "phase": "Enquanto você escreve",
+    "heroPhase": "Enquanto você escreve",
+    "heroImg": "hero-analise-livro.webp",
+    "card": "card-analise-livro.webp",
+    "title": "Análise de Livro com IA | R$ 69, em até 24h | KlooBR",
+    "metaDesc": "Parecer editorial completo do seu manuscrito por inteligência artificial: pontos fortes, fragilidades e o que melhorar, por R$ 69, em até 24h. KlooBR, do Clube de Autores.",
+    "price": "69",
+    "savePct": 92,
+    "marketText": "a partir de R$ 900",
+    "ariaTestar": "Analisar o seu livro agora",
+    "promise": "Um parecer editorial completo do seu manuscrito, com pontos fortes, fragilidades e o que melhorar, pronto em até 24 horas.",
+    "ctaLabel": "Analisar agora",
+    "dockNote": "parecer completo em minutos",
+    "steps": [
+      {
+        "title": "Envie seu livro em .docx",
+        "text": "Suba o seu livro em Word (.docx). Rápido e sem complicação."
+      },
+      {
+        "title": "Compre a análise",
+        "text": "Conclua a compra da análise completa do seu livro de forma rápida e segura."
+      },
+      {
+        "title": "A IA analisa em minutos",
+        "text": "Em poucos minutos, a IA faz uma leitura crítica completa do seu manuscrito."
+      },
+      {
+        "title": "Receba o parecer detalhado",
+        "text": "Você recebe uma análise profissional detalhada, do enredo ao ritmo, com recomendações."
+      }
+    ],
+    "stepInput": "Suba seu manuscrito em Word (.docx). Rápido e sem complicação.",
+    "howaiEyebrow": "Leitura crítica sem jargão",
+    "howaiTitle": "<strong>O que a análise</strong> revela sobre o seu livro.",
+    "howaiLead": "Uma leitura crítica e estruturada do seu manuscrito, do enredo ao ritmo, com recomendações práticas.",
+    "howaiCards": [
+      {
+        "icon": "search",
+        "title": "Estrutura e enredo",
+        "items": [
+          "Avaliamos a construção da história do começo ao fim.",
+          "Apontamos furos de roteiro e pontas soltas."
+        ]
+      },
+      {
+        "icon": "target",
+        "title": "Ritmo e progressão",
+        "items": [
+          "Mostramos onde a narrativa acelera ou se arrasta.",
+          "Indicamos capítulos que prendem ou perdem o leitor."
+        ]
+      },
+      {
+        "icon": "heart",
+        "title": "Personagens e coerência",
+        "items": [
+          "Analisamos a consistência e a profundidade dos personagens.",
+          "Sinalizamos incoerências de tempo, tom e ponto de vista."
+        ]
+      },
+      {
+        "icon": "grade",
+        "title": "Recomendações práticas",
+        "items": [
+          "Priorizamos o que melhorar antes de revisar ou publicar.",
+          "Sugerimos caminhos concretos para a próxima versão."
+        ]
+      }
+    ],
+    "deliverables": [
+      {
+        "tag": ".pdf",
+        "icon": "file-doc",
+        "title": "Parecer editorial completo",
+        "desc": "Um relatório (.pdf) com a análise do seu manuscrito: pontos fortes, fragilidades e recomendações capítulo a capítulo."
+      },
+      {
+        "tag": "Plano",
+        "icon": "chart",
+        "title": "Mapa de melhorias priorizado",
+        "desc": "Uma lista objetiva do que ajustar primeiro, para você evoluir o texto com foco."
+      },
+      {
+        "tag": "LGPD",
+        "muted": true,
+        "icon": "shield",
+        "title": "Privacidade garantida",
+        "desc": "Seu texto não treina nossos modelos e permanece 100% seu, do envio à entrega."
+      }
+    ],
+    "compareRows": [
+      [
+        "Preço",
+        "R$ 69",
+        "a partir de R$ 900"
+      ],
+      [
+        "Prazo de entrega",
+        "em até 24h",
+        "2 a 4 semanas"
+      ],
+      [
+        "Como você contrata",
+        "100% online, self-service",
+        "cotações, e-mails e espera"
+      ],
+      [
+        "Abrangência da análise",
+        "enredo, ritmo, personagens e mais",
+        "depende do profissional"
+      ],
+      [
+        "Formato do parecer",
+        "relatório estruturado e objetivo",
+        "varia conforme o profissional"
+      ]
+    ],
+    "proofTitle": "Autores que analisaram o livro com a KlooBR.",
+    "testimonials": [
+      {
+        "quote": "O parecer apontou exatamente onde a história perdia força. Reescrevi dois capítulos e o livro ficou muito melhor.",
+        "initials": "CM",
+        "name": "Carla Menezes",
+        "meta": "autora de ficção · Salvador"
+      },
+      {
+        "quote": "Recebi em um dia uma leitura crítica que um parecerista cobraria caro e levaria semanas. Valeu cada centavo.",
+        "initials": "JF",
+        "name": "João Ferraz",
+        "meta": "autor estreante · Porto Alegre"
+      }
+    ],
+    "faq": [
+      {
+        "q": "A análise corrige o meu texto?",
+        "a": "Não. A análise é um parecer: aponta o que funciona e o que melhorar. Para corrigir ortografia, gramática e fluidez, o serviço indicado é a Edição e Revisão."
+      },
+      {
+        "q": "Preciso ter o livro terminado?",
+        "a": "Não. Você pode enviar um manuscrito em andamento. A análise ajuda justamente a decidir os próximos passos da escrita."
+      },
+      {
+        "q": "Que tipo de livro vocês analisam?",
+        "a": "Ficção e não ficção de qualquer gênero. O preço de R$ 69 tem como base um livro de cerca de 200 páginas; para obras maiores, o valor é calculado antes da compra."
+      },
+      {
+        "q": "Como recebo o parecer?",
+        "a": "Em um relatório profissional detalhado, com a leitura crítica do seu livro do enredo ao ritmo, pronto para ler e aplicar."
+      }
+    ],
+    "xsEyebrow": "Combina com a Análise de Livro",
+    "xsTitle": "<strong>Depois do parecer,</strong> os próximos passos.",
+    "xsLead": "Com os pontos de melhoria em mãos, avance no seu livro com quem cuida de cada etapa.",
+    "xsDesc": "Um parecer editorial completo do seu manuscrito: pontos fortes, fragilidades e o que melhorar.",
+    "crossSell": [
+      "edicao-revisao",
+      "raiox-emocional",
+      "conversao-ebook"
+    ],
+    "ctaTitle": "Receba o parecer completo do seu livro.",
+    "ctaText": "Envie o seu manuscrito e receba, em minutos, uma análise profissional detalhada do seu livro.",
+    "flowUrl": "fluxo-analise-livro.html"
+  },
+  {
+    "slug": "raiox-emocional",
+    "name": "Raio-X Emocional",
+    "plainName": "Raio-X Emocional",
+    "phase": "Enquanto você escreve",
+    "heroPhase": "Enquanto você escreve",
+    "heroImg": "hero-raiox-emocional.webp",
+    "card": "card-raiox-emocional.webp",
+    "title": "Raio-X Emocional com IA | R$ 99, em até 24h | KlooBR",
+    "metaDesc": "Descubra o impacto emocional de cada capítulo do seu livro por inteligência artificial, por R$ 99, em até 24h. Veja onde a história prende ou perde o leitor. KlooBR, do Clube de Autores.",
+    "price": "99",
+    "savePct": 86,
+    "marketText": "a partir de R$ 700",
+    "ariaTestar": "Fazer o Raio-X Emocional do seu livro",
+    "promise": "Descubra o impacto emocional de cada capítulo e veja onde a sua história prende ou perde o leitor, em até 24 horas.",
+    "ctaLabel": "Fazer o Raio-X",
+    "dockNote": "mapa emocional em minutos",
+    "steps": [
+      {
+        "title": "Envie seu livro em .docx",
+        "text": "Suba o seu livro em Word (.docx). Rápido e sem complicação."
+      },
+      {
+        "title": "Compre a análise",
+        "text": "Conclua a compra da análise de engajamento do leitor de forma rápida e segura."
+      },
+      {
+        "title": "A IA analisa em minutos",
+        "text": "Em poucos minutos, a IA mapeia o impacto emocional do seu livro."
+      },
+      {
+        "title": "Receba o mapa emocional",
+        "text": "Você recebe a análise do impacto emocional com recomendações práticas para aprimorar o livro."
+      }
+    ],
+    "stepInput": "Suba seu manuscrito em Word (.docx). Rápido e sem complicação.",
+    "howaiEyebrow": "A emoção da leitura, medida",
+    "howaiTitle": "<strong>O que o Raio-X</strong> revela sobre a sua história.",
+    "howaiLead": "Um mapa da jornada emocional do leitor, capítulo a capítulo, do primeiro ao último parágrafo.",
+    "howaiCards": [
+      {
+        "icon": "heart",
+        "title": "Curva emocional",
+        "items": [
+          "Mapeamos a emoção predominante de cada capítulo.",
+          "Mostramos os altos e baixos ao longo da leitura."
+        ]
+      },
+      {
+        "icon": "target",
+        "title": "Tensão e engajamento",
+        "items": [
+          "Apontamos onde a história prende a atenção.",
+          "Sinalizamos os trechos em que o leitor pode desistir."
+        ]
+      },
+      {
+        "icon": "compass",
+        "title": "Ritmo da jornada",
+        "items": [
+          "Revelamos se a progressão emocional está equilibrada.",
+          "Indicamos picos e vales que pedem ajuste."
+        ]
+      },
+      {
+        "icon": "grade",
+        "title": "Recomendações de impacto",
+        "items": [
+          "Sugerimos como intensificar os momentos-chave.",
+          "Priorizamos ajustes para uma leitura mais envolvente."
+        ]
+      }
+    ],
+    "deliverables": [
+      {
+        "tag": ".pdf",
+        "icon": "file-doc",
+        "title": "Relatório do Raio-X Emocional",
+        "desc": "Um relatório (.pdf) com a curva emocional do seu livro e a leitura capítulo a capítulo."
+      },
+      {
+        "tag": "Mapa",
+        "icon": "chart",
+        "title": "Mapa de engajamento",
+        "desc": "Uma visão clara de onde a história prende e onde perde o leitor, para você agir com foco."
+      },
+      {
+        "tag": "LGPD",
+        "muted": true,
+        "icon": "shield",
+        "title": "Privacidade garantida",
+        "desc": "Seu texto não treina nossos modelos e permanece 100% seu, do envio à entrega."
+      }
+    ],
+    "compareRows": [
+      [
+        "Preço",
+        "R$ 99",
+        "a partir de R$ 700"
+      ],
+      [
+        "Prazo de entrega",
+        "em até 24h",
+        "2 a 3 semanas"
+      ],
+      [
+        "Como você contrata",
+        "100% online, self-service",
+        "cotações, e-mails e espera"
+      ],
+      [
+        "Profundidade da análise",
+        "curva de tensão, mapa de calor e nota emocional",
+        "raramente disponível"
+      ],
+      [
+        "Formato do resultado",
+        "mapa emocional capítulo a capítulo",
+        "raramente disponível"
+      ]
+    ],
+    "proofTitle": "Autores que fizeram o Raio-X com a KlooBR.",
+    "testimonials": [
+      {
+        "quote": "Descobri que o meio do livro esfriava. Ajustei dois capítulos e a leitura ganhou o fôlego que faltava.",
+        "initials": "LP",
+        "name": "Letícia Prado",
+        "meta": "autora de ficção · Fortaleza"
+      },
+      {
+        "quote": "Ver a curva emocional da minha história foi revelador. Nunca tinha enxergado o meu livro assim.",
+        "initials": "AM",
+        "name": "André Moura",
+        "meta": "autor independente · Brasília"
+      }
+    ],
+    "faq": [
+      {
+        "q": "O Raio-X corrige o texto?",
+        "a": "Não. Ele analisa o impacto emocional da leitura. Para deixar o texto impecável, o serviço indicado é a Edição e Revisão."
+      },
+      {
+        "q": "Serve para não ficção?",
+        "a": "Sim. Mesmo em não ficção, o engajamento do leitor importa. O Raio-X mostra onde a leitura prende e onde pode cansar."
+      },
+      {
+        "q": "Preciso do livro terminado?",
+        "a": "Não. Você pode enviar um manuscrito em andamento e usar o Raio-X para guiar a próxima versão."
+      },
+      {
+        "q": "Como recebo o resultado?",
+        "a": "Em um relatório com a curva emocional e a leitura capítulo a capítulo, com recomendações práticas para aprimorar o seu livro."
+      }
+    ],
+    "xsEyebrow": "Combina com o Raio-X Emocional",
+    "xsTitle": "<strong>Depois do Raio-X,</strong> dê o próximo passo.",
+    "xsLead": "Com o mapa emocional em mãos, evolua o seu livro com quem cuida de cada fase.",
+    "xsDesc": "Descubra o impacto emocional de cada capítulo e onde a história prende ou perde o leitor.",
+    "crossSell": [
+      "analise-livro",
+      "edicao-revisao",
+      "textos-marketing"
+    ],
+    "ctaTitle": "Descubra o impacto emocional do seu livro.",
+    "ctaText": "Envie o seu manuscrito e receba, em minutos, o mapa emocional completo do seu livro.",
+    "flowUrl": "fluxo-raiox-emocional.html"
+  },
+  {
+    "slug": "traducao",
+    "name": "Tradução",
+    "plainName": "Tradução",
+    "phase": "Com o livro pronto",
+    "heroPhase": "Com o livro pronto",
+    "heroImg": "hero-traducao.webp",
+    "card": "card-traducao.webp",
+    "title": "Tradução de Livros com IA | R$ 399, em até 24h | KlooBR",
+    "metaDesc": "Traduza seu livro para mais de 80 idiomas com inteligência artificial, mantendo o sentido e o tom, por R$ 399, em até 24h. Teste grátis antes de pagar. KlooBR, do Clube de Autores.",
+    "price": "399",
+    "savePct": 93,
+    "marketText": "a partir de R$ 6.000",
+    "ariaTestar": "Testar grátis a Tradução",
+    "promise": "Seu livro em mais de 80 idiomas, com o sentido e o tom preservados, pronto para novos leitores em até 24 horas.",
+    "steps": [
+      {
+        "title": "Envie e escolha o idioma",
+        "text": "Suba o seu livro em Word (.docx) e selecione o idioma de destino."
+      },
+      {
+        "title": "Receba uma amostra grátis",
+        "text": "Receba e valide uma amostra gratuita da tradução feita pela IA, sem pagar nada."
+      },
+      {
+        "title": "Aprove e contrate",
+        "text": "Aprovou a amostra? Contrate a tradução completa de forma rápida e segura."
+      },
+      {
+        "title": "Receba o livro traduzido",
+        "text": "Seu livro chega traduzido em .docx, pronto para diagramar e publicar."
+      }
+    ],
+    "stepInput": "Suba seu livro revisado em Word (.docx). Rápido e sem complicação.",
+    "howaiEyebrow": "Tradução com alma",
+    "howaiTitle": "<strong>Como a IA traduz</strong> sem perder a sua voz.",
+    "howaiLead": "Uma tradução que vai além das palavras, cuidando de tom, contexto e naturalidade em cada página.",
+    "howaiCards": [
+      {
+        "icon": "globe",
+        "title": "Fidelidade ao sentido",
+        "items": [
+          "Preservamos a intenção e o significado do original.",
+          "Evitamos traduções literais que soam artificiais."
+        ]
+      },
+      {
+        "icon": "target",
+        "title": "Tom e estilo mantidos",
+        "items": [
+          "Mantemos a sua voz e o registro do seu livro.",
+          "Adaptamos expressões para soar natural no idioma."
+        ]
+      },
+      {
+        "icon": "book-check",
+        "title": "Coerência do começo ao fim",
+        "items": [
+          "Padronizamos nomes, termos e escolhas ao longo do texto.",
+          "Garantimos consistência em toda a obra."
+        ]
+      },
+      {
+        "icon": "grade",
+        "title": "Pronto para publicar",
+        "items": [
+          "Entregamos o texto revisado no idioma de destino.",
+          "Formatação preservada para diagramar e publicar."
+        ]
+      }
+    ],
+    "deliverables": [
+      {
+        "tag": ".docx",
+        "icon": "file-doc",
+        "title": "Seu livro traduzido",
+        "desc": "Um arquivo Word (.docx) com a tradução completa, revisada e pronta para diagramar e publicar."
+      },
+      {
+        "tag": "Idiomas",
+        "icon": "globe",
+        "title": "Mais de 80 idiomas",
+        "desc": "Escolha entre mais de 80 idiomas de destino e alcance leitores no mundo todo, a partir do mesmo arquivo."
+      },
+      {
+        "tag": "LGPD",
+        "muted": true,
+        "icon": "shield",
+        "title": "Privacidade garantida",
+        "desc": "Seu texto não treina nossos modelos e permanece 100% seu, do envio à entrega."
+      }
+    ],
+    "compareRows": [
+      [
+        "Preço",
+        "R$ 399",
+        "a partir de R$ 6.000"
+      ],
+      [
+        "Prazo de entrega",
+        "em até 24h",
+        "6 a 12 semanas"
+      ],
+      [
+        "Como você contrata",
+        "100% online, self-service",
+        "cotações, e-mails e espera"
+      ],
+      [
+        "Teste antes de pagar",
+        "amostra grátis do seu texto",
+        "normalmente indisponível"
+      ],
+      [
+        "Idiomas disponíveis",
+        "mais de 80 idiomas",
+        "depende do profissional"
+      ]
+    ],
+    "proofTitle": "Autores que traduziram com a KlooBR.",
+    "testimonials": [
+      {
+        "quote": "Traduzi meu livro para o inglês num fim de semana e comecei a vender lá fora. Não teria conseguido pelo caminho tradicional.",
+        "initials": "HC",
+        "name": "Helena Costa",
+        "meta": "autora independente · Curitiba"
+      },
+      {
+        "quote": "Tinha receio de perder o tom do meu texto. A tradução manteve a minha voz melhor do que eu esperava.",
+        "initials": "RS",
+        "name": "Ricardo Salles",
+        "meta": "autor de não ficção · São Paulo"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Para quais idiomas vocês traduzem?",
+        "a": "Traduzimos para mais de 80 idiomas, do inglês, espanhol, francês, alemão e italiano ao mandarim, japonês, árabe e muitos outros. Você escolhe o idioma de destino ao contratar."
+      },
+      {
+        "q": "A tradução mantém o meu estilo?",
+        "a": "Sim. A IA traduz preservando o tom e a voz do original, adaptando expressões para soar natural no idioma de destino."
+      },
+      {
+        "q": "Preciso revisar o livro antes de traduzir?",
+        "a": "Recomendamos que sim. Um texto já revisado gera uma tradução ainda melhor. Se precisar, comece pela Edição e Revisão."
+      },
+      {
+        "q": "Qual é o tamanho máximo de livro?",
+        "a": "Atendemos livros de qualquer tamanho. O preço de R$ 399 tem como base um livro de cerca de 200 páginas; para obras maiores, o valor é calculado antes da compra."
+      }
+    ],
+    "xsEyebrow": "Combina com a Tradução",
+    "xsTitle": "<strong>Traduzido o livro,</strong> leve-o mais longe.",
+    "xsLead": "Com a sua obra em outro idioma, publique e divulgue para novos leitores com quem cuida de cada etapa.",
+    "xsDesc": "Alcance leitores em mais de 80 idiomas. A tradução herda o mesmo cuidado editorial do seu livro.",
+    "crossSell": [
+      "conversao-ebook",
+      "textos-marketing",
+      "edicao-revisao"
+    ],
+    "ctaTitle": "Comece pela amostra grátis da sua Tradução.",
+    "ctaText": "Envie seu livro e veja, sem pagar nada, como a IA da KlooBR traduz mantendo a sua voz.",
+    "flowUrl": "fluxo-traducao.html"
+  },
+  {
+    "slug": "conversao-ebook",
+    "name": "Conversão para E-book",
+    "plainName": "Conversão para E-book",
+    "phase": "Para publicar",
+    "heroPhase": "Para publicar",
+    "heroImg": "hero-conversao-ebook.webp",
+    "card": "card-conversao-epub.webp",
+    "title": "Conversão para E-book com IA | R$ 109, em até 24h | KlooBR",
+    "metaDesc": "Transforme seu livro em e-book (EPUB 3) pronto para as principais lojas com inteligência artificial, por R$ 109, em até 24h. Leitura perfeita em qualquer dispositivo. KlooBR, do Clube de Autores.",
+    "price": "109",
+    "savePct": 78,
+    "marketText": "a partir de R$ 500",
+    "ariaTestar": "Converter o seu livro para e-book",
+    "promise": "Seu livro pronto em e-book (EPUB 3) para as principais lojas, com leitura perfeita em qualquer dispositivo, em até 24 horas.",
+    "stepInput": "Suba seu livro em PDF. Rápido e sem complicação.",
+    "ctaLabel": "Converter agora",
+    "dockNote": "EPUB 3 em até 24h",
+    "steps": [
+      {
+        "title": "Envie seu livro em PDF",
+        "text": "Suba o seu livro em PDF. Rápido e sem complicação."
+      },
+      {
+        "title": "Compre a conversão",
+        "text": "Conclua a compra da conversão para e-book de forma rápida e segura."
+      },
+      {
+        "title": "Receba o EPUB 3 em até 24h",
+        "text": "Seu livro chega em EPUB 3, estruturado e compatível com os principais leitores digitais."
+      },
+      {
+        "title": "Metadados e relatório",
+        "text": "Você também recebe uma planilha com todos os metadados e um relatório com os detalhes da conversão."
+      }
+    ],
+    "howaiEyebrow": "Do arquivo à loja",
+    "howaiTitle": "<strong>Como a IA converte</strong> o seu livro em e-book.",
+    "howaiLead": "Uma conversão que respeita o seu conteúdo e entrega uma leitura impecável em qualquer tela.",
+    "howaiCards": [
+      {
+        "icon": "tablet",
+        "title": "Leitura fluida em qualquer tela",
+        "items": [
+          "O texto se adapta a celulares, tablets e e-readers.",
+          "Fontes, tamanhos e espaçamentos ajustáveis pelo leitor."
+        ]
+      },
+      {
+        "icon": "layers",
+        "title": "Estrutura preservada",
+        "items": [
+          "Capítulos, títulos e sumário navegável mantidos.",
+          "Imagens e quebras de página no lugar certo."
+        ]
+      },
+      {
+        "icon": "store",
+        "title": "Pronto para as lojas",
+        "items": [
+          "Arquivo EPUB compatível com as principais livrarias.",
+          "Padrão aceito pela Amazon, Apple, Google e outras."
+        ]
+      },
+      {
+        "icon": "grade",
+        "title": "Revisão de formatação",
+        "items": [
+          "Conferimos a leitura do começo ao fim.",
+          "Corrigimos falhas de conversão antes de entregar."
+        ]
+      }
+    ],
+    "deliverables": [
+      {
+        "tag": ".epub",
+        "icon": "tablet",
+        "title": "Seu livro em EPUB 3",
+        "desc": "Um arquivo EPUB 3 estruturado, pronto para publicar nas principais lojas, com leitura perfeita em qualquer dispositivo."
+      },
+      {
+        "tag": ".xlsx",
+        "icon": "sheet",
+        "title": "Metadados e relatório",
+        "desc": "Uma planilha com todos os metadados do livro e um relatório com os detalhes e as verificações da conversão."
+      },
+      {
+        "tag": "LGPD",
+        "muted": true,
+        "icon": "shield",
+        "title": "Privacidade garantida",
+        "desc": "Seu arquivo não treina nossos modelos e permanece 100% seu, do envio à entrega."
+      }
+    ],
+    "compareRows": [
+      [
+        "Preço",
+        "R$ 109",
+        "a partir de R$ 500"
+      ],
+      [
+        "Prazo de entrega",
+        "em até 24h",
+        "1 a 2 semanas"
+      ],
+      [
+        "Como você contrata",
+        "100% online, self-service",
+        "cotações, e-mails e espera"
+      ],
+      [
+        "Documentação",
+        "metadados + relatório da conversão",
+        "raramente incluída"
+      ],
+      [
+        "Compatibilidade",
+        "principais lojas de e-book",
+        "varia conforme o profissional"
+      ]
+    ],
+    "proofTitle": "Autores que publicaram o e-book com a KlooBR.",
+    "testimonials": [
+      {
+        "quote": "Meu PDF virou um e-book impecável no mesmo dia. Publiquei nas lojas sem dor de cabeça técnica.",
+        "initials": "VS",
+        "name": "Vanessa Souza",
+        "meta": "autora independente · Recife"
+      },
+      {
+        "quote": "A leitura ficou perfeita no celular e no e-reader. Parecia trabalho de uma editora grande.",
+        "initials": "MP",
+        "name": "Marcelo Pinto",
+        "meta": "autor de não ficção · Campinas"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Qual arquivo eu envio?",
+        "a": "Envie seu livro em PDF. A IA cuida da conversão para EPUB, o formato aceito pelas principais lojas."
+      },
+      {
+        "q": "O e-book funciona em quais dispositivos?",
+        "a": "Em celulares, tablets e e-readers. O texto se adapta à tela, com fonte e tamanho ajustáveis pelo leitor."
+      },
+      {
+        "q": "Vocês publicam o livro nas lojas por mim?",
+        "a": "Entregamos o arquivo EPUB pronto para publicar. A publicação em cada loja é feita por você, de forma simples, ou pelo Clube de Autores."
+      },
+      {
+        "q": "E se a conversão tiver algum erro?",
+        "a": "Cada conversão passa por verificações de estrutura e compatibilidade, e você recebe um relatório com esses detalhes. Se algo precisar de ajuste, o nosso suporte resolve."
+      }
+    ],
+    "xsEyebrow": "Combina com a Conversão para E-book",
+    "xsTitle": "<strong>Com o e-book pronto,</strong> conquiste leitores.",
+    "xsLead": "Publicado o livro, o próximo passo é vender e alcançar mais gente com quem cuida de cada etapa.",
+    "xsDesc": "Transforme o livro pronto em e-book e publique nas principais lojas no mesmo dia.",
+    "crossSell": [
+      "textos-marketing",
+      "traducao",
+      "edicao-revisao"
+    ],
+    "ctaTitle": "Converta o seu livro em e-book pronto para as lojas.",
+    "ctaText": "Envie o seu livro em PDF e receba, em até 24 horas, um e-book em EPUB 3 pronto para as principais lojas.",
+    "flowUrl": "fluxo-conversao-ebook.html"
+  },
+  {
+    "slug": "textos-marketing",
+    "name": "Textos de marketing &amp; sinopse",
+    "plainName": "Textos de marketing e sinopse",
+    "phase": "Para divulgar",
+    "heroPhase": "Para divulgar",
+    "heroImg": "hero-textos-marketing.webp",
+    "card": "card-textos-marketing.webp",
+    "title": "Textos de Marketing &amp; Sinopse com IA | R$ 79, em até 24h | KlooBR",
+    "metaDesc": "Sinopse, quarta capa e posts para redes sociais escritos a partir do seu livro por inteligência artificial, por R$ 79, em até 24h. Teste grátis antes de pagar. KlooBR, do Clube de Autores.",
+    "price": "79",
+    "savePct": 87,
+    "marketText": "a partir de R$ 600",
+    "ariaTestar": "Testar grátis os Textos de marketing e sinopse",
+    "promise": "Sinopse, quarta capa e posts que despertam o desejo de ler, escritos a partir do seu próprio livro, em até 24 horas.",
+    "steps": [
+      {
+        "title": "Envie seu livro",
+        "text": "Suba o seu livro em Word (.docx). Rápido e sem complicação."
+      },
+      {
+        "title": "Receba uma amostra grátis",
+        "text": "Receba uma amostra dos textos gerados a partir do seu livro, sem pagar nada."
+      },
+      {
+        "title": "Aprove e compre",
+        "text": "Gostou? Conclua a compra dos textos de forma rápida e segura."
+      },
+      {
+        "title": "Receba o kit de divulgação",
+        "text": "Você recebe a sinopse, a quarta capa e os posts para as redes, prontos para usar."
+      }
+    ],
+    "stepInput": "Suba seu livro em Word (.docx). Rápido e sem complicação.",
+    "howaiEyebrow": "Textos que vendem o seu livro",
+    "howaiTitle": "<strong>Como a IA cria</strong> os textos que vendem.",
+    "howaiLead": "Materiais de divulgação escritos a partir do conteúdo do seu livro, prontos para as lojas e as redes.",
+    "howaiCards": [
+      {
+        "icon": "megaphone",
+        "title": "Sinopse que convence",
+        "items": [
+          "Um resumo que desperta curiosidade sem entregar o final.",
+          "No tom certo para o público do seu livro."
+        ]
+      },
+      {
+        "icon": "book-check",
+        "title": "Texto de quarta capa",
+        "items": [
+          "A apresentação que convence quem folheia na loja.",
+          "Destaca o que torna o seu livro único."
+        ]
+      },
+      {
+        "icon": "sparkles",
+        "title": "Posts para as redes",
+        "items": [
+          "Frases e chamadas prontas para divulgar o lançamento.",
+          "Adaptadas para diferentes redes sociais."
+        ]
+      },
+      {
+        "icon": "target",
+        "title": "A partir do seu conteúdo",
+        "items": [
+          "Escrevemos com base no que o seu livro realmente diz.",
+          "Mantemos a sua voz e a promessa da obra."
+        ]
+      }
+    ],
+    "deliverables": [
+      {
+        "tag": "Kit",
+        "icon": "megaphone",
+        "title": "Kit de divulgação",
+        "desc": "Sinopse, texto de quarta capa e um conjunto de posts para redes, prontos para copiar e usar."
+      },
+      {
+        "tag": ".docx",
+        "icon": "file-doc",
+        "title": "Tudo em um arquivo",
+        "desc": "Um documento (.docx) organizado com todos os textos, fácil de editar e reaproveitar."
+      },
+      {
+        "tag": "LGPD",
+        "muted": true,
+        "icon": "shield",
+        "title": "Privacidade garantida",
+        "desc": "Seu texto não treina nossos modelos e permanece 100% seu, do envio à entrega."
+      }
+    ],
+    "compareRows": [
+      [
+        "Preço",
+        "R$ 79",
+        "a partir de R$ 600"
+      ],
+      [
+        "Prazo de entrega",
+        "em até 24h",
+        "1 a 2 semanas"
+      ],
+      [
+        "Como você contrata",
+        "100% online, self-service",
+        "cotações, e-mails e espera"
+      ],
+      [
+        "Teste antes de pagar",
+        "amostra grátis dos textos",
+        "normalmente indisponível"
+      ],
+      [
+        "O que está incluso",
+        "sinopse, quarta capa e posts",
+        "depende do profissional"
+      ]
+    ],
+    "proofTitle": "Autores que divulgaram com a KlooBR.",
+    "testimonials": [
+      {
+        "quote": "A sinopse ficou melhor do que a que eu tinha escrito em semanas. As vendas na loja reagiram na hora.",
+        "initials": "TB",
+        "name": "Tânia Barros",
+        "meta": "autora de ficção · Belo Horizonte"
+      },
+      {
+        "quote": "Recebi um kit de posts pronto e finalmente comecei a divulgar o meu livro sem travar na hora de escrever.",
+        "initials": "EG",
+        "name": "Eduardo Gomes",
+        "meta": "autor independente · Natal"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Os textos são escritos a partir do quê?",
+        "a": "Do conteúdo do seu próprio livro. A IA lê a obra e escreve sinopse, quarta capa e posts fiéis à sua história e à sua voz."
+      },
+      {
+        "q": "Posso editar os textos depois?",
+        "a": "Sim. Você recebe tudo em um arquivo editável e pode ajustar o que quiser antes de publicar."
+      },
+      {
+        "q": "Serve para qualquer gênero?",
+        "a": "Sim, ficção e não ficção. Os textos são adaptados ao público e ao tom do seu livro."
+      },
+      {
+        "q": "Para quais redes servem os posts?",
+        "a": "São chamadas e frases prontas, fáceis de adaptar para as principais redes sociais e para as páginas do seu livro nas lojas."
+      }
+    ],
+    "xsEyebrow": "Combina com os Textos de marketing",
+    "xsTitle": "<strong>Com a divulgação pronta,</strong> complete o seu livro.",
+    "xsLead": "Enquanto atrai novos leitores, garanta que o seu livro esteja impecável e em toda parte.",
+    "xsDesc": "Sinopse, quarta capa e posts para as redes, escritos a partir do conteúdo do seu livro.",
+    "crossSell": [
+      "conversao-ebook",
+      "traducao",
+      "edicao-revisao"
+    ],
+    "ctaTitle": "Comece pela amostra grátis dos seus Textos de marketing.",
+    "ctaText": "Envie seu livro e veja, sem pagar nada, os textos que a IA da KlooBR cria para divulgar a sua obra.",
+    "flowUrl": "fluxo.html"
+  },
+  {
+    "slug": "diagramacao",
+    "name": "Diagramação",
+    "plainName": "Diagramação",
+    "phase": "Para publicar",
+    "heroPhase": "Para publicar",
+    "heroImg": "hero-diagramacao.webp",
+    "card": "card-diagramacao.webp",
+    "title": "Diagramação de Livro com IA | R$ 149, em até 24h | KlooBR",
+    "metaDesc": "Miolo do seu livro diagramado por IA — tipografia, margens, sumário e cabeçalhos no padrão editorial, pronto para impressão. Em até 24h. KlooBR, do Clube de Autores.",
+    "price": "149",
+    "savePct": 90,
+    "marketText": "a partir de R$ 1.500",
+    "ariaTestar": "Diagramar o seu livro agora",
+    "promise": "O miolo do seu livro diagramado com padrão de editora — tipografia, margens, sumário e cabeçalhos —, pronto para impressão em até 24 horas.",
+    "flowUrl": "fluxo-diagramacao.html",
+    "ctaLabel": "Diagramar agora",
+    "dockNote": "miolo pronto para impressão",
+    "stepInput": "Suba o seu livro em Word (.docx). Rápido e sem complicação.",
+    "steps": [
+      {
+        "title": "Envie seu livro em .docx",
+        "text": "Suba o seu manuscrito finalizado em Word (.docx). Rápido e sem complicação."
+      },
+      {
+        "title": "Veja uma amostra grátis",
+        "text": "A IA diagrama um trecho do seu livro para você conferir o resultado, sem pagar nada."
+      },
+      {
+        "title": "Aprove e pague online",
+        "text": "Gostou? Conclua a compra de forma rápida e segura."
+      },
+      {
+        "title": "Receba o miolo em até 24h",
+        "text": "O PDF diagramado, pronto para impressão, chega por e-mail e em Meus Pedidos."
+      }
+    ],
+    "howaiEyebrow": "Padrão de editora, sem editor",
+    "howaiTitle": "<strong>O que a diagramação</strong> resolve pelo seu livro.",
+    "howaiLead": "A IA aplica as decisões de um diagramador profissional — formato, tipografia, espaçamento e navegação — seguindo o padrão do mercado editorial.",
+    "howaiCards": [
+      {
+        "icon": "doc-rules",
+        "title": "Formato e margens de editora",
+        "items": [
+          "Formato A5 por padrão — ou 16x23, pocket, A4 e quadrado.",
+          "Margens, lombada e espelhamento no padrão de impressão."
+        ]
+      },
+      {
+        "icon": "text-lines",
+        "title": "Tipografia cuidada",
+        "items": [
+          "Miolo em fonte clássica de livro, com entrelinha e recuos equilibrados.",
+          "Títulos, capítulos e citações com uma hierarquia clara."
+        ]
+      },
+      {
+        "icon": "book-check",
+        "title": "Sumário e navegação",
+        "items": [
+          "Sumário automático, cabeçalhos e numeração de páginas.",
+          "Aberturas de capítulo, quebras e ornamentos entre cenas."
+        ]
+      },
+      {
+        "icon": "sparkles",
+        "title": "Decisões com IA, com segurança",
+        "items": [
+          "A IA sugere o visual; o gerador aplica só o que garante um bom resultado.",
+          "Se algo não for possível, entra um padrão profissional de segurança."
+        ]
+      }
+    ],
+    "deliverables": [
+      {
+        "tag": ".pdf",
+        "icon": "file-doc",
+        "title": "Miolo pronto para impressão",
+        "desc": "Um PDF diagramado no formato escolhido, com tipografia, margens e sumário no padrão editorial, pronto para a gráfica ou para publicar."
+      },
+      {
+        "tag": "Formato",
+        "icon": "layers",
+        "title": "No formato do seu livro",
+        "desc": "A5, 16x23, pocket, A4 ou quadrado — a IA aplica as margens e a tipografia adequadas a cada tamanho."
+      },
+      {
+        "tag": "LGPD",
+        "muted": true,
+        "icon": "shield",
+        "title": "Privacidade garantida",
+        "desc": "Seu texto não treina nossos modelos e permanece 100% seu, do envio à entrega."
+      }
+    ],
+    "compareRows": [
+      [
+        "Preço",
+        "R$ 149",
+        "a partir de R$ 1.500"
+      ],
+      [
+        "Prazo de entrega",
+        "em até 24h",
+        "1 a 3 semanas"
+      ],
+      [
+        "Como você contrata",
+        "100% online, self-service",
+        "cotações, e-mails e espera"
+      ],
+      [
+        "Formatos de página",
+        "A5, 16x23, pocket, A4 e quadrado",
+        "depende do profissional"
+      ],
+      [
+        "O que está incluído",
+        "tipografia, margens, sumário e numeração",
+        "varia conforme o orçamento"
+      ]
+    ],
+    "proofTitle": "Autores que diagramaram o livro com a KlooBR.",
+    "testimonials": [
+      {
+        "quote": "Enviei o Word e recebi um miolo com cara de editora: tipografia, margens e sumário no lugar. Mandei direto para a gráfica.",
+        "initials": "RC",
+        "name": "Renata Coelho",
+        "meta": "Romance · 312 páginas"
+      },
+      {
+        "quote": "Não entendo nada de diagramação e tinha medo do resultado. Ficou impecável, e em menos de um dia.",
+        "initials": "JM",
+        "name": "Jonas Martins",
+        "meta": "Não ficção · 198 páginas"
+      },
+      {
+        "quote": "Testei a amostra, aprovei na hora e paguei. O PDF veio pronto para impressão, sem retrabalho.",
+        "initials": "AP",
+        "name": "Aline Prado",
+        "meta": "Contos · 140 páginas"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Em que formato eu recebo o arquivo?",
+        "a": "Você recebe um PDF do miolo, diagramado e pronto para impressão, no formato de página que escolher."
+      },
+      {
+        "q": "Quais formatos de página posso escolher?",
+        "a": "A5 (padrão), 16x23, pocket, A4 e quadrado 20 cm. Se você não escolher, aplicamos o A5, padrão do mercado editorial."
+      },
+      {
+        "q": "Preciso entender de tipografia ou de diagramação?",
+        "a": "Não. A IA aplica fonte, tamanho, entrelinha, margens e espaçamentos no padrão de editora. Você só envia o seu .docx."
+      },
+      {
+        "q": "A diagramação inclui sumário, cabeçalhos e numeração?",
+        "a": "Sim. Sumário automático, cabeçalhos e numeração de páginas entram por padrão — e o sumário pode ser incluído ou omitido, como você preferir."
+      },
+      {
+        "q": "As imagens, negritos e itálicos do meu texto são mantidos?",
+        "a": "Sim. As imagens são centralizadas e ajustadas à página automaticamente, e negrito, itálico, sublinhado e sobrescrito/subscrito são preservados."
+      },
+      {
+        "q": "E se a IA não conseguir aplicar algum ajuste?",
+        "a": "O serviço usa um padrão profissional de segurança e conclui a diagramação mesmo assim: o seu livro nunca fica sem um resultado pronto."
+      }
+    ],
+    "xsEyebrow": "Combina com a Diagramação",
+    "xsTitle": "<strong>Com o miolo pronto,</strong> os próximos passos.",
+    "xsLead": "Leve o seu livro diagramado além do papel.",
+    "xsDesc": "O miolo do seu livro diagramado no padrão editorial, pronto para impressão.",
+    "crossSell": [
+      "conversao-ebook",
+      "textos-marketing",
+      "traducao"
+    ],
+    "ctaTitle": "<strong>Deixe o seu livro pronto para imprimir.</strong>",
+    "ctaText": "Envie o seu .docx e receba, em até 24 horas, o miolo diagramado no padrão do mercado editorial.",
+    "_note": "PLACEHOLDER: preço R$149/savePct90/marketText e imagens hero+card são provisórios — confirmar antes de publicar."
+  }
+]

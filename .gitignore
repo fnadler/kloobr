@@ -1,0 +1,36 @@
+# ============================================================================
+# Publicar SOMENTE os arquivos do canal (site + build).
+# Artefatos de processo (estratégia, wireframes, copy, prompts de arte, UI,
+# plano de replicação) ficam no disco, mas fora do repositório.
+# ============================================================================
+
+# Estratégia e diagnóstico
+00-estrategia/
+
+# Wireframes
+01-wireframes/
+
+# Copy deck
+02-copy/
+
+# Prompts de arte (geração de imagens)
+03-arte/
+
+# Checklists de UI / acessibilidade
+03-ui/
+
+# Plano de replicação (documento interno)
+PLANO-REPLICACAO-SERVICOS.md
+
+# ---- Sobras que não devem ir para o repositório ----
+assets/img/test-3-4.webp
+assets/img/hero-home-desktop - cópia.webp
+
+# ---- Sistema operacional / editores ----
+.DS_Store
+**/.DS_Store
+Thumbs.db
+*.swp
+*~
+.vscode/
+.idea/

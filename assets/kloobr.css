@@ -1766,6 +1766,22 @@ body.has-drawer-open {
       var(--radial);
   }
 
+  /* Layer de contraste do subtítulo: gradiente esquerda→direita na metade
+     esquerda, na COR DO FUNDO do hero (rgb 20,17,38) para ficar integrada,
+     escurecendo atrás do texto sem esconder o grafismo à direita. */
+  .hero-section--servico::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(90deg,
+      rgb(20, 17, 38) 0%,
+      rgba(20, 17, 38, .78) 26%,
+      rgba(20, 17, 38, .3) 46%,
+      transparent 56%);
+  }
+
   .hero-section--servico .hero-subtitle {
     gap: .75rem;
   }
@@ -6582,4 +6598,47 @@ html.has-anim :is(
     transform: none !important;
     transition: none !important;
   }
+}
+
+/* ============================================================================
+   DESEMPENHO NO MOBILE (Safari iOS)
+   `filter: blur(300px)` nas elipses e dezenas de `backdrop-filter` saturam o
+   compositor do iPhone → página lenta e toques travando. No mobile removemos
+   esses blurs (perde-se só o "vidro fosco"; fundos, bordas e sombras ficam).
+   ============================================================================ */
+@media (max-width: 859px) {
+  /* Elipses de brilho: blur(300px) é o efeito mais caro. O radial-gradient de
+     fundo do próprio hero já provê o glow, então podemos ocultá-las. */
+  .hero-ellipse { display: none; }
+
+  /* Desliga o backdrop-filter (blur do que está atrás) no mobile */
+  .site-nav[data-scrolled="true"],
+  .site-nav:has(.nav-drawer[data-open="true"]),
+  .nav-drawer,
+  .trust-bar__list,
+  .svc-card,
+  .phase-card,
+  .svc-bar,
+  .svc-bar__link,
+  .svc-bar__list,
+  .svc-select,
+  .glass,
+  .hero-price,
+  .quote-card,
+  .comparison-card,
+  .service-card,
+  .cart,
+  .order,
+  .done,
+  .auth,
+  .cta-dock,
+  .flow-bar,
+  .flow-nav,
+  .footer-news form {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  /* A nav rolada dependia do blur para legibilidade → fundo mais sólido */
+  .site-nav[data-scrolled="true"] { background: rgba(25, 22, 45, .96); }
 }

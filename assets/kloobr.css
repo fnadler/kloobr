@@ -2261,6 +2261,47 @@ body.has-drawer-open {
   .award:hover {
     transform: none;
   }
+  .awards-viewport {
+    touch-action: pan-y;   /* permite rolar a página na vertical e deslizar o carrossel na horizontal */
+  }
+}
+
+/* Controles de avançar/voltar do carrossel (só no mobile) */
+.awards-nav {
+  display: none;
+}
+
+@media (max-width: 859px) {
+  .awards-nav {
+    display: flex;
+    justify-content: center;
+    gap: .75rem;
+    margin-top: 1.5rem;
+  }
+}
+
+.awards-nav__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .2);
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.awards-nav__btn:hover {
+  background: rgba(255, 255, 255, .12);
+  border-color: rgba(255, 255, 255, .36);
+}
+
+.awards-nav__btn:focus-visible {
+  outline: 2px solid var(--hl-blue);
+  outline-offset: 2px;
 }
 
 /* Barra de garantias — card de vidro que FLUTUA sobre a base do hero

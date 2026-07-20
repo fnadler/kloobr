@@ -239,6 +239,14 @@
           <li class="award"><img src="assets/img/selo-YCE.png" alt="Young Creative Entrepreneur Awards" loading="lazy"></li>
         </ul>
       </div>
+      <div class="awards-nav" data-awards-nav>
+        <button class="awards-nav__btn" type="button" data-awards-prev aria-label="Ver selos anteriores">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="awards-nav__btn" type="button" data-awards-next aria-label="Ver próximos selos">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
     </div>
   </section>
 
@@ -1818,17 +1826,21 @@
 </script>
 
 <script>
-  /* Carrossel de selos: só no mobile (uma linha, 2 por vez, auto-play e loop). */
+  /* Carrossel de selos: só no mobile (uma linha, 2 por vez). Auto-play + o
+     usuário pode deslizar (touch/mouse) ou usar os botões avançar/voltar. */
   (function () {
     var track = document.querySelector('[data-awards-track]');
-    if (!track) return;
+    var viewport = document.querySelector('[data-awards-viewport]');
+    if (!track || !viewport) return;
     var mq = window.matchMedia('(max-width: 859px)');
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
     var originals = Array.prototype.slice.call(track.children);
     var VISIBLE = 2;
     var clones = [], idx = 0, timer = null, resetT = null;
 
-    function on() { return mq.matches && !reduce.matches && originals.length > VISIBLE; }
+    function on() { return mq.matches && originals.length > VISIBLE; }
+    function autoOk() { return on() && !reduce.matches; }
+
     function addClones() {
       if (clones.length) return;
       for (var i = 0; i < VISIBLE; i++) {
@@ -1849,7 +1861,7 @@
       return a[1].getBoundingClientRect().left - a[0].getBoundingClientRect().left;
     }
     function move(anim) {
-      track.style.transition = anim ? 'transform .55s ease' : 'none';
+      track.style.transition = (anim && !reduce.matches) ? 'transform .55s ease' : 'none';
       track.style.transform = 'translateX(' + (-idx * step()) + 'px)';
     }
     function next() {
@@ -1859,20 +1871,63 @@
         resetT = setTimeout(function () { idx = 0; move(false); }, 580);
       }
     }
-    function stop() {
+    function prev() {
+      if (resetT) { clearTimeout(resetT); resetT = null; }
+      if (idx <= 0) {
+        idx = originals.length;      // posição-clone equivalente ao início
+        move(false);
+        track.getBoundingClientRect(); // reflow: o snap não anima
+        idx = originals.length - 1;
+        move(true);
+      } else {
+        idx--;
+        move(true);
+      }
+    }
+    function clearTimers() {
       if (timer) { clearInterval(timer); timer = null; }
       if (resetT) { clearTimeout(resetT); resetT = null; }
     }
-    function play() { stop(); if (on()) timer = setInterval(next, 3200); }
+    function play() { clearTimers(); if (autoOk()) timer = setInterval(next, 3200); }
+    function userGo(dir) {
+      if (!on()) return;
+      clearTimers();
+      if (dir < 0) prev(); else next();
+      play();   // reinicia o auto-play após a interação
+    }
+
+    /* deslizar (touch e mouse via Pointer Events) */
+    var startX = null;
+    viewport.addEventListener('pointerdown', function (e) {
+      if (!on()) return;
+      startX = e.clientX;
+      clearTimers();   // pausa enquanto interage
+    });
+    window.addEventListener('pointerup', function (e) {
+      if (startX === null) return;
+      var dx = e.clientX - startX;
+      startX = null;
+      if (!on()) return;
+      if (Math.abs(dx) > 40) userGo(dx < 0 ? 1 : -1);
+      else play();     // sem deslize: retoma o auto-play
+    });
+    viewport.addEventListener('pointercancel', function () { startX = null; play(); });
+
+    /* botões avançar / voltar */
+    var prevBtn = document.querySelector('[data-awards-prev]');
+    var nextBtn = document.querySelector('[data-awards-next]');
+    if (prevBtn) prevBtn.addEventListener('click', function () { userGo(-1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { userGo(1); });
+
     function sync() {
-      stop();
+      clearTimers();
       if (on()) { addClones(); idx = 0; move(false); play(); }
       else { removeClones(); idx = 0; track.style.transition = 'none'; track.style.transform = ''; }
     }
     if (mq.addEventListener) mq.addEventListener('change', sync);
     else if (mq.addListener) mq.addListener(sync);
     window.addEventListener('resize', function () { if (on()) move(false); });
-    document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else play(); });
+    document.addEventListener('visibilitychange', function () { if (document.hidden) clearTimers(); else play(); });
     sync();
   })();
 </script>

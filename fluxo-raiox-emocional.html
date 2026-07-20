@@ -411,8 +411,9 @@
     var s = steps[atual - 1];
     // Da venda em diante não há o que validar para seguir: a ação é a própria barra.
     if (atual >= 3) pronto[atual] = true;
-    // Passo 4 é uma transição automática (pagamento em canal externo): sem barra.
-    flowBar.hidden = atual === 4;
+    // Sem barra no pagamento (transição automática) e na confirmação
+    // (o card de confirmação já tem os próprios botões).
+    flowBar.hidden = atual >= steps.length - 1;
     barBack.hidden = atual === 1 || atual === steps.length;   // depois de pagar não há volta
     barNext.textContent = s.dataset.nextLabel || 'Continuar';
     barNext.disabled = !pronto[atual];

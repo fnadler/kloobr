@@ -610,7 +610,7 @@ main {
   font-size: 18px;
   line-height: 1;
 }
-.nav-country__pin { flex: 0 0 auto; color: var(--hl-pink); }
+.nav-country__pin { flex: 0 0 auto; color: #fff; }
 .nav-country__pin,
 .nav-country__name,
 .nav-country .nav-locale__chevron { display: none; }

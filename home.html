@@ -230,13 +230,15 @@
         <h2 class="h2" id="awards-h"><strong>Uma plataforma premiada</strong> no Brasil e no mundo.</h2>
         <p class="section__lead">A tecnologia da KlooBR já foi reconhecida por prêmios de inovação e do mercado editorial.</p>
       </div>
-      <ul class="awards-grid">
-        <li class="award"><img src="assets/img/selo-WSA-world.png" alt="World Summit Awards" loading="lazy"></li>
-        <li class="award"><img src="assets/img/selo-WSA-portugal.png" alt="WSA Portugal, apresentado pela APDC" loading="lazy"></li>
-        <li class="award"><img src="assets/img/selo-publish-news.png" alt="Prêmio PublishNews" loading="lazy"></li>
-        <li class="award"><img src="assets/img/selo-granter-innovation.png" alt="Granter Innovation Award" loading="lazy"></li>
-        <li class="award"><img src="assets/img/selo-YCE.png" alt="Young Creative Entrepreneur Awards" loading="lazy"></li>
-      </ul>
+      <div class="awards-viewport" data-awards-viewport>
+        <ul class="awards-grid" data-awards-track>
+          <li class="award"><img src="assets/img/selo-WSA-world.png" alt="World Summit Awards" loading="lazy"></li>
+          <li class="award"><img src="assets/img/selo-WSA-portugal.png" alt="WSA Portugal, apresentado pela APDC" loading="lazy"></li>
+          <li class="award"><img src="assets/img/selo-publish-news.png" alt="Prêmio PublishNews" loading="lazy"></li>
+          <li class="award"><img src="assets/img/selo-granter-innovation.png" alt="Granter Innovation Award" loading="lazy"></li>
+          <li class="award"><img src="assets/img/selo-YCE.png" alt="Young Creative Entrepreneur Awards" loading="lazy"></li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -1075,18 +1077,6 @@
         </ul>
       </nav>
     </div>
-
-    <div class="footer-awards" aria-label="Premiações e reconhecimento">
-      <span class="footer-awards__label">Premiações e reconhecimento</span>
-      <ul class="footer-awards__list">
-        <li><img src="assets/img/selo-WSA-world.png" alt="World Summit Awards" loading="lazy"></li>
-        <li><img src="assets/img/selo-WSA-portugal.png" alt="WSA Portugal, apresentado pela APDC" loading="lazy"></li>
-        <li><img src="assets/img/selo-publish-news.png" alt="Prêmio PublishNews" loading="lazy"></li>
-        <li><img src="assets/img/selo-granter-innovation.png" alt="Granter Innovation Award" loading="lazy"></li>
-        <li><img src="assets/img/selo-YCE.png" alt="Young Creative Entrepreneur Awards" loading="lazy"></li>
-      </ul>
-    </div>
-
     <p class="footer-copy">© 2026 KlooBR · Publishing, re-engineered. · Uma empresa do Clube de Autores. Todos os direitos reservados.</p>
   </div>
 </footer>
@@ -1824,6 +1814,66 @@
     sync();
     if (mq.addEventListener) mq.addEventListener("change", sync);
     else if (mq.addListener) mq.addListener(sync);
+  })();
+</script>
+
+<script>
+  /* Carrossel de selos: só no mobile (uma linha, 2 por vez, auto-play e loop). */
+  (function () {
+    var track = document.querySelector('[data-awards-track]');
+    if (!track) return;
+    var mq = window.matchMedia('(max-width: 859px)');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var originals = Array.prototype.slice.call(track.children);
+    var VISIBLE = 2;
+    var clones = [], idx = 0, timer = null, resetT = null;
+
+    function on() { return mq.matches && !reduce.matches && originals.length > VISIBLE; }
+    function addClones() {
+      if (clones.length) return;
+      for (var i = 0; i < VISIBLE; i++) {
+        var c = originals[i].cloneNode(true);
+        c.setAttribute('aria-hidden', 'true');
+        c.classList.add('award--clone');
+        track.appendChild(c);
+        clones.push(c);
+      }
+    }
+    function removeClones() {
+      clones.forEach(function (c) { if (c.parentNode) c.parentNode.removeChild(c); });
+      clones = [];
+    }
+    function step() {
+      var a = track.children;
+      if (a.length < 2) return 0;
+      return a[1].getBoundingClientRect().left - a[0].getBoundingClientRect().left;
+    }
+    function move(anim) {
+      track.style.transition = anim ? 'transform .55s ease' : 'none';
+      track.style.transform = 'translateX(' + (-idx * step()) + 'px)';
+    }
+    function next() {
+      idx++;
+      move(true);
+      if (idx >= originals.length) {
+        resetT = setTimeout(function () { idx = 0; move(false); }, 580);
+      }
+    }
+    function stop() {
+      if (timer) { clearInterval(timer); timer = null; }
+      if (resetT) { clearTimeout(resetT); resetT = null; }
+    }
+    function play() { stop(); if (on()) timer = setInterval(next, 3200); }
+    function sync() {
+      stop();
+      if (on()) { addClones(); idx = 0; move(false); play(); }
+      else { removeClones(); idx = 0; track.style.transition = 'none'; track.style.transform = ''; }
+    }
+    if (mq.addEventListener) mq.addEventListener('change', sync);
+    else if (mq.addListener) mq.addListener(sync);
+    window.addEventListener('resize', function () { if (on()) move(false); });
+    document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else play(); });
+    sync();
   })();
 </script>
 

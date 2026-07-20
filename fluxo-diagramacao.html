@@ -211,7 +211,7 @@
     <div class="flow-step__head">
       <p class="flow-step__eyebrow">Passo 3 de 6</p>
       <h1 class="flow-step__title" id="s3-h">Amostra da diagramação do seu livro</h1>
-      <p class="flow-step__support">Veja uma página do seu livro já diagramada, no padrão do mercado editorial — tipografia, margens, cabeçalho e numeração.</p>
+      <p class="flow-step__support">Veja uma página do seu livro já diagramada e o que a IA ajustou em cada detalhe, com o porquê de cada escolha.</p>
     </div>
 
     <div class="flow-step__body">
@@ -222,46 +222,93 @@
         Página do seu livro <strong>diagramada</strong> · formato A5.
       </p>
 
-      <!-- SLOT: sample-doc — página diagramada (miolo) -->
-      <div class="sample sample--dgm" data-sample>
-        <div class="sample__paper dgm-page" data-paper>
-          <div class="dgm-page__header" aria-hidden="true">
-            <span class="dgm-page__running">A Evolução do Futebol Entre as Copas</span>
+      <!-- Mobile: alterna entre a amostra e as sugestões da IA (no desktop as duas aparecem lado a lado) -->
+      <div class="dgm-tabs" role="tablist" aria-label="Alternar entre a amostra e as sugestões da IA">
+        <button class="dgm-tab" type="button" role="tab" id="dgm-tab-amostra" aria-controls="dgm-pane-amostra" aria-selected="true" data-dgm-tab="amostra">Amostra</button>
+        <button class="dgm-tab" type="button" role="tab" id="dgm-tab-sugestoes" aria-controls="dgm-pane-sugestoes" aria-selected="false" data-dgm-tab="sugestoes">O que a IA aplicou</button>
+      </div>
+
+      <div class="dgm-cols" data-dgm-cols data-dgm-active="amostra">
+        <!-- SLOT: sample-doc — página diagramada (miolo) -->
+        <div class="sample sample--dgm" id="dgm-pane-amostra" role="tabpanel" aria-labelledby="dgm-tab-amostra" data-dgm-pane="amostra" data-sample>
+          <div class="sample__paper dgm-page" data-paper>
+            <div class="dgm-page__header" aria-hidden="true">
+              <span class="dgm-page__running">A Evolução do Futebol Entre as Copas</span>
+            </div>
+
+            <div class="dgm-page__body">
+              <p class="dgm-page__chapnum">1</p>
+              <h2 class="dgm-page__chaptitle">O Futebol como Espelho da Sociedade</h2>
+
+              <p class="dgm-p dgm-p--first">O futebol é muito mais do que um jogo: é um reflexo da sociedade, da tecnologia e da transformação humana em cada época. Desde a primeira Copa do Mundo, disputada no Uruguai em 1930, até os torneios contemporâneos, o esporte passou por mudanças radicais que vão muito além da simples alteração de regras.</p>
+              <p class="dgm-p">Cada geração de jogadores herdou o conhecimento da anterior e o transformou. O que antes era transmitido oralmente, nos campos de várzea e nas conversas de vestiário, hoje é sistematizado em bancos de dados, vídeos analíticos e modelos estatísticos. E, no entanto, algo permanece imutável: a paixão que o jogo desperta.</p>
+              <p class="dgm-p">Poucas atividades humanas conseguem unir pessoas de culturas tão diferentes quanto o futebol. Um torcedor japonês e um torcedor argentino podem não compartilhar idioma, religião ou tradição, mas compartilham a compreensão instintiva de um belo drible, de um passe preciso, de um gol no último minuto.</p>
+              <p class="dgm-p">À medida que o futebol se espalhou pelo mundo, ele absorveu características locais: o drible brasileiro, a organização alemã, a garra uruguaia e a técnica espanhola imprimiram, cada um, a sua identidade cultural na forma de jogar.</p>
+            </div>
+
+            <div class="dgm-page__footer" aria-hidden="true"><span class="dgm-page__folio">13</span></div>
           </div>
 
-          <div class="dgm-page__body">
-            <p class="dgm-page__chapnum">1</p>
-            <h2 class="dgm-page__chaptitle">O Futebol como Espelho da Sociedade</h2>
-
-            <p class="dgm-p dgm-p--first">O futebol é muito mais do que um jogo: é um reflexo da sociedade, da tecnologia e da transformação humana em cada época. Desde a primeira Copa do Mundo, disputada no Uruguai em 1930, até os torneios contemporâneos, o esporte passou por mudanças radicais que vão muito além da simples alteração de regras.</p>
-            <p class="dgm-p">Cada geração de jogadores herdou o conhecimento da anterior e o transformou. O que antes era transmitido oralmente, nos campos de várzea e nas conversas de vestiário, hoje é sistematizado em bancos de dados, vídeos analíticos e modelos estatísticos. E, no entanto, algo permanece imutável: a paixão que o jogo desperta.</p>
-            <p class="dgm-p">Poucas atividades humanas conseguem unir pessoas de culturas tão diferentes quanto o futebol. Um torcedor japonês e um torcedor argentino podem não compartilhar idioma, religião ou tradição, mas compartilham a compreensão instintiva de um belo drible, de um passe preciso, de um gol no último minuto.</p>
-            <p class="dgm-p">À medida que o futebol se espalhou pelo mundo, ele absorveu características locais: o drible brasileiro, a organização alemã, a garra uruguaia e a técnica espanhola imprimiram, cada um, a sua identidade cultural na forma de jogar.</p>
+          <!-- Véu que "esconde" o restante e leva ao desbloqueio -->
+          <div class="sample__lock">
+            <div class="sample__lock-inner">
+              <span class="sample__lock-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="4.5" y="10.5" width="15" height="9.5" rx="2.2"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/>
+                </svg>
+              </span>
+              <h2 class="sample__lock-title">Isto é só uma amostra da diagramação.</h2>
+              <p class="sample__lock-text">O que você viu é uma página do seu livro já diagramada. Para receber o livro inteiro, do início ao fim, diagrame o seu livro completo.</p>
+              <ul class="sample__lock-list">
+                <li>Todas as páginas diagramadas, não apenas esta.</li>
+                <li>Sumário, cabeçalhos e numeração aplicados automaticamente.</li>
+                <li>Você recebe um e-mail assim que o arquivo ficar pronto (em até 24h).</li>
+                <li>Entregue em PDF, pronto para impressão.</li>
+              </ul>
+              <!-- A compra é o botão da barra inferior (SLOT: price no data-next-label) -->
+              <p class="sample__lock-note">Use o botão <strong>Comprar agora</strong> aqui embaixo. Pagamento seguro no Clube de Autores.</p>
+            </div>
           </div>
-
-          <div class="dgm-page__footer" aria-hidden="true"><span class="dgm-page__folio">13</span></div>
         </div>
 
-        <!-- Véu que "esconde" o restante e leva ao desbloqueio -->
-        <div class="sample__lock">
-          <div class="sample__lock-inner">
-            <span class="sample__lock-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="4.5" y="10.5" width="15" height="9.5" rx="2.2"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/>
-              </svg>
-            </span>
-            <h2 class="sample__lock-title">Isto é só uma amostra da diagramação.</h2>
-            <p class="sample__lock-text">O que você viu é uma página do seu livro já diagramada. Para receber o livro inteiro, do início ao fim, diagrame o seu livro completo.</p>
-            <ul class="sample__lock-list">
-              <li>Todas as páginas diagramadas, não apenas esta.</li>
-              <li>Sumário, cabeçalhos e numeração aplicados automaticamente.</li>
-              <li>Você recebe um e-mail assim que o arquivo ficar pronto (em até 24h).</li>
-              <li>Entregue em PDF, pronto para impressão.</li>
-            </ul>
-            <!-- A compra é o botão da barra inferior (SLOT: price no data-next-label) -->
-            <p class="sample__lock-note">Use o botão <strong>Comprar agora</strong> aqui embaixo. Pagamento seguro no Clube de Autores.</p>
-          </div>
-        </div>
+        <!-- O que a IA aplicou nesta página (o que + por quê) -->
+        <aside class="dgm-applied" id="dgm-pane-sugestoes" role="tabpanel" aria-labelledby="dgm-tab-sugestoes" data-dgm-pane="sugestoes">
+          <h2 class="dgm-applied__title">
+            <span class="dgm-applied__spark" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></span>
+            O que a IA aplicou nesta página
+          </h2>
+          <p class="dgm-applied__lead">Cada ajuste tem um objetivo: legibilidade, hierarquia e o padrão do mercado editorial.</p>
+          <ul class="dgm-applied__list">
+          <li>
+            <span class="dgm-applied__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span>
+            <span><strong>Formato A5 (14,8 × 21 cm)</strong>: o tamanho de livro mais usado no mercado, confortável na mão e econômico para imprimir.</span>
+          </li>
+          <li>
+            <span class="dgm-applied__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span>
+            <span><strong>Miolo em EB Garamond, 10,5 pt</strong>: uma serifada clássica de livro, para uma leitura fluida e elegante no papel.</span>
+          </li>
+          <li>
+            <span class="dgm-applied__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span>
+            <span><strong>Entrelinha de 1,08</strong>: mais respiro entre as linhas, deixando a leitura mais leve e agradável.</span>
+          </li>
+          <li>
+            <span class="dgm-applied__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span>
+            <span><strong>Parágrafos justificados, com recuo de 0,45 cm</strong>: linhas alinhadas nas duas margens e cada parágrafo bem marcado, com cara de livro publicado.</span>
+          </li>
+          <li>
+            <span class="dgm-applied__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span>
+            <span><strong>Abertura de capítulo</strong>: número e título centralizados, com espaço generoso que anuncia o novo capítulo.</span>
+          </li>
+          <li>
+            <span class="dgm-applied__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span>
+            <span><strong>Cabeçalho com o título do livro (7,5 pt)</strong>: o leitor sempre sabe onde está, sem poluir a página.</span>
+          </li>
+          <li>
+            <span class="dgm-applied__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span>
+            <span><strong>Número de página no centro inferior</strong>: a posição padrão do mercado, fácil de achar ao folhear.</span>
+          </li>
+          </ul>
+        </aside>
       </div>
     </div>
   </section>
@@ -737,6 +784,7 @@
   var VEU = 240;   // precisa bater com --veil no CSS
   var paper = document.querySelector('[data-paper]');
   function ajustaAmostra() {
+    if (!paper.offsetParent) return;   // painel oculto (ex.: aba "Sugestões" no mobile): não medir
     var ps = paper.querySelectorAll('.dgm-p');
     if (!ps.length) return;
     var alvo = ps[Math.min(1, ps.length - 1)];
@@ -747,6 +795,19 @@
   window.addEventListener('resize', function () {
     clearTimeout(window._amostraR);
     window._amostraR = setTimeout(function () { if (atual === 3) ajustaAmostra(); }, 150);
+  });
+
+  /* Alternância amostra / sugestões (só afeta o layout no mobile via CSS). */
+  var dgmCols = document.querySelector('[data-dgm-cols]');
+  var dgmTabs = Array.prototype.slice.call(document.querySelectorAll('[data-dgm-tab]'));
+  dgmTabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var alvo = tab.getAttribute('data-dgm-tab');
+      if (dgmCols) dgmCols.setAttribute('data-dgm-active', alvo);
+      dgmTabs.forEach(function (t) { t.setAttribute('aria-selected', String(t === tab)); });
+      // ao voltar para a amostra, remede o véu (o papel pode ter ficado oculto)
+      if (alvo === 'amostra') ajustaAmostra();
+    });
   });
 
   /* ---------- passo 4: ofertas + carrinho ---------- */

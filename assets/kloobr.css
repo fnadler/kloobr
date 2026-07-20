@@ -5631,6 +5631,131 @@ select.ds-input option {
   color: #9a9a9a;
 }
 
+/* Passo 3 (Diagramação): página diagramada + painel "O que a IA aplicou" */
+.dgm-cols {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 900px) {
+  .dgm-cols {
+    grid-template-columns: minmax(0, 460px) 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+}
+
+/* Alternador amostra / sugestões — segmented control (aparece só no mobile) */
+.dgm-tabs {
+  display: none;
+  gap: .3rem;
+  padding: .3rem;
+  margin: 0 0 1.4rem;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 999px;
+}
+
+.dgm-tab {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: .62rem .7rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--text-mut);
+  font: inherit;
+  font-size: .9rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: color .2s ease, background .2s ease;
+}
+
+.dgm-tab[aria-selected="true"] {
+  color: #fff;
+  background: linear-gradient(90deg, rgba(255, 0, 191, .28), rgba(87, 76, 155, .3));
+}
+
+.dgm-tab:focus-visible {
+  outline: 2px solid rgba(255, 0, 191, .7);
+  outline-offset: 2px;
+}
+
+@media (max-width: 899px) {
+  .dgm-tabs { display: flex; }
+  [data-dgm-active="amostra"] [data-dgm-pane="sugestoes"] { display: none; }
+  [data-dgm-active="sugestoes"] [data-dgm-pane="amostra"] { display: none; }
+}
+
+.dgm-applied {
+  padding: 1.5rem 1.6rem;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
+  border: 1px solid rgba(255, 255, 255, .12);
+}
+
+.dgm-applied__title {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  margin: 0 0 .4rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.dgm-applied__spark {
+  display: inline-flex;
+  color: var(--hl-pink);
+}
+
+.dgm-applied__lead {
+  margin: 0 0 1.15rem;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+
+.dgm-applied__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+}
+
+.dgm-applied__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: .65rem;
+  font-size: 13.5px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+
+.dgm-applied__list strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.dgm-applied__ico {
+  flex: 0 0 auto;
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(255, 0, 191, .18);
+  border: 1px solid rgba(255, 0, 191, .5);
+}
+
 /* Balão com a explicação do ajuste */
 .doc-tip {
   position: absolute;

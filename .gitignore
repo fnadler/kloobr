@@ -22,10 +22,6 @@
 # Plano de replicação (documento interno)
 PLANO-REPLICACAO-SERVICOS.md
 
-# ---- Sobras que não devem ir para o repositório ----
-assets/img/test-3-4.webp
-assets/img/hero-home-desktop - cópia.webp
-
 # ---- Sistema operacional / editores ----
 .DS_Store
 **/.DS_Store

@@ -1706,6 +1706,11 @@ body.has-drawer-open {
   /* mais espaço na base, antes da barra de selos que flutua sobre o hero */
   .hero-section--home {
     padding-bottom: 168px;
+    /* centraliza o conteúdo verticalmente (como no hero de serviço), para
+       equilibrar o vão entre o conteúdo e a barra de selos em telas altas */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .hero-section--home .hero-subtitle {
